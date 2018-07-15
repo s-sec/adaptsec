@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
-    <title>Archiv: 2018/7 - 攻VS防，战略与战术！马拉松式工作！</title>
+    <title>Archiv: 2017/2 - 攻VS防，战略与战术！马拉松式工作！</title>
     <meta name="author" content="Lao k17">
     
         <meta name="keywords" content="hexo,javascript,安全,">
@@ -20,7 +20,7 @@
 <meta name="keywords" content="hexo,javascript,安全">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="攻VS防，战略与战术！马拉松式工作！">
-<meta property="og:url" content="http://s-sec.github.io/archives/2018/07/index.html">
+<meta property="og:url" content="http://s-sec.github.io/archives/2017/02/index.html">
 <meta property="og:site_name" content="攻VS防，战略与战术！马拉松式工作！">
 <meta property="og:description" content="记录网络安全,渗透渗透,信息安全,代码审计,权限提升,脚本漏洞,无线安全,社会工程,安全文献,安全媒体。">
 <meta property="og:locale" content="zh-CN">
@@ -241,49 +241,120 @@
     <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
+    <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
                 <h1 class="postShorten-title">
                     
-                        <a class="link-unstyled" href="/2018/07/14/hello-world/">
-                            Hello World
+                        <a class="link-unstyled" href="/2017/02/09/学习渗透测试的感悟/">
+                            学习渗透测试的感悟
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2018-07-14T23:39:14+08:00">
+    <time datetime="2017-02-09T16:20:08+08:00">
 	
-		    14 7月 2018
+		    09 2月 2017
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/技能储备与交流/">技能储备与交流</a>
+
+
     
 </div>
 
             </div>
             
-                <div class="postShorten-content">
-                    <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+                <div class="postShorten-excerpt">
+                    <p><strong>PS</strong>: 内容摘自一位安全同仁Goocher</p>
+<p><strong>渗透测试的定义：对于现有系统的安全评估，发现存在的安全问题进行报告 </strong></p>
+<p>以下对于安全都仅限于web安全</p>
+<pre><code>安全最近被炒的很热，各种ctf，培训，教程，视频都很多，让新手往往都目不暇接，尤其是没有接触过的人感觉都好NB，我也要那么NB，
+接着就会进入一个循环翻看各种视频教程，各种文章教程，最终发现还是感觉自己是个半吊子，发现现实的渗透和视频里面的差距很大，
+为什么感觉视频里面就做的那么轻松，或者是看别人的渗透文章感觉他们怎么就能发现这样的漏洞呢，我怎么就不行，
+我也对漏洞原理了解很清楚怎么就找不到呢。而且也很膜拜那些在各种src上刷屏的人。
+</code></pre><p><strong>我总结了一下我的看法：</strong></p>
+<pre><code>视频中一般讲解的都是sqli,xss,csrf,lfi/rfi等基本漏洞，原理可以讲的很清楚，利用也会讲一些，但是对于最重要的一步如何去识别、
+特定的漏洞讲的就很少了，而这个人认为是最关键的一步，因为要识别一个漏洞才是你对一个漏洞理解和掌握的基本
+文章中出现的渗透测试的文章，并不会是仅仅通过一个sql注入就会拿到权限，他们会用很多现实中才会用到的一些第三方组件的
+已知漏洞，还有一些中间件的错误配置来拿到权限，但这些文章和教程都不会跟你讲，上来就是各种常见的信息收集手段，各种常见
+web漏洞识别，不行旁注或者弱口令，接着就到后渗透阶段，这样讲会让初学者的思路很受限。
+</code></pre><p><strong>如果是想刷src的我给出以下建议：</strong></p>
+<pre><code>对于自建站（没有使用已知的cms来搭建），这样的站往往会存在很多sqli,xss,csrf等漏洞，还会存在一些权限控制不当，越权，
+密码重置漏洞，逻辑漏洞（这样的漏洞wooyun已经总结了文章）这些东西都需要不断的去实战测试提升自己的思路和技巧
+对于使用已知的cms来搭建的站，需要在收集到目标站的cms版本信息，以及一些第三方组件的版本信息然后来搜索是否存在已知漏洞
+</code></pre>
                     
+                        <a href="/2017/02/09/学习渗透测试的感悟/" class="postShorten-excerpt_link link">
+                            Weiterlesen
+                        </a>
                         
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a class="link-unstyled" href="/2017/02/09/安全人员基本技能/">
+                            安全人员基本技能
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2017-02-09T11:09:11+08:00">
+	
+		    09 2月 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/技能储备与交流/">技能储备与交流</a>
 
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p><strong>PS</strong>: 内容转载自安全维基SecWiki,谢谢！以学习的态度，广传安全知识！</p>
+<p><strong>职位描述</strong>：</p>
+<pre><code>合理安排工作时间，完成上级交待的任务；
+打造属于自己的开发与测试环境；
+专属的网络上网环境；
+开发工具与代码同步；
+专业文档编写技巧；
+能无障碍读懂专业英文资料；
+关注行业态势和热点。
+</code></pre><p><strong>职位要求</strong>：</p>
+<pre><code>了解行业发展，目前大公司的产品和业务；
+熟悉GTD时间管理方式；
+能独立安装Windows/Ubuntu系统和虚拟机；
+客户端与服务器通信过程；
+浏览器插件与使用技巧（Firebug）；
+突破网络限制，建立自己的私有网络（VPN，Wireshark）；
+针对每种语言的开发工具（Sublime，Ulipad等），git的使用技巧；
+Office编辑与格式注意（标题、封面、页眉、页码、字体等）；
+英语水平良好，能阅读各种英文技术文档。
+</code></pre>
                     
-                    
-                        <p>
-                            <a href="/2018/07/14/hello-world/#post-footer" class="postShorten-excerpt_link link">
-                                Kommentieren und teilen
-                            </a>
-                        </p>
+                        <a href="/2017/02/09/安全人员基本技能/" class="postShorten-excerpt_link link">
+                            Weiterlesen
+                        </a>
+                        
                     
                 </div>
             

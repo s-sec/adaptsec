@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
-    <title>Hello World - 攻VS防，战略与战术！马拉松式工作！</title>
+    <title>如何有效检查证书有效性？ - 攻VS防，战略与战术！马拉松式工作！</title>
     <meta name="author" content="Lao k17">
     
         <meta name="keywords" content="hexo,javascript,安全,">
@@ -15,19 +15,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"},"articleBody":"Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.\nQuick StartCreate a new post1$ hexo new \"My New Post\"\nMore info: Writing\nRun server1$ hexo server\nMore info: Server\nGenerate static files1$ hexo generate\nMore info: Generating\nDeploy to remote sites1$ hexo deploy\nMore info: Deployment\n","dateCreated":"2018-07-14T23:39:14+08:00","dateModified":"2018-07-14T23:39:14+08:00","datePublished":"2018-07-14T23:39:14+08:00","description":"","headline":"Hello World","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://s-sec.github.io/2018/07/14/hello-world/"},"publisher":{"@type":"Organization","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"}},"url":"http://s-sec.github.io/2018/07/14/hello-world/"}</script>
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords" content="hexo,javascript,安全">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"},"articleBody":"证书有效性，一般要检查三点：\n\n验证证书是否是否在有效期内？\n\n检查证书上有签发起始时间和过期时间思考：如何保证取到的时间点是可信的？\n\n\n验证证书是否被吊销了？\n吊销的证书是无效的，一般有俩种方式：– CRL（Certificate Revocation List）,证书吊销列表，离线方式；– OCSP（Online Certificate Status Protocol ）,在线证书状态检查协议（RFC6960）。\n\n\n验证证书的真实性，是否是上级CA签发的？\nCA下发给网站的证书是分层的证书链，从根证书开始一层一层直到网站证书。要验证某一层证书是否确实由上级CA签发的，需要验证附带在该证书上由上级CA通过签名函数及私钥生成的数字签名。数字签名的解密需要上级CA的公钥，这个公钥的明文就就保存在证书链中的上层证书中。而根证书是自己给自己签名，也就是根证书的签名也是靠自己保存的公钥来解密。这就很好解决了证实真实性的问题，也就能够证明最底层的网站证书确实是证书中表明的CA发放的。备注：证书检测不是强制的，如果ca机构的检测服务器宕机，只会检查本地的根证书列表。\n\n\n\n","dateCreated":"2017-01-20T11:06:11+08:00","dateModified":"2017-01-20T22:00:09+08:00","datePublished":"2017-01-20T11:06:11+08:00","description":"证书有效性，一般要检查三点：\n\n验证证书是否是否在有效期内？\n\n检查证书上有签发起始时间和过期时间思考：如何保证取到的时间点是可信的？\n","headline":"如何有效检查证书有效性？","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/"},"publisher":{"@type":"Organization","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"}},"url":"http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/","keywords":"证书, 有效性, OCSP, CRL"}</script>
+    <meta name="description" content="证书有效性，一般要检查三点：  验证证书是否是否在有效期内？  检查证书上有签发起始时间和过期时间思考：如何保证取到的时间点是可信的？">
+<meta name="keywords" content="证书,有效性,OCSP,CRL">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://s-sec.github.io/2018/07/14/hello-world/index.html">
+<meta property="og:title" content="如何有效检查证书有效性？">
+<meta property="og:url" content="http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/index.html">
 <meta property="og:site_name" content="攻VS防，战略与战术！马拉松式工作！">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="证书有效性，一般要检查三点：  验证证书是否是否在有效期内？  检查证书上有签发起始时间和过期时间思考：如何保证取到的时间点是可信的？">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-14T15:39:14.104Z">
+<meta property="og:updated_time" content="2017-01-20T14:00:09.009Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="如何有效检查证书有效性？">
+<meta name="twitter:description" content="证书有效性，一般要检查三点：  验证证书是否是否在有效期内？  检查证书上有签发起始时间和过期时间思考：如何保证取到的时间点是可信的？">
     
     
         
@@ -245,16 +245,22 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            Hello World
+            如何有效检查证书有效性？
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2018-07-14T23:39:14+08:00">
+    <time datetime="2017-01-20T11:06:11+08:00">
 	
-		    14 7月 2018
+		    20 1月 2017
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/证书CA/">证书CA</a>
+
+
     
 </div>
 
@@ -264,15 +270,22 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <p>证书有效性，一般要检查三点：</p>
+<ol>
+<li><p>验证证书是否是否在有效期内？</p>
+<blockquote>
+<p>检查证书上有签发起始时间和过期时间<br><strong>思考</strong>：如何保证取到的时间点是可信的？</p>
+</blockquote>
+<a id="more"></a></li>
+<li>验证证书是否被吊销了？<blockquote>
+<p>吊销的证书是无效的，一般有俩种方式：<br>– CRL（Certificate Revocation List）,证书吊销列表，离线方式；<br>– OCSP（Online Certificate Status Protocol ）,在线证书状态检查协议（RFC6960）。</p>
+</blockquote>
+</li>
+<li>验证证书的真实性，是否是上级CA签发的？<blockquote>
+<p>CA下发给网站的证书是分层的证书链，从根证书开始一层一层直到网站证书。要验证某一层证书是否确实由上级CA签发的，需要验证附带在该证书上由上级CA通过签名函数及私钥生成的数字签名。数字签名的解密需要上级CA的公钥，这个公钥的明文就就保存在证书链中的上层证书中。而根证书是自己给自己签名，也就是根证书的签名也是靠自己保存的公钥来解密。这就很好解决了证实真实性的问题，也就能够证明最底层的网站证书确实是证书中表明的CA发放的。<br><strong>备注：</strong>证书检测不是强制的，如果ca机构的检测服务器宕机，只会检查本地的根证书列表。</p>
+</blockquote>
+</li>
+</ol>
 
             
 
@@ -280,13 +293,21 @@
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">GETAGGT IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/CRL/">CRL</a> <a class="tag tag--primary tag--small t-link" href="/tags/OCSP/">OCSP</a> <a class="tag tag--primary tag--small t-link" href="/tags/有效性/">有效性</a> <a class="tag tag--primary tag--small t-link" href="/tags/证书/">证书</a>
+
+            </div>
+        
         
             <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--disabled">
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/20/exploit/" data-tooltip="exploit" aria-label="FRÜHER: exploit">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
@@ -295,7 +316,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" data-tooltip="使用sqlmap 绕过防火墙进行注入测试" aria-label="NÄCHSTER: 使用sqlmap 绕过防火墙进行注入测试">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/19/IT-SECURITY/" data-tooltip="IT SECURITY" aria-label="NÄCHSTER: IT SECURITY">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -313,7 +334,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2018/07/14/hello-world/" title="Teilen auf Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/" title="Teilen auf Facebook">
                     <i class="fa fa-facebook-official" aria-hidden="true"></i>
                 </a>
             </li>
@@ -321,7 +342,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2018/07/14/hello-world/" title="Teilen auf Twitter">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/" title="Teilen auf Twitter">
                     <i class="fa fa-twitter" aria-hidden="true"></i>
                 </a>
             </li>
@@ -329,7 +350,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2018/07/14/hello-world/" title="Teilen auf Google Plus">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/" title="Teilen auf Google Plus">
                     <i class="fa fa-google-plus" aria-hidden="true"></i>
                 </a>
             </li>
@@ -371,7 +392,8 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--disabled">
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/20/exploit/" data-tooltip="exploit" aria-label="FRÜHER: exploit">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
@@ -380,7 +402,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" data-tooltip="使用sqlmap 绕过防火墙进行注入测试" aria-label="NÄCHSTER: 使用sqlmap 绕过防火墙进行注入测试">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/19/IT-SECURITY/" data-tooltip="IT SECURITY" aria-label="NÄCHSTER: IT SECURITY">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -398,7 +420,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2018/07/14/hello-world/" title="Teilen auf Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/" title="Teilen auf Facebook">
                     <i class="fa fa-facebook-official" aria-hidden="true"></i>
                 </a>
             </li>
@@ -406,7 +428,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2018/07/14/hello-world/" title="Teilen auf Twitter">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/" title="Teilen auf Twitter">
                     <i class="fa fa-twitter" aria-hidden="true"></i>
                 </a>
             </li>
@@ -414,7 +436,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2018/07/14/hello-world/" title="Teilen auf Google Plus">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/" title="Teilen auf Google Plus">
                     <i class="fa fa-google-plus" aria-hidden="true"></i>
                 </a>
             </li>
@@ -441,7 +463,7 @@
             
             
             <li class="share-option">
-                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2018/07/14/hello-world/">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/">
                     <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Teilen auf Facebook</span>
                 </a>
             </li>
@@ -449,7 +471,7 @@
             
             
             <li class="share-option">
-                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2018/07/14/hello-world/">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/">
                     <i class="fa fa-twitter" aria-hidden="true"></i><span>Teilen auf Twitter</span>
                 </a>
             </li>
@@ -457,7 +479,7 @@
             
             
             <li class="share-option">
-                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2018/07/14/hello-world/">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/01/20/如何有效检查证书有效性？/">
                     <i class="fa fa-google-plus" aria-hidden="true"></i><span>Teilen auf Google Plus</span>
                 </a>
             </li>

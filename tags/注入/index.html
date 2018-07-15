@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
-    <title>Archiv: 2018/7 - 攻VS防，战略与战术！马拉松式工作！</title>
+    <title>Tag: 注入 - 攻VS防，战略与战术！马拉松式工作！</title>
     <meta name="author" content="Lao k17">
     
         <meta name="keywords" content="hexo,javascript,安全,">
@@ -20,7 +20,7 @@
 <meta name="keywords" content="hexo,javascript,安全">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="攻VS防，战略与战术！马拉松式工作！">
-<meta property="og:url" content="http://s-sec.github.io/archives/2018/07/index.html">
+<meta property="og:url" content="http://s-sec.github.io/tags/注入/index.html">
 <meta property="og:site_name" content="攻VS防，战略与战术！马拉松式工作！">
 <meta property="og:description" content="记录网络安全,渗透渗透,信息安全,代码审计,权限提升,脚本漏洞,无线安全,社会工程,安全文献,安全媒体。">
 <meta property="og:locale" content="zh-CN">
@@ -241,49 +241,45 @@
     <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
+    <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
                 <h1 class="postShorten-title">
                     
-                        <a class="link-unstyled" href="/2018/07/14/hello-world/">
-                            Hello World
+                        <a class="link-unstyled" href="/2017/03/01/手工注入/">
+                            手工注入
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2018-07-14T23:39:14+08:00">
+    <time datetime="2017-03-01T16:45:21+08:00">
 	
-		    14 7月 2018
+		    01 3月 2017
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/渗透测试/">渗透测试</a>
+
+
     
 </div>
 
             </div>
             
-                <div class="postShorten-content">
-                    <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+                <div class="postShorten-excerpt">
+                    <p><strong>手工注入</strong></p>
+<p>1、加入单引号 ’提交,<br>结果:如果出现错误提示，则该网站可能就存在注入漏洞。 </p>
+<p>2、数字型判断是否有注入; 语句：and 1=1 ;and 1=2 （经典）、’ and ‘1’=1(字符型）<br>结果:分别返回不同的页面,说明存在注入漏洞.<br>分析：and 的意思是“和”如果没有过滤我们的语句，and 1=1就会被代入SQL查询语句进行查询， 如果and前后的两条语句都是真的话就不会出错，但如果前后语句有一个为假的话，程序就会暴错。 也就表明程序有注入漏洞 </p>
+<p>防注入解决办法：<br>1&gt;使用or 2&gt;1 ; or 1&gt;2来进行判断<br>结果:分别返回不同的页面,说明存在注入漏洞.<br>分析：or注入只要求前后两个语句只要有一个正确就为真，如果前后两个语句都是正确的，反而为假。 记住：or注入时，or后面的语句如果是正确的，则返回错误页面！如果是错误，则返回正确页面 ，说明存在注入点。 </p>
+<p>2&gt; 使用xor 1=1; xor 1=2<br>结果:分别返回不同的页面,说明存在注入漏洞.<br>分析:xor 代表着异或,意思即连接的表达式仅有一个为真的时候才为真。 记住：xor注入时，xor后面的语句如果是正确的，则返回错误页面积，如果是错误，则返回正确 页面，说明存在注入点。<br>
                     
+                        <a href="/2017/03/01/手工注入/" class="postShorten-excerpt_link link">
+                            Weiterlesen
+                        </a>
                         
-
-                    
-                    
-                        <p>
-                            <a href="/2018/07/14/hello-world/#post-footer" class="postShorten-excerpt_link link">
-                                Kommentieren und teilen
-                            </a>
-                        </p>
                     
                 </div>
             
@@ -300,7 +296,6 @@
 </div>
 
 </section>
-
 
 
                 <footer id="footer" class="main-content-wrap">

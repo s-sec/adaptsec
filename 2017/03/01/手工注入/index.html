@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
+    <title>手工注入 - 攻VS防，战略与战术！马拉松式工作！</title>
+    <meta name="author" content="Lao k17">
+    
+        <meta name="keywords" content="hexo,javascript,安全,">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"},"articleBody":"手工注入\n1、加入单引号 ’提交,结果:如果出现错误提示，则该网站可能就存在注入漏洞。 \n2、数字型判断是否有注入; 语句：and 1=1 ;and 1=2 （经典）、’ and ‘1’=1(字符型）结果:分别返回不同的页面,说明存在注入漏洞.分析：and 的意思是“和”如果没有过滤我们的语句，and 1=1就会被代入SQL查询语句进行查询， 如果and前后的两条语句都是真的话就不会出错，但如果前后语句有一个为假的话，程序就会暴错。 也就表明程序有注入漏洞 \n防注入解决办法：1&gt;使用or 2&gt;1 ; or 1&gt;2来进行判断结果:分别返回不同的页面,说明存在注入漏洞.分析：or注入只要求前后两个语句只要有一个正确就为真，如果前后两个语句都是正确的，反而为假。 记住：or注入时，or后面的语句如果是正确的，则返回错误页面！如果是错误，则返回正确页面 ，说明存在注入点。 \n2&gt; 使用xor 1=1; xor 1=2结果:分别返回不同的页面,说明存在注入漏洞.分析:xor 代表着异或,意思即连接的表达式仅有一个为真的时候才为真。 记住：xor注入时，xor后面的语句如果是正确的，则返回错误页面积，如果是错误，则返回正确 页面，说明存在注入点。3&gt;把and 1=1转换成URL编码形式后在提交 and 1=1 URL编码：%41%4E%44%20%%31%3D%31 \n4&gt;使用-1；-0分析：如果返回的页面和前面不同，是另一则新闻，则表示有注入漏洞，是数字型的注入漏洞;在 URL地址后面加上 -0，URL变成 news.asp?id=123-0，返回的页面和前面的页面相同，加上-1，返回错误页面，则也表示存在注入漏洞. \n3、字符型判断是否有注入：语句：’ and ‘1’=1；’ and ‘1=2(经典）结果：分别返回不同的页面,说明存在注入漏洞.分析：加入’ and ‘1’=1返回正确页面，加入’ and ‘1=2返回错误页面，说明有注入漏同。 \n防注入解决办法：在URL的地址后面加上’%2B’（字符型）分析：URL地址变为：news.asp?id=123’%2B’，返回的页面和1同;加 上’2%2B’asdf，URL地址变为：news.asp?id=123’%2Basdf，返回的页面和1 不同，或者说未发现该条记录，或者错误，则表示存在注入点，是文本型的。 \n搜索型判断是否有注入:简单的判断搜索型注入漏洞存在不存在的办法是先搜索’，如果出错，说明90%存在这个漏洞。然后搜索%，如果正常返回，说明95%有洞了。说明：加入如”&amp;”、”[“、”]”、”%”、”$”、”@”等特殊字符，都可以实现，如果出现错误，说明有问题。操作： 搜索一个关键字，比如2006吧，正常返回所有2006相关的信息，再搜索2006%’and 1=1 and ‘%’=’和 2006%’and 1=2 and ‘%’=’，存在异同的话，就是100%有洞了。关键字%’ and 1=1 and ‘%’=’% 关键字%’ and 1=2 and ‘%’=’% 将and 1=1 换成注入语句就可以了 \n判断数据库类型：and user&gt;0例如：showdetail.asp?id=49 ;and user&gt;0 如果是ACCESS数据库,那么返回的错误里一般会有”Microsoft JET Database”关键定，如果是MSSQL数 据库的话返回的错误提示里一般会含有”SQL Server”关键了. \n猜表名 and exists (select * from 表名)说明：意思与上面一样，只是用的语名不一样。 \n猜列名 and (select count(列名) from 表名)&gt;0说明：如果我们输入的列名猜解正确否反回正常页面 \n猜长度 and (select top 1 len(username) from admin)&gt;0说明：如果我们输入的最后一位数据返回错误，而错误前一位数字返回正确，说明我所猜解的长度 为正确。 \n猜内容 and (select top 1 asc(mid(username,1,1)) from admin)&gt;50 ascii码1-128说明：如果我们输入的最后一位数据返回错误，而错误前一位数字返回正确，说明我所猜解的数字正确。（可以使用折半法猜内容）折半法：最小值与最大值差的一半，比如输入50返正确，输入100返回错误，折半后输入75。两种常见爆库1、%5c2、conn.asp \n%5c暴库 把二级目录中间的/换成%5c EY: otherweb … s.asp?BigClassName=职 责范围&amp;BigClassType=1 如果你能看到：’E:\\ahttc040901 \\otherweb\\dz\\database\\iXuEr_Studio.asa’不是一 个有效的 路径。 确定路径名称拼写是否正确， 以及是否 连接到文件存放的服务器。 这样的就是数据库了。下载时用FLASHGET换成.MDB格式的就行 .conn.asp暴库 这个也是比较老的漏洞，利用价值不大 \n常见的：’or’=’or’万能密码登陆’or’=’or’这是一个可以连接SQL的语名句.可以直接进入后台。我收集了一下。类似的还有 ： ’or’’=’ “ or “a”=”a ’) or (’a’=’a “) or (“a”=”a or 1=1– ’ or ’ a’=’a 一个很老的利用方法，主要用于一些比较老的网站。 \n联合查询注入(union查询）操作步骤：1&gt;在正常语句后台加入 and 1=2 union select  form 表名，其中号代表字段数量，从1一直追加 （and 1=2 union select 1，2，3，4 form 表名）如果字段数正确就会有暴错2&gt;在页面显示数字的地方用真实得到的字段名代替，如：username,password.3&gt;在页面字段值处暴出真实的数据库字段值。 \n","dateCreated":"2017-03-01T16:45:21+08:00","dateModified":"2017-03-01T16:46:17+08:00","datePublished":"2017-03-01T16:45:21+08:00","description":"手工注入\n1、加入单引号 ’提交,结果:如果出现错误提示，则该网站可能就存在注入漏洞。 \n2、数字型判断是否有注入; 语句：and 1=1 ;and 1=2 （经典）、’ and ‘1’=1(字符型）结果:分别返回不同的页面,说明存在注入漏洞.分析：and 的意思是“和”如果没有过滤我们的语句，and 1=1就会被代入SQL查询语句进行查询， 如果and前后的两条语句都是真的话就不会出错，但如果前后语句有一个为假的话，程序就会暴错。 也就表明程序有注入漏洞 \n防注入解决办法：1&gt;使用or 2&gt;1 ; or 1&gt;2来进行判断结果:分别返回不同的页面,说明存在注入漏洞.分析：or注入只要求前后两个语句只要有一个正确就为真，如果前后两个语句都是正确的，反而为假。 记住：or注入时，or后面的语句如果是正确的，则返回错误页面！如果是错误，则返回正确页面 ，说明存在注入点。 \n2&gt; 使用xor 1=1; xor 1=2结果:分别返回不同的页面,说明存在注入漏洞.分析:xor 代表着异或,意思即连接的表达式仅有一个为真的时候才为真。 记住：xor注入时，xor后面的语句如果是正确的，则返回错误页面积，如果是错误，则返回正确 页面，说明存在注入点。","headline":"手工注入","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://s-sec.github.io/2017/03/01/手工注入/"},"publisher":{"@type":"Organization","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"}},"url":"http://s-sec.github.io/2017/03/01/手工注入/","keywords":"注入"}</script>
+    <meta name="description" content="手工注入 1、加入单引号 ’提交,结果:如果出现错误提示，则该网站可能就存在注入漏洞。  2、数字型判断是否有注入; 语句：and 1=1 ;and 1=2 （经典）、’ and ‘1’=1(字符型）结果:分别返回不同的页面,说明存在注入漏洞.分析：and 的意思是“和”如果没有过滤我们的语句，and 1=1就会被代入SQL查询语句进行查询， 如果and前后的两条语句都是真的话就不会出错，但如果前">
+<meta name="keywords" content="注入">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="手工注入">
+<meta property="og:url" content="http://s-sec.github.io/2017/03/01/手工注入/index.html">
+<meta property="og:site_name" content="攻VS防，战略与战术！马拉松式工作！">
+<meta property="og:description" content="手工注入 1、加入单引号 ’提交,结果:如果出现错误提示，则该网站可能就存在注入漏洞。  2、数字型判断是否有注入; 语句：and 1=1 ;and 1=2 （经典）、’ and ‘1’=1(字符型）结果:分别返回不同的页面,说明存在注入漏洞.分析：and 的意思是“和”如果没有过滤我们的语句，and 1=1就会被代入SQL查询语句进行查询， 如果and前后的两条语句都是真的话就不会出错，但如果前">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-03-01T08:46:17.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手工注入">
+<meta name="twitter:description" content="手工注入 1、加入单引号 ’提交,结果:如果出现错误提示，则该网站可能就存在注入漏洞。  2、数字型判断是否有注入; 语句：and 1=1 ;and 1=2 （经典）、’ and ‘1’=1(字符型）结果:分别返回不同的页面,说明存在注入漏洞.分析：and 的意思是“和”如果没有过滤我们的语句，and 1=1就会被代入SQL查询语句进行查询， 如果and前后的两条语句都是真的话就不会出错，但如果前">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-3frockyt2j28isvdztjchy5nhkz8tjki9ermufc1ckptmvjdftux94m2ahub.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">攻VS防，战略与战术！马拉松式工作！</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="search"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="about"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">about</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://paper.seebug.org/" target="_blank" rel="noopener" title="seebug paper">
+                    
+                        <i class="sidebar-button-icon fab fa-seebug" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">seebug paper</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://js.tuisec.win/convert/ox2str/" target="_blank" rel="noopener" title="decode tools">
+                    
+                        <i class="sidebar-button-icon fab fa-decode" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">decode tools</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.cvedetails.com/" target="_blank" rel="noopener" title="cvedetails">
+                    
+                        <i class="sidebar-button-icon fab fa-cvedetails" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">cvedetails</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="http://www.expku.com/" target="_blank" rel="noopener" title="exp库">
+                    
+                        <i class="sidebar-button-icon fab fa-edb" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">exp库</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://wy.tuisec.win/" target="_blank" rel="noopener" title="乌云历史库">
+                    
+                        <i class="sidebar-button-icon fab fa-wy" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">乌云历史库</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://s.threatbook.cn/" target="_blank" rel="noopener" title="微步沙箱">
+                    
+                        <i class="sidebar-button-icon fab fa-sandboxie" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">微步沙箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            手工注入
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-03-01T16:45:21+08:00">
+	
+		    01 3月 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/渗透测试/">渗透测试</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p><strong>手工注入</strong></p>
+<p>1、加入单引号 ’提交,<br>结果:如果出现错误提示，则该网站可能就存在注入漏洞。 </p>
+<p>2、数字型判断是否有注入; 语句：and 1=1 ;and 1=2 （经典）、’ and ‘1’=1(字符型）<br>结果:分别返回不同的页面,说明存在注入漏洞.<br>分析：and 的意思是“和”如果没有过滤我们的语句，and 1=1就会被代入SQL查询语句进行查询， 如果and前后的两条语句都是真的话就不会出错，但如果前后语句有一个为假的话，程序就会暴错。 也就表明程序有注入漏洞 </p>
+<p>防注入解决办法：<br>1&gt;使用or 2&gt;1 ; or 1&gt;2来进行判断<br>结果:分别返回不同的页面,说明存在注入漏洞.<br>分析：or注入只要求前后两个语句只要有一个正确就为真，如果前后两个语句都是正确的，反而为假。 记住：or注入时，or后面的语句如果是正确的，则返回错误页面！如果是错误，则返回正确页面 ，说明存在注入点。 </p>
+<p>2&gt; 使用xor 1=1; xor 1=2<br>结果:分别返回不同的页面,说明存在注入漏洞.<br>分析:xor 代表着异或,意思即连接的表达式仅有一个为真的时候才为真。 记住：xor注入时，xor后面的语句如果是正确的，则返回错误页面积，如果是错误，则返回正确 页面，说明存在注入点。<br><a id="more"></a><br>3&gt;把and 1=1转换成URL编码形式后在提交 and 1=1 URL编码：%41%4E%44%20%%31%3D%31 </p>
+<p>4&gt;使用-1；-0<br>分析：如果返回的页面和前面不同，是另一则新闻，则表示有注入漏洞，是数字型的注入漏洞;在 URL地址后面加上 -0，URL变成 news.asp?id=123-0，返回的页面和前面的页面相同，加上-1，返回错误页面，则也表示存在注入漏洞. </p>
+<p>3、字符型判断是否有注入：<br>语句：’ and ‘1’=1；’ and ‘1=2(经典）<br>结果：分别返回不同的页面,说明存在注入漏洞.<br>分析：加入’ and ‘1’=1返回正确页面，加入’ and ‘1=2返回错误页面，说明有注入漏同。 </p>
+<p>防注入解决办法：<br>在URL的地址后面加上’%2B’（字符型）<br>分析：URL地址变为：news.asp?id=123’%2B’，返回的页面和1同;加 上’2%2B’asdf，URL地址变为：news.asp?id=123’%2Basdf，返回的页面和1 不同，或者说未发现该条记录，或者错误，则表示存在注入点，是文本型的。 </p>
+<p>搜索型判断是否有注入:<br>简单的判断搜索型注入漏洞存在不存在的办法是先搜索’，如果出错，说明90%存在这个漏洞。然后搜索%，如果正常返回，说明95%有洞了。<br>说明：加入如”&amp;”、”[“、”]”、”%”、”$”、”@”等特殊字符，都可以实现，如果出现错误，说明有问题。<br>操作： 搜索一个关键字，比如2006吧，正常返回所有2006相关的信息，再搜索2006%’and 1=1 and ‘%’=’和 2006%’and 1=2 and ‘%’=’，存在异同的话，就是100%有洞了。关键字%’ and 1=1 and ‘%’=’% 关键字%’ and 1=2 and ‘%’=’% 将and 1=1 换成注入语句就可以了 </p>
+<p>判断数据库类型：<br>and user&gt;0<br>例如：showdetail.asp?id=49 ;and user&gt;0 如果是ACCESS数据库,那么返回的错误里一般会有”Microsoft JET Database”关键定，如果是MSSQL数 据库的话返回的错误提示里一般会含有”SQL Server”关键了. </p>
+<p>猜表名 and exists (select * from 表名)<br>说明：意思与上面一样，只是用的语名不一样。 </p>
+<p>猜列名 and (select count(列名) from 表名)&gt;0<br>说明：如果我们输入的列名猜解正确否反回正常页面 </p>
+<p>猜长度 and (select top 1 len(username) from admin)&gt;0<br>说明：如果我们输入的最后一位数据返回错误，而错误前一位数字返回正确，说明我所猜解的长度 为正确。 </p>
+<p>猜内容 and (select top 1 asc(mid(username,1,1)) from admin)&gt;50 ascii码1-128<br>说明：如果我们输入的最后一位数据返回错误，而错误前一位数字返回正确，说明我所猜解的数字正确。（可以使用折半法猜内容）<br>折半法：最小值与最大值差的一半，比如输入50返正确，输入100返回错误，折半后输入75。<br>两种常见爆库<br>1、%5c<br>2、conn.asp </p>
+<p>%5c暴库 把二级目录中间的/换成%5c EY: otherweb … s.asp?BigClassName=职 责范围&amp;BigClassType=1 如果你能看到：’E:\ahttc040901 \otherweb\dz\database\iXuEr_Studio.asa’不是一 个有效的 路径。 确定路径名称拼写是否正确， 以及是否 连接到文件存放的服务器。 这样的就是数据库了。下载时用FLASHGET换成.MDB格式的就行 .<br>conn.asp暴库 这个也是比较老的漏洞，利用价值不大 </p>
+<p>常见的：’or’=’or’万能密码登陆<br>’or’=’or’这是一个可以连接SQL的语名句.可以直接进入后台。我收集了一下。类似的还有 ： ’or’’=’ “ or “a”=”a ’) or (’a’=’a “) or (“a”=”a or 1=1– ’ or ’ a’=’a 一个很老的利用方法，主要用于一些比较老的网站。 </p>
+<p>联合查询注入(union查询）<br>操作步骤：<br>1&gt;在正常语句后台加入 and 1=2 union select <em> form 表名，其中</em>号代表字段数量，从1一直追加 （and 1=2 union select 1，2，3，4 form 表名）如果字段数正确就会有暴错<br>2&gt;在页面显示数字的地方用真实得到的字段名代替，如：username,password.<br>3&gt;在页面字段值处暴出真实的数据库字段值。 </p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">GETAGGT IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/注入/">注入</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/渗透笔记/" data-tooltip="渗透笔记" aria-label="FRÜHER: 渗透笔记">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/渗透测试信息探测问答/" data-tooltip="渗透测试信息探测问答" aria-label="NÄCHSTER: 渗透测试信息探测问答">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/01/手工注入/" title="Teilen auf Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/01/手工注入/" title="Teilen auf Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/01/手工注入/" title="Teilen auf Google Plus">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Lao k17. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/渗透笔记/" data-tooltip="渗透笔记" aria-label="FRÜHER: 渗透笔记">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/渗透测试信息探测问答/" data-tooltip="渗透测试信息探测问答" aria-label="NÄCHSTER: 渗透测试信息探测问答">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/01/手工注入/" title="Teilen auf Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/01/手工注入/" title="Teilen auf Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/01/手工注入/" title="Teilen auf Google Plus">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/01/手工注入/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Teilen auf Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/01/手工注入/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Teilen auf Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/01/手工注入/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Teilen auf Google Plus</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <h4 id="about-card-name">Lao k17</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-xzfezjobyekpxrjktw5tz6muvzqfsbmo5n6atk3p5om9ulfptldi3p7cyqd8.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+    </body>
+</html>

