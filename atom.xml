@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://s-sec.github.io/"/>
-  <updated>2018-07-16T09:01:00.012Z</updated>
+  <updated>2018-07-16T09:10:33.467Z</updated>
   <id>http://s-sec.github.io/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>【安全那些事儿】安全技术设计框架</title>
     <link href="http://s-sec.github.io/2018/07/16/%E3%80%90%E5%AE%89%E5%85%A8%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF%E3%80%91%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E8%AE%BE%E8%AE%A1%E6%A1%86%E6%9E%B6/"/>
     <id>http://s-sec.github.io/2018/07/16/【安全那些事儿】安全技术设计框架/</id>
-    <published>2018-07-16T00:53:22.722Z</published>
-    <updated>2018-07-16T09:01:00.012Z</updated>
+    <published>2018-07-15T16:00:00.000Z</published>
+    <updated>2018-07-16T09:10:33.467Z</updated>
     
     <content type="html"><![CDATA[<h2 id="【安全那些事儿】安全技术设计框架"><a href="#【安全那些事儿】安全技术设计框架" class="headerlink" title="【安全那些事儿】安全技术设计框架"></a><strong>【安全那些事儿】安全技术设计框架</strong></h2><p><strong>0x01 安全，从设计开始</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;未知攻，焉知防&quot;，甲方的安全，需从体系化来建设，讲究的是&quot;全面防御、纵深防御&quot;。</span><br><span class="line"></span><br><span class="line">安全，唯有从设计开始，方能从源头上堵住安全风险之口，减少安全问题或安全事件的发生，节省安全运营维护的成本！</span><br></pre></td></tr></table></figure><blockquote></blockquote><p><strong>0x02 安全技术框架适用人员</strong></p><blockquote><ul><li>产品经理</li><li>开发人员</li><li>测试人员</li><li>运维人员</li><li>信息安全人员</li><li>准备入门的非安全人员等</li></ul></blockquote><p><strong>0x03 安全技术设计框架内容</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">秉承SDL理念，推动安全技术设计。在2017年8月起面向金融科技全员多渠道（微信、邮件、confluence、美课等）推广学习，</span><br><span class="line">结合安全问题和安全事件，通过问题根源学习，引导安全设计学习。</span><br><span class="line"></span><br><span class="line">结合“金融科技SDL安全设计checklist”一起学习，通过不定期美课线上考试验收，目的是以考促学，以学促能，以能促用！</span><br><span class="line"></span><br><span class="line">此安全设计框架可指导产品、开发、测试、运维、安全人员进行产品安全设计和安全方案实施。</span><br><span class="line"></span><br><span class="line">后续，会持续优化，携手大家一起把安全设计做好！</span><br></pre></td></tr></table></figure></p><p><strong>温馨提示</strong></p><blockquote><p>内容比较多，以图文展示，请耐心阅读哈~</p></blockquote><blockquote><p>原文摘自【安全那些事儿】安全技术设计框架 <a href="https://mp.weixin.qq.com/s/uw-mN-u_UPwNekS1m_v-Yg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/uw-mN-u_UPwNekS1m_v-Yg</a></p></blockquote><hr><p><img src="/images/WechatIMG11_01.png" alt=""></p><p><img src="/images/WechatIMG11_02.png" alt=""></p><p><img src="/images/WechatIMG11_03.png" alt=""></p><p><img src="/images/WechatIMG11_04.png" alt=""></p><p><img src="/images/WechatIMG11_05.png" alt=""></p><p><img src="/images/WechatIMG11_06.png" alt=""></p><p><img src="/images/WechatIMG11_07.png" alt=""></p><p><img src="/images/WechatIMG11_08.png" alt=""></p><p><img src="/images/WechatIMG11_09.png" alt=""></p><p><img src="/images/WechatIMG11_10.png" alt=""></p><p><img src="/images/WechatIMG11_11.png" alt=""></p><p><img src="/images/WechatIMG11_12.png" alt=""></p><p><img src="/images/WechatIMG11_13.png" alt=""></p><p><strong>攻防对抗，从未停止！安全建设，一直在路上！</strong></p><p><img src="/images/红蓝对抗.jpg" alt=""></p><p><strong>安全设计，有你更安全！</strong></p><blockquote><p>分享是一种美德，交流共成长！</p></blockquote>]]></content>
     
@@ -37,7 +37,11 @@
       <category term="安全建设" scheme="http://s-sec.github.io/categories/%E5%AE%89%E5%85%A8%E5%BB%BA%E8%AE%BE/"/>
     
     
-      <category term="安全建设，安全技术，安全设计" scheme="http://s-sec.github.io/tags/%E5%AE%89%E5%85%A8%E5%BB%BA%E8%AE%BE%EF%BC%8C%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%EF%BC%8C%E5%AE%89%E5%85%A8%E8%AE%BE%E8%AE%A1/"/>
+      <category term="安全建设" scheme="http://s-sec.github.io/tags/%E5%AE%89%E5%85%A8%E5%BB%BA%E8%AE%BE/"/>
+    
+      <category term="安全技术" scheme="http://s-sec.github.io/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="安全设计" scheme="http://s-sec.github.io/tags/%E5%AE%89%E5%85%A8%E8%AE%BE%E8%AE%A1/"/>
     
   </entry>
   
